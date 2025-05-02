@@ -35,6 +35,6 @@ jobs:
         with:
           credentials_json: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_GDG_TW }}'
 
-      - name: Deploy to Firebase Hosting (Production)
+      - name: Deploy to Firebase Hosting (Staging)
         run: |
-          firebase deploy --only hosting --channel-id ${{ github.run_id }}-${{ github.head_ref }}
+          firebase hosting:channel:deploy ${{ github.head_ref }} --expires 7d
