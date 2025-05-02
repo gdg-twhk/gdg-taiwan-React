@@ -34,4 +34,4 @@ jobs:
 
       - name: Deploy to Firebase Hosting (Production)
         run: |
-          firebase deploy --only hosting
+          firebase deploy --only hosting --channel-id live

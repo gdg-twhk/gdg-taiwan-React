@@ -37,4 +37,4 @@ jobs:
 
       - name: Deploy to Firebase Hosting (Production)
         run: |
-          firebase deploy --only hosting --change-id ${{ github.pull_request.number }}
+          firebase deploy --only hosting --channel-id ${{ github.run_id }}-${{ github.head_ref }}
