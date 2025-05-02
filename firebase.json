@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "src/build/server/app",
+    "public": "src/out",
     "rewrites": [
       {
         "source": "**",

@@ -7,6 +7,12 @@ import React from "react";
 
 type ActivityKey = keyof typeof activityContent;
 
+export function generateStaticParams(): { activity: ActivityKey }[] {
+  return (Object.keys(activityContent) as ActivityKey[]).map((activity) => ({
+    activity,
+  }));
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ activity: ActivityKey }> }): Promise<Metadata> {
   const { activity } = await params;
   const activityInfo = activityContent[activity];
