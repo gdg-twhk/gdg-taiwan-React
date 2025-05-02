@@ -46,7 +46,7 @@ export default function Home() {
             <h2 className="text-xl font-light mt-4" style={{ whiteSpace: 'pre-line', textAlign: 'left' }}>Google 的 Google developers 計畫為科技領域的開發者提供知名度、社群和資源。</h2>
           </div>
           <div className="flex flex-col justify-center items-center">
-            <img src="/google_sticker_3.gif" alt="main image" className="img-fluid w-full h-full" />
+            <Image src="/google_sticker_3.gif" alt="main image" width={300} height={300} className="img-fluid w-full h-full" />
           </div>
         </div>
       </section>

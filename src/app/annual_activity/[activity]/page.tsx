@@ -7,14 +7,8 @@ import React from "react";
 
 type ActivityKey = keyof typeof activityContent;
 
-interface PageProps {
-  params: Promise<{
-    activity: ActivityKey;
-  }>;
-}
-
-export async function generateMetadata({ params }: { params: { activity: ActivityKey } }): Promise<Metadata> {
-  const activity = params.activity;
+export async function generateMetadata({ params }: { params: Promise<{ activity: ActivityKey }> }): Promise<Metadata> {
+  const { activity } = await params;
   const activityInfo = activityContent[activity];
   return {
     title: `GDG Taiwan | ${activityInfo.title}`,
@@ -22,16 +16,18 @@ export async function generateMetadata({ params }: { params: { activity: Activit
   };
 }
 
-export default function AnnualActivityPage({
-  params: paramsPromise,
-}: PageProps) {
-  const params = React.use(paramsPromise);
+export default async function AnnualActivityPage({
+  params,
+}: {
+  params: Promise<{ activity: ActivityKey }>;
+}) {
+  const { activity } = await params;
 
   return (
     <div>
       <div className="flex flex-col">
         <SiteHeader />
-        <AnnualActivitySection activity={params.activity} />
+        <AnnualActivitySection activity={activity} />
       </div>
       <SiteFooter />
     </div>

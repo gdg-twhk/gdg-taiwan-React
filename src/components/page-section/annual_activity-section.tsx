@@ -31,6 +31,7 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile";
 import Link from "next/link";
 import { activityContent, AnnualActivitySectionProps } from "@/entities/anaual_activity/index";
+import Image from "next/image";
 
 
 function groupEventsByYear(events: Event[]) {
@@ -132,7 +133,7 @@ export default function AnnualActivitySection({
       >
         <div className="row align-items-lg-center justify-content-left">
           <div className="col-lg-12 text-left">
-            <img
+            <Image
               src={activityContent[activity].iconUrl}
               alt="main image"
               width={100}
@@ -153,7 +154,7 @@ export default function AnnualActivitySection({
                 alignItems: "center",
               }}
             >
-              <img
+              <Image
                 src={activityContent[activity].animationUrl}
                 alt="main image"
                 width={100}
