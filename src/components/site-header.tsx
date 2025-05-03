@@ -55,16 +55,16 @@ export function SiteHeader() {
                   </MenubarItem>
                   <MenubarSeparator />
                   <MenubarItem>
-                    <Link href="/annual_activity/international_womens_day">{t('navigation.internationalWomensDay')}</Link>
+                    <Link href="/annual_activity/international_womens_day">{t('navigation.internationalWomensDay.title')}</Link>
                   </MenubarItem>
                   <MenubarItem>
-                    <Link href="/annual_activity/google_io_extended">{t('navigation.googleIOExtended')}</Link>
+                    <Link href="/annual_activity/google_io_extended">{t('navigation.googleIOExtended.title')}</Link>
                   </MenubarItem>
                   <MenubarItem>
-                    <Link href="/annual_activity/cloud_study_jam">{t('navigation.cloudStudyJam')}</Link>
+                    <Link href="/annual_activity/cloud_study_jam">{t('navigation.cloudStudyJam.title')}</Link>
                   </MenubarItem>
                   <MenubarItem>
-                    <Link href="/annual_activity/devfest">{t('navigation.devfest')}</Link>
+                    <Link href="/annual_activity/devfest">{t('navigation.devfest.title')}</Link>
                   </MenubarItem>
                   <MenubarSeparator />
                   <MenubarItem>
@@ -87,7 +87,7 @@ export function SiteHeader() {
           </Link>
         )}
         {!isMobile && (
-          <div className="ml-auto flex items-center justify-between gap-2 w-fit-content">
+          <div className="ml-auto flex items-between justify-between gap-2 w-1/3 ">
           <NavigationMenu className="w-full">
             <NavigationMenuList>
             <NavigationMenuItem>
@@ -99,17 +99,17 @@ export function SiteHeader() {
               <NavigationMenuTrigger>{t('navigation.annualActivities')}</NavigationMenuTrigger>
                 <NavigationMenuContent>
               <ul className="grid gap-3 p-6 md:w-[400px]">
-                <ListItem href="/annual_activity/international_womens_day" title={t('navigation.internationalWomensDay')}>
-                  國際婦女節 (IWD) 是 Women Techmakers 最大的年度活動
+                <ListItem href="/annual_activity/international_womens_day" title={t('navigation.internationalWomensDay.title')}>
+                  {t('navigation.internationalWomensDay.description')}
                 </ListItem>
-                <ListItem href="/annual_activity/google_io_extended" title={t('navigation.googleIOExtended')}>
-                  討論最新的新技術、總結內容、主持問答環節並會見其他技術愛好者。
+                <ListItem href="/annual_activity/google_io_extended" title={t('navigation.googleIOExtended.title')}>
+                  {t('navigation.googleIOExtended.description')}
                 </ListItem>
-                <ListItem href="/annual_activity/cloud_study_jam" title={t('navigation.cloudStudyJam')}>
-                  從容器化應用程式到創建虛擬機，Study Jams 可以根據特定的雲端主題和技能水平進行自訂。
+                <ListItem href="/annual_activity/cloud_study_jam" title={t('navigation.cloudStudyJam.title')}>
+                  {t('navigation.cloudStudyJam.description')}
                 </ListItem>
-                <ListItem href="/annual_activity/devfest" title={t('navigation.devfest')}>
-                  是由全球 Google Developer Group (GDG) 主持的當地技術研討會。
+                <ListItem href="/annual_activity/devfest" title={t('navigation.devfest.title')}>
+                  {t('navigation.devfest.description')}
                 </ListItem>
               </ul>
               </NavigationMenuContent>
@@ -120,7 +120,7 @@ export function SiteHeader() {
               </NavigationMenuLink>
             </NavigationMenuItem>
             </NavigationMenuList>
-            </NavigationMenu>
+          </NavigationMenu>
         </div>
         )}
         <div className="flex items-center justify-between gap-2">

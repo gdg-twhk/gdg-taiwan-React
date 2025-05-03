@@ -30,7 +30,8 @@ import {
 } from "@/components/ui/command";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Link from "next/link";
-import { AnnualActivitySectionProps, activityContent } from "@/entities/anaual_activity/index";
+import { AnnualActivitySectionProps, activityMeta } from "@/entities/anaual_activity/index";
+import { useActivityContent } from "@/entities/anaual_activity/useActivityContent";
 import Image from "next/image";
 import { IconCalendar } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
@@ -53,19 +54,19 @@ function groupEventsByYear(events: Event[]) {
   return result;
 }
 
-export default function AnnualActivitySection({
-  activity,
-}: AnnualActivitySectionProps) {
+export default function AnnualActivitySection({ activity }: AnnualActivitySectionProps) {
   const [activities, setActivities] = useState<Event[]>([]);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const isMobile = useIsMobile();
   const { t } = useTranslation();
+  const content = useActivityContent();
+
   // 取得所有活動
   useEffect(() => {
     async function fetchEvents() {
       const events = await getEventByTag(
-        activityContent[activity].bevytagId
+        activityMeta[activity].bevytagId
       );
       setActivities(events || []);
     }
@@ -122,7 +123,7 @@ export default function AnnualActivitySection({
       <section
         className="w-full px-0 flex flex-col justify-center items-center relative py-16 md:py-24 h-[400px]"
         style={{
-          backgroundImage: `url(${activityContent[activity].backgroundUrl})`,
+          backgroundImage: `url(${activityMeta[activity].backgroundUrl})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -134,7 +135,7 @@ export default function AnnualActivitySection({
         <div className="row align-items-lg-center justify-content-left">
           <div className="col-lg-12 text-left">
             <Image
-              src={activityContent[activity].iconUrl}
+              src={activityMeta[activity].iconUrl}
               alt="main image"
               width={100}
               height={100}
@@ -155,7 +156,7 @@ export default function AnnualActivitySection({
               }}
             >
               <Image
-                src={activityContent[activity].animationUrl}
+                src={activityMeta[activity].animationUrl}
                 alt="main image"
                 width={100}
                 height={100}
@@ -165,17 +166,17 @@ export default function AnnualActivitySection({
             <div className="col-span-1">
               <CardHeader>
                 <CardTitle className="text-2xl font-bold mb-4 text-google-blue">
-                  {activityContent[activity].title}
+                  {content[activity].title}
                 </CardTitle>
                 <CardDescription className="text-lg">
-                  {activityContent[activity].description}
+                  {content[activity].description}
                 </CardDescription>
                 <CardFooter className="flex flex-col gap-4 justify-start items-start px-0 mt-4">
                   <Button
                     className={`bg-google-blue dark:bg-google-blue border border-3 rounded-lg text-xl font-medium text-black hover:bg-halftone-blue dark:hover:bg-halftone-blue hover:text-black hover:border-black`}
                   >
                     <Link
-                      href={activityContent[activity].url}
+                      href={activityMeta[activity].url}
                       target="_blank"
                     >
                       {t('annualActivitySection.learnMore')}

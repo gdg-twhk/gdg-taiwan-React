@@ -17,6 +17,8 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { CommandEmpty, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
 import { Command } from "@/components/ui/command";
 import Image from "next/image";
+import { useTranslation } from 'react-i18next';
+import { IconLocationBroken } from "@tabler/icons-react";
 
 export default function ChaptersSection() {
   const [chaptersByCountry, setChaptersByCountry] = useState<{[key: string]: Chapter[]}>({});
@@ -24,6 +26,7 @@ export default function ChaptersSection() {
   const [selectedCountry, setSelectedCountry] = useState<string>("");
   const [open, setOpen] = useState(false);
   const isMobile = useIsMobile();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchChapters = async () => {
@@ -58,7 +61,7 @@ export default function ChaptersSection() {
     return (
       <Command>
         <CommandList>
-          <CommandEmpty>No chapters found.</CommandEmpty>
+          <CommandEmpty>{t('chaptersSection.noChaptersFound')}</CommandEmpty>
           <CommandGroup>
             {sortedCountries.map((country) => (
               <CommandItem
@@ -70,7 +73,7 @@ export default function ChaptersSection() {
                   setOpen(false);
                 }}
               >
-                {country}
+                {t('selectedCountryMap.' + country)}
               </CommandItem>
             ))}
           </CommandGroup>
@@ -95,13 +98,13 @@ export default function ChaptersSection() {
         }}
       >
       <div className="flex flex-col justify-center items-center gap-4">
-          <h1 className="text-white text-5xl font-bold"> 全台據點</h1>
+          <h1 className="text-white text-5xl font-bold">{t('chaptersSection.title')}</h1>
         </div>
       </section>
       <section className="container mx-auto px-4 md:py-16 gap-4">
         <SidebarProvider className="flex flex-row flex-3 w-fit h-fit w-full gap-4">
           <Sidebar collapsible="none" className="flex w-full flex-col flex-1 hidden md:flex rounded justify-center items-center gap-8 text-card-foreground rounded-xl">
-            <h1 className="text-2xl font-bold mt-4">選擇縣市</h1>
+            <h1 className="text-2xl font-bold mt-4">{t('chaptersSection.selectCity')}</h1>
             <Taiwan 
               onSelect={handleSelect} 
               size={400} 
@@ -127,16 +130,16 @@ export default function ChaptersSection() {
                                 className="w-fit-content justify-start text-xl"
                               >
                                 {selectedCountry ? (
-                                  <>{selectedCountry}</>
+                                  <><IconLocationBroken /> {t('selectedCountryMap.' + selectedCountry)}</>
                                 ) : (
-                                  <> No content yet</>
+                                  <>{t('chaptersSection.noContentYet')}</>
                                 )}
                               </Button>
                             </DrawerTrigger>
                             <DrawerContent>
-                              <DrawerTitle className="text-center">選擇縣市</DrawerTitle>
+                              <DrawerTitle className="text-center">{t('chaptersSection.selectCity')}</DrawerTitle>
                               <DrawerDescription className="text-center">
-                                請選擇你想要瀏覽的縣市
+                                {t('chaptersSection.selectCityDescription')}
                               </DrawerDescription>
                               <div className="mt-4 border-t text-center">
                                 <StatusList
@@ -148,7 +151,7 @@ export default function ChaptersSection() {
                           </Drawer>
                         </div>
                       ) : (
-                        <h1 className="text-center text-4xl font-bold ">{selectedCountry}</h1>
+                        <h1 className="text-center text-4xl font-bold ">{`${t('selectedCountryMap.' + selectedCountry)}`}</h1>
                       )}
                     </CardTitle>
                   </CardHeader>
@@ -161,7 +164,7 @@ export default function ChaptersSection() {
                         <Card className="row-span-3 w-full col-span-4 justify-center items-center bg-transparent">
                           <Image src="/dinosaur.gif" alt="404 not found" width={100} height={100} className="w-1/2 h-auto" />
                           <CardContent className="flex flex-col justify-center items-center">
-                            <h1 className="text-center text-2xl font-bold">這個縣市沒有我們的據點</h1>
+                            <h1 className="text-center text-2xl font-bold">{t('chaptersSection.noLocation')}</h1>
                           </CardContent>
                         </Card>
                       )}

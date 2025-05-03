@@ -10,9 +10,15 @@ import { defaultImage } from "@/entities/common_pic";
 
 export function ChapterCard({chapter}: {chapter: Chapter}) {
     const { t } = useTranslation();
+    const { i18n } = useTranslation();
     const eventTypeColor = isCampusChapter(chapter.title) ? 'green' : 'blue';
 
-    
+    const currentLanguage = i18n.language;
+
+    const chapterName = currentLanguage.includes('zh')
+      ? chapterNameMap[schoolNameFinder(chapter.title) as keyof typeof chapterNameMap]
+      : schoolNameFinder(chapter.title);
+
     return (
         <div className={`flex flex-col items-center p-8 gap-4 w-full items-center justify-center`}>
         <div className="flex-shrink-0 w-32 h-32 rounded-full flex items-center justify-center overflow-hidden shadow-md">
@@ -36,7 +42,7 @@ export function ChapterCard({chapter}: {chapter: Chapter}) {
           </Avatar>
         </div>
         <div className="flex-1 flex flex-col items-center justify-center">
-          <h1 className="text-xl font-bold mb-2">{chapterNameMap[schoolNameFinder(chapter.title) as keyof typeof chapterNameMap] ?? schoolNameFinder(chapter.title)}
+          <h1 className="text-xl font-bold mb-2 text-center">{chapterName}
           </h1>
           <Button className={`bg-google-${eventTypeColor} dark:bg-google-${eventTypeColor} border border-3 rounded-lg text-xl font-medium text-black hover:bg-halftone-${eventTypeColor} dark:hover:bg-halftone-${eventTypeColor} hover:text-black hover:border-black`}>
                 <Link href={chapter.url} target="_blank">{t('chapterCard.findUs')} </Link>

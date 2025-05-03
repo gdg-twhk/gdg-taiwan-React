@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 // 匯入各語系檔案
 import { en } from './locales/en/index';
-import { zh_TW } from './locales/zh_TW/index';
+import { zh_TW } from './locales/zh-TW/index';
 
 const resources = {
   en,

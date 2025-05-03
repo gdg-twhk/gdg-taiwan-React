@@ -11,7 +11,8 @@ import { activitySection } from "./activitySection";
 import { eventTypeMap } from "./eventTypeMap";
 import { audienceTypeMap } from "./audienceTypeMap";
 import { selectedCountryMap } from "./selectedCountry";
-export const en = {
+
+export const zh_TW = {
   translation: {
     mainSection,
     navigation,

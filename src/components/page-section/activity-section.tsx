@@ -20,6 +20,8 @@ import { Button } from "@/components/ui/button";
 import { CalendarIcon } from "lucide-react"
 import { format } from "date-fns";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useTranslation } from 'react-i18next';
+import i18n from "@/i18n/config"
 
 export default function ActivitySection() {
   const [events, setEvents] = useState<Event[]>([]);
@@ -28,7 +30,7 @@ export default function ActivitySection() {
   const [eventsByDate, setEventsByDate] = useState<{ [key: string]: Event[] }>({});
   const [dates, setDates] = useState<string[]>([]);
   const isMobile = useIsMobile();
-  
+  const { t } = useTranslation();
   // 取得所有活動
   useEffect(() => {
     async function fetchEvents() {
@@ -44,6 +46,10 @@ export default function ActivitySection() {
     fetchEvents();
   }, []);
 
+  useEffect(() => {
+    i18n.loadNamespaces(['activitySection']);
+  }, []);
+
   const handleClickCalendar = (day?: Date) => {
     if(!day) return;
 
@@ -52,6 +58,25 @@ export default function ActivitySection() {
       setCurrentPage(index);
     }
   };
+
+  const CanlendercustomLabels={
+    "close": t('activitySection.calendar.close'),
+    "apple": t('activitySection.calendar.apple'),
+    "google": t('activitySection.calendar.google'),
+    "outlookcom": t('activitySection.calendar.outlookcom'),
+    "yahoo": t('activitySection.calendar.yahoo'),
+    "ical": t('activitySection.calendar.ical')
+  }
+
+
+  const getDateString = (date: string) => {
+    const parsedDate = new Date(date);
+    if (isNaN(parsedDate.getTime())) {
+      return 'Invalid Date'; // 或者返回一個默認值
+    }
+    const locale = i18n.language.includes('zh') ? 'zh-TW' : i18n.language; // 提供默認的語言標籤
+    return parsedDate.toLocaleDateString(locale, { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' });
+  }
 
   return (
     <div>
@@ -68,17 +93,17 @@ export default function ActivitySection() {
         }}
       >
       <div className="flex flex-col justify-center items-center gap-4">
-              <h1 className="text-white text-5xl font-bold"> 全台近期活動</h1>
+              <h1 className="text-white text-5xl font-bold">{t('activitySection.title')}</h1>
               <AddToCalendarButton
                   name="Google Developer Group Subscription Service"
                   subscribe={true}
                   startDate="2000-01-01"
                   icsFile="https://calendar.google.com/calendar/ical/c_956fb0210ce3ab577f81bc24e8992f2511b57214638878cb86d3d750b1d91f07%40group.calendar.google.com/public/basic.ics"
                   options="'Apple','Google','Outlook.com','Yahoo','iCal'"
-                  label="訂閱全台GDG活動行事曆"
+                  label={t('activitySection.calendar.subscribe')}
                   inline
                   listStyle="modal"
-                  customLabels='{"close":"關閉選單", "apple":"加入到 Apple 日曆", "google":"加入到 Google 日曆", "outlookcom":"加入到 Outlook 行事曆", "yahoo":"加入到 Yahoo 行事曆", "ical":"下載 iCal 檔案"}'
+                  customLabels={CanlendercustomLabels}
                   lightMode="bodyScheme"
                   iCalFileName="gdg-taiwan-subscript-calender"
               ></AddToCalendarButton>
@@ -109,7 +134,7 @@ export default function ActivitySection() {
             <SidebarGroupContent>
             <Card>
               <CardHeader className="flex flex-col justify-between">
-              <CardDescription>全台近期活動</CardDescription>
+              <CardDescription>{t('activitySection.recentActivities')}</CardDescription>
               <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
                 {events.length}
               </CardTitle>
@@ -155,7 +180,7 @@ export default function ActivitySection() {
                       <PaginationPrevious isActive={false}/>
                   )}
                   </PaginationItem>
-                  <h1 className="text-2xl font-bold">{dates[currentPage]}</h1>
+                  <h1 className="text-2xl font-bold">{dates[currentPage] ? getDateString(dates[currentPage]) : <span>Pick a date</span>}</h1>
                   
                   <PaginationItem>
                   {currentPage < totalPages ? (

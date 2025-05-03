@@ -10,7 +10,6 @@ import { AudienceTypeBadge } from "@/components/audience-type-badge";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import {isCampusChapter} from "@/helper/index"
-import { eventTypeMap  } from "@/entities";
 import { useTranslation } from "react-i18next";
 import { defaultImage } from "@/entities/common_pic";
 
@@ -20,6 +19,20 @@ export function EventCard( {eventObject}: {eventObject: Event}) {
   const { t } = useTranslation();
 
   const eventTypeColor = isCampusChapter(eventObject.chapter_title) ? 'green' : 'blue';
+
+  const eventTypeMap = {
+    "Conference": t('eventTypeMap.Conference'),
+    "Info session": t('eventTypeMap.InfoSession'),
+    "Watch Party": t('eventTypeMap.WatchParty'),
+    "Conference with Bevy Virtual Conference": t('eventTypeMap.ConferenceWithBevyVirtualConference'),
+    "External Ticketing": t('eventTypeMap.ExternalTicketing'),
+    "Hackathon": t('eventTypeMap.Hackathon'),
+    "Workshop / Study Group": t('eventTypeMap.WorkshopStudyGroup'),
+    "Speaker Session / Tech Talk": t('eventTypeMap.SpeakerSessionTechTalk'),
+    "Test Event - use to test creating an event page": t('eventTypeMap.TestEvent'),
+    "Women's Online Safety Program": t('eventTypeMap.WomenOnlineSafetyProgram'),
+    "Google Hosted Summit": t('eventTypeMap.GoogleHostedSummit')
+  }
 
   return (
     <div className={`flex flex-${isMobile ? 'col' : 'row'} items-center p-8 gap-8 w-full`}>
