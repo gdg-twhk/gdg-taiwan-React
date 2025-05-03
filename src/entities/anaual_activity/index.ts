@@ -6,7 +6,7 @@ export const activityContent = {
       bevytagId: "30",
       backgroundUrl: "/event/IWD/bg.png",
       iconUrl: "/event/IWD/logo.png",
-      animationUrl: "/event/IWD/IWD.svg",
+      animationUrl: "/event/IWD/IWD.png",
       url: "https://developers.google.com/womentechmakers/initiatives/iwd",
     },
     google_io_extended: {
@@ -24,7 +24,7 @@ export const activityContent = {
       description:
         "從容器化應用程式到創建虛擬機，Study Jams 可以根據特定的雲端主題和技能水平進行自訂。 無論您是初學者開發人員還是有興趣深入研究機器學習、BigQuery、認證或 Kubernetes - 總有一條適合您。 您將透過免費造訪實作實驗室來了解 Google Cloud 的基本工具和功能。",
       bevytagId: "23",
-      backgroundUrl: "/event/Cloud-Study-Jam/banner.svg",
+      backgroundUrl: "/event/Cloud-Study-Jam/banner.jpg",
       iconUrl: "/event/cloud-study-jam/logo.svg",
       animationUrl: "/event/cloud-study-jam/cloud_animation.gif",
       url: "https://events.withgoogle.com/cloud-studyjam/",
