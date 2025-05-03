@@ -34,7 +34,7 @@ export const activityContent = {
       description:
         "DevFests 是由全球 Google Developer Group (GDG) 主持的當地技術研討會。每個 DevFest 活動都是由當地發起人舉辦，以配合當地開發人員社群的需求和興趣，推動技術開放文化。無論是透過實作學習體驗，還是由專家提供的當地語言技術講座，或是只要與其他當地開發人員研討會，DevFest 的參與者就能學習如何透過 Google 的開源技術或開發人員工具共同協作並創新。",
       bevytagId: "21",
-      backgroundUrl: "/event/DevFest/DF23-Bevy-BannerBG-Blue.svg",
+      backgroundUrl: "/event/DevFest/DF23-Bevy-BannerBG-Blue.jpg",
       iconUrl: "/event/devFest/DF23-Logo-White.svg",
       animationUrl: "/event/devFest/devfest.gif",
       url: "https://developers.google.com/community/devfest",
