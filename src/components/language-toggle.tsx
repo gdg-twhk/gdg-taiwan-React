@@ -12,7 +12,6 @@ const languages = [
     { code: 'zh_CN', name: "简体中文" },
     { code: 'ja', name: "日本語" },
     { code: 'ko', name: "한국어" },
-    { code: 'es', name: "Español" },
   ];
   
 export function LanguageToggle() {
