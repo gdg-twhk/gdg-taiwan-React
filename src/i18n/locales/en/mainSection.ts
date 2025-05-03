@@ -1,6 +1,6 @@
 export const mainSection = {
-    title: "Discover the Essence of Google Technology\n and Global Developers\n Learn,交流,Grow!",
-    description: "Google's Google developers program provides visibility, community, and resources to technology领域的 developers.",
+    title: "Discover the Essence of Google Technology\n and Global Developers\n Learn, Share, Grow!",
+    description: "Google's Google developers program provides visibility, community, and resources to technology enthusiasts.",
     whoWeAre: "Who We Are",
     whoWeAreDescription: "Google Developer Groups (GDG) is dedicated to helping developers connect with others to learn and build successfully on all Google platforms. There are over 145 countries/regions with 1,000+ GDG communities worldwide. Google Developer Groups is the largest developer community network in the world. Each GDG is a local community center for professional developers who share their expertise and passion for Google developer technologies. The GDG program focuses on helping developers access the latest and best Google developer technologies, learn together, build successful products together, and establish connections with other developers and experts in the technology industry.",
     recruitmentQuote: "We are looking for friends who are willing to share their expertise on Android, Kotlin, Firebase, Flutter, AI, Gemin, TensorFlow, or Google Cloud related topics. Whether it's your own topic you want to share, or any related topics you want to hear, as long as you have a passion for sharing, don't be afraid if your topic is not professional enough. We need simple, easy, and fun talks.",
