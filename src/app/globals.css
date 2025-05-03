@@ -188,3 +188,29 @@
   font-weight: bold;
   box-shadow: 0 2px 8px 0 #4285f422;
 }
+
+ol {
+  list-style: none;
+}
+
+ol li {
+  counter-increment: li;
+}
+
+.custom-list li::before {
+  content: counter(li)"."; /* 使用 Unicode 或其他符號 */
+  color: var(--color-google-red); /* 設定項目符號的顏色 */
+  display: inline-block;
+  list-style-position: inside;
+  width: 1em;
+  margin-left: -1em;
+}
+
+.custom-list-disc li::before {
+  content: "•"; /* 使用 Unicode 或其他符號 */
+  color: var(--color-google-red); /* 設定項目符號的顏色 */
+  display: inline-block;
+  list-style-position: inside;
+  width: 1em;
+  margin-left: -1em;
+}

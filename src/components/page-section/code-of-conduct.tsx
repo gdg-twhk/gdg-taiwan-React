@@ -15,20 +15,20 @@ export default function CodeOfConductSection() {
             <h5>{t('codeOfConduct.intro')}</h5>
             <h5 className="mt-0 text-google-red font-bold">{t('codeOfConduct.policyTitle')}</h5>
             <div>
-              <ol className="list-decimal list-inside">
-                <li>{t('codeOfConduct.policy1')}</li>
-                <li>{t('codeOfConduct.policy2')}</li>
-                <li>{t('codeOfConduct.policy3')}</li>
-                <li>{t('codeOfConduct.policy4')}</li>
+              <ol className="custom-list list-decimal list-inside mt-4">
+                <li className="ml-4">{t('codeOfConduct.policy1')}</li>
+                <li className="ml-4">{t('codeOfConduct.policy2')}</li>
+                <li className="ml-4">{t('codeOfConduct.policy3')}</li>
+                <li className="ml-4">{t('codeOfConduct.policy4')}</li>
               </ol>
               <p className="mt-4">{t('codeOfConduct.content1')}</p>
               <p className="mt-4">{t('codeOfConduct.content2')}</p>
               <p className="mt-4">{t('codeOfConduct.content3')}</p>
               <p className="mt-4">{t('codeOfConduct.contactList.title')}</p>
-              <ul className="list-disc list-inside mt-4">
-                <li> {t('codeOfConduct.contactList.item1')}</li>
-                <li> {t('codeOfConduct.contactList.item2')}</li>
-                <li> {t('codeOfConduct.contactList.item3')}</li>
+              <ul className="custom-list-disc list-inside mt-4">
+                <li className="ml-4"> {t('codeOfConduct.contactList.item1')}</li>
+                <li className="ml-4"> {t('codeOfConduct.contactList.item2')}</li>
+                <li className="ml-4"> {t('codeOfConduct.contactList.item3')}</li>
               </ul>
               <br />
               {t('codeOfConduct.exhibitorPolicy')}
