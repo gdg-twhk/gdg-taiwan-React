@@ -85,7 +85,7 @@ export default function ChaptersSection() {
       <section
         className="w-full px-0 flex flex-col justify-center items-center relative py-16 md:py-24 h-[400px]"
         style={{
-          backgroundImage: `url(/GDG23-VideoChatBG-Blue.png)`,
+          backgroundImage: `url(/GDG23-VideoChatBG-Blue.jpg)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
