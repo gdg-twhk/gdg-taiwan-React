@@ -28,11 +28,10 @@ jobs:
       - name: Build project
         run: cd src &&  npm run build
 
-      - name: Deploy to Firebase
-        uses: FirebaseExtended/action-hosting-deploy@v0
+      - uses: 'google-github-actions/auth@v2'
         with:
-          entryPoint: "./"
-          repoToken: "${{ secrets.GITHUB_TOKEN }}"
-          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_GDG_TW }}"
-          projectId: "${{ secrets.PROJECT_ID }}"
-          channelId: ${{ github.head_ref }}
+          credentials_json: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_GDG_TW }}'
+
+      - name: Deploy to Firebase Hosting (Staging)
+        run: |
+          firebase hosting:channel:deploy ${{ github.head_ref }} --expires 7d
