@@ -6,12 +6,14 @@ import { en } from './locales/en/index';
 import { zh_TW } from './locales/zh-TW/index';
 import { zh_CN } from './locales/zh-CN/index';
 import { ja } from './locales/ja/index';
+import { ko } from './locales/ko/index';
 
 const resources = {
   en,
   zh_TW,
   zh_CN,
   ja,
+  ko,
   // 如有其他語系可在此新增
 };
 
