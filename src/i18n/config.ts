@@ -4,10 +4,12 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 // 匯入各語系檔案
 import { en } from './locales/en/index';
 import { zh_TW } from './locales/zh-TW/index';
+import { zh_CN } from './locales/zh-CN/index';
 
 const resources = {
   en,
   zh_TW,
+  zh_CN,
   // 如有其他語系可在此新增
 };
 
