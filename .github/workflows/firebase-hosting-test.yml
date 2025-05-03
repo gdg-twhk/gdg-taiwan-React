@@ -35,4 +35,4 @@ jobs:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_GDG_TW }}"
           projectId: "${{ secrets.PROJECT_ID }}"
-          channelId: ${{ github.head_ref }}-${{ github.run_id }}
+          channelId: ${{ github.head_ref }}
