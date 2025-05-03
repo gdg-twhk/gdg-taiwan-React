@@ -14,8 +14,8 @@ export const activityContent = {
       description:
         "Google I/O 將來自世界各地的開發人員聯繫在一起，進行深思熟慮的討論，與 Google 專家進行實踐學習，並搶先了解 Google 的最新開發人員產品。 I/O 的魔力並沒有在主賽事之後結束。 本地開發人員齊聚一堂參加 I/O Extended 活動，討論最新的新技術、總結內容、主持問答環節並會見其他技術愛好者。",
       bevytagId: "24",
-      backgroundUrl: "/event/io-extend/IOE23-Bevy-Chapter-Banner-2560x650.svg",
-      iconUrl: "/event/io-extend/GoogleIO Extended-White.svg",
+      backgroundUrl: "/event/io-extend/banner.svg",
+      iconUrl: "/event/io-extend/logo-white.svg",
       animationUrl: "/event/io-extend/giphy.gif",
       url: "https://gdg.community.dev/ioextended/",
     },
