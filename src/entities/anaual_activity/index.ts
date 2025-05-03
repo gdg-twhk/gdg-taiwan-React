@@ -1,17 +1,17 @@
 export const activityMeta = {
     international_womens_day: {
       bevytagId: "30",
-      backgroundUrl: "/event/iwd/bg.png",
-      iconUrl: "/event/iwd/logo.png",
-      animationUrl: "/event/iwd/iwd.png",
+      backgroundUrl: "/event/international-womans-day/bg.png",
+      iconUrl: "/event/international-womans-day/logo.png",
+      animationUrl: "/event/international-womans-day/iwd.png",
       url: "https://developers.google.com/womentechmakers/initiatives/iwd",
     },
     google_io_extended: {
       bevytagId: "24",
-      backgroundUrl: "/event/io-extend/banner.svg",
-      iconUrl: "/event/io-extend/logo-white.svg",
-      animationUrl: "/event/io-extend/giphy.gif",
-      url: "https://gdg.community.dev/ioextended/",
+      backgroundUrl: "/event/io-extends/banner.svg",
+      iconUrl: "/event/io-extends/logo-white.svg",
+      animationUrl: "/event/io-extends/giphy.gif",
+      url: "https://gdg.community.dev/ioextends/",
     },
     cloud_study_jam: {
       bevytagId: "23",
