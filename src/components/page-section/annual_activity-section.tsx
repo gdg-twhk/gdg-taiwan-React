@@ -138,7 +138,7 @@ export default function AnnualActivitySection({
               alt="main image"
               width={100}
               height={100}
-              style={{ width: "30vw", height: "auto" }}
+              style={{ width: isMobile ? "90vw" : "30vw", height: "auto" }}
             />
           </div>
         </div>
