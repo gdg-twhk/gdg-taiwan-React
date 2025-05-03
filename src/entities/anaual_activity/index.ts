@@ -4,9 +4,9 @@ export const activityContent = {
       description:
         "國際婦女節 (IWD) 是 Women Techmakers 最大的年度活動，大使們在 3 月和 4 月期間在世界各地舉辦活動以慶祝這一時刻。從大型峰會到小型私密聚會， IWD 也是我們支持我們的使命的一種方式，即建設一個所有女性都能在科技領域茁壯成長的世界。 GDG 和 GDG on Campus 社群也可以參與 IWD 活動。",
       bevytagId: "30",
-      backgroundUrl: "/event/IWD/bg.png",
-      iconUrl: "/event/IWD/logo.png",
-      animationUrl: "/event/IWD/IWD.png",
+      backgroundUrl: "/event/iwd/bg.png",
+      iconUrl: "/event/iwd/logo.png",
+      animationUrl: "/event/iwd/iwd.png",
       url: "https://developers.google.com/womentechmakers/initiatives/iwd",
     },
     google_io_extended: {
