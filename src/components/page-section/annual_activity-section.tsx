@@ -32,7 +32,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import Link from "next/link";
 import { activityContent, AnnualActivitySectionProps } from "@/entities/anaual_activity/index";
 import Image from "next/image";
-
+import { IconCalendar } from "@tabler/icons-react";
 
 function groupEventsByYear(events: Event[]) {
   const result: Record<string, Event[]> = {};
@@ -204,15 +204,15 @@ export default function AnnualActivitySection({
             </TabsList>
           )}
           {isMobile && (
-            <div className="flex flex-row w-full justify-center items-center relative z-10 mb-4 bg-card">
+            <div className="flex flex-row w-full justify-center items-center relative z-10 mb-4">
               <Drawer open={open} onOpenChange={setOpen}>
                 <DrawerTrigger asChild>
                   <Button
                     variant="outline"
-                    className="w-fit-content justify-start "
+                    className="w-fit-content justify-center w-2/3 text-lg text-center"
                   >
                     {selectedYear ? (
-                      <>{selectedYear}</>
+                      <><IconCalendar className="w-4 h-4 mr-2" /> {selectedYear}</>
                     ) : (
                       <> No content yet</>
                     )}
