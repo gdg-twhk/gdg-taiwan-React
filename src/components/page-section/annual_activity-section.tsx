@@ -30,10 +30,10 @@ import {
 } from "@/components/ui/command";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Link from "next/link";
-import { activityContent, AnnualActivitySectionProps } from "@/entities/anaual_activity/index";
+import { AnnualActivitySectionProps, activityContent } from "@/entities/anaual_activity/index";
 import Image from "next/image";
 import { IconCalendar } from "@tabler/icons-react";
-
+import { useTranslation } from "react-i18next";
 function groupEventsByYear(events: Event[]) {
   const result: Record<string, Event[]> = {};
   events.forEach((event) => {
@@ -60,7 +60,7 @@ export default function AnnualActivitySection({
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const isMobile = useIsMobile();
-
+  const { t } = useTranslation();
   // 取得所有活動
   useEffect(() => {
     async function fetchEvents() {
@@ -178,7 +178,7 @@ export default function AnnualActivitySection({
                       href={activityContent[activity].url}
                       target="_blank"
                     >
-                      了解更多
+                      {t('annualActivitySection.learnMore')}
                     </Link>
                   </Button>
                 </CardFooter>
@@ -188,7 +188,7 @@ export default function AnnualActivitySection({
         </Card>
       </section>
       <section className="container mx-auto px-4 py-16 md:py-16 w-full justify-center items-center">
-        <h2 className="text-4xl font-bold mb-4 text-center">活動列表</h2>
+        <h2 className="text-4xl font-bold mb-4 text-center">{t('annualActivitySection.activityList')}</h2>
         <Tabs
           value={selectedYear ?? undefined}
           className="w-full gap-4"
@@ -214,14 +214,14 @@ export default function AnnualActivitySection({
                     {selectedYear ? (
                       <><IconCalendar className="w-4 h-4 mr-2" /> {selectedYear}</>
                     ) : (
-                      <> No content yet</>
+                      <> {t('annualActivitySection.selectYear')}</>
                     )}
                   </Button>
                 </DrawerTrigger>
                 <DrawerContent>
-                  <DrawerTitle className="text-center">選擇年份</DrawerTitle>
+                  <DrawerTitle className="text-center">{t('annualActivitySection.selectYear')}</DrawerTitle>
                   <DrawerDescription className="text-center">
-                    請選擇你想要瀏覽的活動年份
+                    {t('annualActivitySection.selectYearDescription')}
                   </DrawerDescription>
                   <div className="mt-4 border-t">
                     <StatusList

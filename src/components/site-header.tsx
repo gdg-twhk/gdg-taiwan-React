@@ -15,6 +15,7 @@ import {
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useTranslation } from 'react-i18next';
 
 import {
   Menubar,
@@ -31,6 +32,7 @@ const logo = {
 }
 
 export function SiteHeader() {
+  const { t } = useTranslation();
   const { resolvedTheme } = useTheme()
   const [mounted, setMounted] = useState(false);
   const isMobile = useIsMobile();
@@ -49,24 +51,24 @@ export function SiteHeader() {
                 <MenubarTrigger><IconMenu2 /></MenubarTrigger>
                 <MenubarContent>
                   <MenubarItem>
-                    <Link href="/activity">Recent Articles</Link>
+                    <Link href="/activity">{t('navigation.recentArticles')}</Link>
                   </MenubarItem>
                   <MenubarSeparator />
                   <MenubarItem>
-                    <Link href="/annual_activity/international_womens_day">International Women&apos;s Day</Link>
+                    <Link href="/annual_activity/international_womens_day">{t('navigation.internationalWomensDay')}</Link>
                   </MenubarItem>
                   <MenubarItem>
-                    <Link href="/annual_activity/google_io_extended">Google I/O Extended</Link>
+                    <Link href="/annual_activity/google_io_extended">{t('navigation.googleIOExtended')}</Link>
                   </MenubarItem>
                   <MenubarItem>
-                    <Link href="/annual_activity/cloud_study_jam">Cloud Study Jam</Link>
+                    <Link href="/annual_activity/cloud_study_jam">{t('navigation.cloudStudyJam')}</Link>
                   </MenubarItem>
                   <MenubarItem>
-                    <Link href="/annual_activity/devfest">DevFest</Link>
+                    <Link href="/annual_activity/devfest">{t('navigation.devfest')}</Link>
                   </MenubarItem>
                   <MenubarSeparator />
                   <MenubarItem>
-                    <Link href="/chapters">Chapters</Link>
+                    <Link href="/chapters">{t('navigation.chapters')}</Link>
                   </MenubarItem>
                 </MenubarContent>
               </MenubarMenu>
@@ -90,23 +92,23 @@ export function SiteHeader() {
             <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                <Link href="/activity"> Recent Activities</Link>
+                <Link href="/activity">{t('navigation.recentActivities')}</Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Annual Activities</NavigationMenuTrigger>
+              <NavigationMenuTrigger>{t('navigation.annualActivities')}</NavigationMenuTrigger>
                 <NavigationMenuContent>
               <ul className="grid gap-3 p-6 md:w-[400px]">
-                <ListItem href="/annual_activity/international_womens_day" title="International Women's Day">
+                <ListItem href="/annual_activity/international_womens_day" title={t('navigation.internationalWomensDay')}>
                   國際婦女節 (IWD) 是 Women Techmakers 最大的年度活動
                 </ListItem>
-                <ListItem href="/annual_activity/google_io_extended" title="Google I/O Extended">
+                <ListItem href="/annual_activity/google_io_extended" title={t('navigation.googleIOExtended')}>
                   討論最新的新技術、總結內容、主持問答環節並會見其他技術愛好者。
                 </ListItem>
-                <ListItem href="/annual_activity/cloud_study_jam" title="Cloud Study Jam">
+                <ListItem href="/annual_activity/cloud_study_jam" title={t('navigation.cloudStudyJam')}>
                   從容器化應用程式到創建虛擬機，Study Jams 可以根據特定的雲端主題和技能水平進行自訂。
                 </ListItem>
-                <ListItem href="/annual_activity/devfest" title="DevFest">
+                <ListItem href="/annual_activity/devfest" title={t('navigation.devfest')}>
                   是由全球 Google Developer Group (GDG) 主持的當地技術研討會。
                 </ListItem>
               </ul>
@@ -114,7 +116,7 @@ export function SiteHeader() {
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                <Link href="/chapters">Chapters</Link>
+                <Link href="/chapters">{t('navigation.chapters')}</Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
             </NavigationMenuList>

@@ -11,11 +11,13 @@ import Link from "next/link";
 import { useTheme } from "next-themes";
 import {isCampusChapter} from "@/helper/index"
 import { eventTypeMap  } from "@/entities";
-const placeholderImage = "https://res.cloudinary.com/startup-grind/image/upload/c_fill,dpr_2,f_auto,g_center,h_200,q_auto:good,w_200/v1/gcs/platform-data-goog/event_banners/gdev-eccosystems-bevy-chapters-thumbnail_x4z1EBy.png"
+import { useTranslation } from "react-i18next";
+import { defaultImage } from "@/entities/common_pic";
 
 export function EventCard( {eventObject}: {eventObject: Event}) {
   const isMobile = useIsMobile();
   const { resolvedTheme } = useTheme();
+  const { t } = useTranslation();
 
   const eventTypeColor = isCampusChapter(eventObject.chapter_title) ? 'green' : 'blue';
 
@@ -25,7 +27,7 @@ export function EventCard( {eventObject}: {eventObject: Event}) {
       <div className="flex-shrink-0 w-48 h-48 rounded-full flex items-center justify-center overflow-hidden shadow-md">
         <Avatar className="w-full h-full">
           <AvatarImage
-            src={eventObject.picture_url ? eventObject.picture_url : placeholderImage}
+            src={eventObject.picture_url ? eventObject.picture_url : defaultImage}
             alt="Event Logo"
             width={100}
             height={100}
@@ -33,7 +35,7 @@ export function EventCard( {eventObject}: {eventObject: Event}) {
           />
           <AvatarFallback>
             <Image
-              src={placeholderImage}
+              src={defaultImage}
               alt="Event Logo"
               width={100}
               height={100}
@@ -54,7 +56,7 @@ export function EventCard( {eventObject}: {eventObject: Event}) {
           {eventObject.description_short}
         </p>
         <Button className={`bg-google-${eventTypeColor} dark:bg-google-${eventTypeColor} border ${resolvedTheme === 'dark' ? 'border-white' : 'border-dark'} border-3 rounded-lg text-xl font-medium text-black hover:bg-halftone-${eventTypeColor} dark:hover:bg-halftone-${eventTypeColor} hover:text-black hover:border-black`}>
-              <Link href={eventObject.url} target="_blank">了解更多</Link>
+              <Link href={eventObject.url} target="_blank">{t('eventCard.learnMore')}</Link>
         </Button>
         </div>
     </div>
