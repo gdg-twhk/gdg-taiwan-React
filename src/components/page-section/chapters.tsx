@@ -98,9 +98,9 @@ export default function ChaptersSection() {
           <h1 className="text-white text-5xl font-bold"> 全台據點</h1>
         </div>
       </section>
-      <section className="container mx-auto px-4 md:py-16">
-        <SidebarProvider className="flex flex-row flex-3 w-fit h-fit w-full">
-          <Sidebar collapsible="none" className="flex flex-col flex-1 hidden md:flex rounded justify-center items-center gap-8">
+      <section className="container mx-auto px-4 md:py-16 gap-4">
+        <SidebarProvider className="flex flex-row flex-3 w-fit h-fit w-full gap-4">
+          <Sidebar collapsible="none" className="flex w-full flex-col flex-1 hidden md:flex rounded justify-center items-center gap-8 text-card-foreground rounded-xl">
             <h1 className="text-2xl font-bold mt-4">選擇縣市</h1>
             <Taiwan 
               onSelect={handleSelect} 
