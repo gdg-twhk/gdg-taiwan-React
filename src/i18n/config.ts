@@ -22,7 +22,7 @@ i18n
   .use(initReactI18next) // React Hooks 支援
   .init({
     resources,
-    fallbackLng: 'en', // 找不到時預設英文
+    fallbackLng: 'zh', // 找不到時預設中文
     interpolation: { escapeValue: false },
   });
 
