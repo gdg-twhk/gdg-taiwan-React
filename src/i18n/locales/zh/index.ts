@@ -12,7 +12,7 @@ import { eventTypeMap } from "./eventTypeMap";
 import { audienceTypeMap } from "./audienceTypeMap";
 import { selectedCountryMap } from "./selectedCountry";
 
-export const zh_TW = {
+export const zh = {
   translation: {
     mainSection,
     navigation,

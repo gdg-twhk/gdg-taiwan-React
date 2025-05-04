@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 
 const languages = [
     { code: 'en', name: "English" },
-    { code: 'zh_TW', name: "繁體中文" },
+    { code: 'zh', name: "繁體中文" },
     { code: 'zh_CN', name: "简体中文" },
     { code: 'ja', name: "日本語" },
     { code: 'ko', name: "한국어" },
@@ -28,7 +28,7 @@ export function LanguageToggle() {
   };
 
   return (
-    <Select onValueChange={handleLanguageChange} defaultValue={language}>
+    <Select onValueChange={handleLanguageChange} defaultValue={"zh"}>
       <SelectTrigger>
         <SelectValue placeholder={languages.find(language => language.code === i18n.language)?.name} />
       </SelectTrigger>
