@@ -7,10 +7,12 @@ import { Card } from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslation } from 'react-i18next';
+import { useIsMobile } from "@/hooks/use-mobile";
 
 
 export function MainSection() {
   const { t } = useTranslation();
+  const isMobile = useIsMobile();
 
 
 const sistersProjects = [
@@ -38,14 +40,14 @@ const sistersProjects = [
     <>
       <div >
         {/* Main Content */}
-        <section className="container mx-auto px-4 py-16 md:py-24">
-        <div className="flex flex-row gap-4 justify-center items-center w-full h-1/2"> 
-          <div className="flex flex-col justify-left items-left">
+        <section className="container mx-auto px-4 py-16 md:py-20">
+        <div className={`flex flex-${isMobile ? 'col' : 'row'}  justify-center items-center w-full h-1/2`}> 
+          <div className={`flex flex-col justify-left items-left ${isMobile ? 'w-full' : 'w-1/2'}`}>
             <h1 className="text-4xl font-bold" style={{ whiteSpace: 'pre-line', textAlign: 'left' }}>{t('mainSection.title')}</h1>
             <h2 className="text-xl font-light mt-4" style={{ whiteSpace: 'pre-line', textAlign: 'left' }}>{t('mainSection.description')}</h2>
           </div>
-          <div className="flex flex-col justify-center items-center">
-            <Image src="/google_sticker_3.gif" alt="main image" width={300} height={300} className="img-fluid w-full h-full" />
+          <div className={`flex justify-center items-center mt-4 ${isMobile ? 'w-1/2' : 'w-full'}`}>
+            <Image src="/google_sticker_3.gif" alt="main image" width={300} height={300} className={`img-fluid w-${isMobile ? '' : 'auto'} h-auto`} />
           </div>
         </div>
       </section>
@@ -90,7 +92,9 @@ const sistersProjects = [
             </p>
             <div className="flex flex-col gap-3 justify-end items-end">
               <Button className="bg-google-blue dark:bg-google-blue border border-black border-3 rounded-lg text-xl font-medium text-black hover:bg-halftone-blue dark:hover:bg-halftone-blue hover:text-black hover:border-black">
-                {t('mainSection.recruitmentButton')}
+                <Link href="mailto:contact@gdg.tw" target="_blank">
+                  {t('mainSection.recruitmentButton')}
+                </Link>
               </Button>
             </div>
           </div>

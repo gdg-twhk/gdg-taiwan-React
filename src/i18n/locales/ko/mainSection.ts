@@ -4,7 +4,7 @@ export const mainSection = {
     whoWeAre: "우리는 누구인가",
     whoWeAreDescription: "Google Developer Groups (GDG)는 개발자가 다른 사람과 연결하여 모든 Google 플랫폼에서 성공적으로 구축할 수 있도록 돕는 가장 유용한 방법이 되기를 목표로 합니다. 전 세계 145개국 이상에 1000개 이상의 GDG 커뮤니티가 있습니다. Google Developer Groups는 세계에서 가장 큰 개발자 커뮤니티 네트워크입니다. 각 GDG는 Google 개발자 기술에 대한 전문 지식과 열정을 공유하는 전문 개발자의 지역 커뮤니티 허브입니다. GDG 프로그램의 초점은 개발자가 Google의 최신 및 최고의 개발자 기술에 접근할 수 있도록 돕고, 함께 학습하고, 성공적인 제품을 구축하며, 기술 산업의 다른 개발자 및 전문가와 연결하는 것입니다.",
     recruitmentQuote: "Android, Kotlin, Firebase, Flutter, AI, Gemin, TensorFlow 또는 Google Cloud 관련 기술 주제를 공유하고자 하는 친구를 환영합니다. 자신이 공유하고 싶은 주제나 듣고 싶은 주제가 있다면, 열정만 있다면 주제가 충분히 전문적이지 않아도 걱정하지 마세요. 우리는 간단하고, 편안하고, 즐거운 토크를 원합니다.",
-    recruitmentButton: "우리와 함께하세요",
+    recruitmentButton: "지금 제출",
     sistersProjects: {
         title: "자매 프로젝트",
         wtm: {

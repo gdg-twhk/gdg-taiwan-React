@@ -4,7 +4,7 @@ export const mainSection = {
     whoWeAre: "私たちは誰か",
     whoWeAreDescription: "Google Developer Groups（GDG）は、開発者が他の人とつながり、すべてのGoogleプラットフォームで成功するために学び、構築するのを支援することに専念しています。",
     recruitmentQuote: "Android、Kotlin、Firebase、Flutter、AI、Gemin、TensorFlow、またはGoogle Cloud関連のトピックについての専門知識を共有することをいとわない友人を探しています。",
-    recruitmentButton: "参加する",
+    recruitmentButton: "今すぐ投稿",
     sistersProjects: {
       title: "姉妹プロジェクト",
       wtm: {

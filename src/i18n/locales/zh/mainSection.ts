@@ -4,7 +4,7 @@ export const mainSection = {
     whoWeAre: "我們是誰",
     whoWeAreDescription: "Google Developer Groups (GDG) 立志成為開發人員與他人聯繫以了解並在所有 Google 平台上成功構建的最有幫助的方式。 全球有超過 145 個國家/地區的 1000 多個 GDG 社群。 Google Developer Groups 是世界上最大的開發者社群網絡。 每個 GDG 都是專業開發人員的本地社群中心，他們分享對 Google開發人員技術的專業知識和熱情。 GDG 計劃的重點是幫助開發人員接觸 Google 最新最好的開發人員技術，共同學習、共同構建成功的產品，並與技術行業的其他開發人員和專家建立聯繫。",
     recruitmentQuote: "我們誠徵願意分享 Android, Kotlin, Firebase, Flutter, AI, Gemin, TensorFlow 或 Google Cloud 相關技術主題的朋友，不管是自己想分享的主題，或是想聽到任何相關的主題，只有你有一顆熱情的心，不用怕自己的主題不夠專業，我們需要的是簡單、輕鬆和快樂的 Talk。",
-    recruitmentButton: "加入我們",
+    recruitmentButton: "立刻投稿",
     sistersProjects: {
         title: "姐妹計畫",
         wtm: {
