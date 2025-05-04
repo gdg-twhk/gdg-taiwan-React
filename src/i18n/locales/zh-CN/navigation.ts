@@ -1,5 +1,4 @@
 export const navigation = {
-    recentArticles: "最新文章",
     recentActivities: "最新活动",
     annualActivities: "年度活动",
     chapters: "分会",

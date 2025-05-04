@@ -1,5 +1,4 @@
 export const navigation = {
-    recentArticles: "최신 기사",
     recentActivities: "최신 활동",
     annualActivities: "연례 활동",
     chapters: "챕터",

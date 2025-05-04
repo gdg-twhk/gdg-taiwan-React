@@ -1,5 +1,4 @@
 export const navigation = {
-    recentArticles: "Recent Articles",
     recentActivities: "Recent Activities",
     annualActivities: "Annual Activities",
     chapters: "Chapters",
