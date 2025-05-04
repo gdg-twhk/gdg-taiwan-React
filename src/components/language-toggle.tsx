@@ -28,7 +28,7 @@ export function LanguageToggle() {
   };
 
   return (
-    <Select onValueChange={handleLanguageChange} defaultValue={"zh"}>
+    <Select onValueChange={handleLanguageChange} defaultValue={i18n.language}>
       <SelectTrigger>
         <SelectValue placeholder={languages.find(language => language.code === i18n.language)?.name} />
       </SelectTrigger>
