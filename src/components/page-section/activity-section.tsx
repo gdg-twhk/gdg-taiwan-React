@@ -21,7 +21,7 @@ import { CalendarIcon } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useTranslation } from 'react-i18next';
 import i18n from "@/i18n/config"
-import { es, zhTW ,zhCN, ja, ko} from "date-fns/locale";
+import { enUS, zhTW ,zhCN, ja, ko} from "date-fns/locale";
 
 export default function ActivitySection() {
   const [events, setEvents] = useState<Event[]>([]);
@@ -84,7 +84,7 @@ export default function ActivitySection() {
     'zh_CN': zhCN,
     'ja': ja,
     'ko': ko,
-    'es': es,
+    'en': enUS,
   }
 
   return (
