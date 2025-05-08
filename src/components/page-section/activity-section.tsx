@@ -81,7 +81,7 @@ export default function ActivitySection() {
 
   const calendarLocale = {
     'zh': zhTW,
-    'zh-CN': zhCN,
+    'zh_CN': zhCN,
     'ja': ja,
     'ko': ko,
     'es': es,
