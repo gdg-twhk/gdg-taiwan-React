@@ -18,10 +18,10 @@ import { EventCard } from "@/components/event-card";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { CalendarIcon } from "lucide-react"
-import { format } from "date-fns";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useTranslation } from 'react-i18next';
 import i18n from "@/i18n/config"
+import { es, zhTW ,zhCN, ja, ko} from "date-fns/locale";
 
 export default function ActivitySection() {
   const [events, setEvents] = useState<Event[]>([]);
@@ -78,6 +78,15 @@ export default function ActivitySection() {
     return parsedDate.toLocaleDateString(locale, { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' });
   }
 
+
+  const calendarLocale = {
+    'zh': zhTW,
+    'zh-CN': zhCN,
+    'ja': ja,
+    'ko': ko,
+    'es': es,
+  }
+
   return (
     <div>
       <section
@@ -125,6 +134,7 @@ export default function ActivitySection() {
                 today: 'text-red-500 border-red-500 rounded-md border-2',
               }}
               onDayClick={(day) => handleClickCalendar(day)}
+              locale={calendarLocale[i18n.language as keyof typeof calendarLocale]}
             />
           </div>
         </SidebarHeader>
@@ -151,7 +161,7 @@ export default function ActivitySection() {
               <PopoverTrigger asChild>
                 <Button variant="outline">
                   <CalendarIcon />
-                  {dates[currentPage] ? format(dates[currentPage], "PPP") : <span>Pick a date</span>} 
+                  {dates[currentPage] ?  getDateString(dates[currentPage]) : <span>Pick a date</span>} 
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
@@ -166,6 +176,7 @@ export default function ActivitySection() {
                     today: 'text-red-500 border-red-500 rounded-md border-2', 
                   }}
                   onDayClick={(day) => handleClickCalendar(day)}
+                  locale={calendarLocale[i18n.language as keyof typeof calendarLocale]}
                 />
               </PopoverContent>
             </Popover>
