@@ -205,7 +205,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
             </TabsList>
           )}
           {isMobile && (
-            <div className="flex flex-row w-full justify-center items-center relative z-10 mb-4">
+            <div className="flex flex-row w-full justify-center items-center relative mb-4">
               <Drawer open={open} onOpenChange={setOpen}>
                 <DrawerTrigger asChild>
                   <Button
