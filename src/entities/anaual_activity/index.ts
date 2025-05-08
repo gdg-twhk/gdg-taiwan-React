@@ -3,7 +3,7 @@ export const activityMeta = {
       bevytagId: "30",
       backgroundUrl: "/event/international-womans-day/bg.png",
       iconUrl: "/event/international-womans-day/logo.png",
-      animationUrl: "/event/international-womans-day/iwd.png",
+      animationUrl: "/event/international-womans-day/main.png",
       url: "https://developers.google.com/womentechmakers/initiatives/iwd",
     },
     google_io_extended: {
