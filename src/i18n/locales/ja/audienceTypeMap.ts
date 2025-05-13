@@ -1,5 +1,5 @@
 export const audienceTypeMap = {
-    "Virtual": "オンライン",
-    "In-person": "対面",
-    "Hybrid": "ハイブリッド"
+    "Virtual": "オンラインイベント",
+    "In-person": "オフラインイベント",
+    "Hybrid": "フィジタルイベント"
 }
