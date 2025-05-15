@@ -30,8 +30,12 @@ import {
 } from "@/components/ui/command";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Link from "next/link";
-import { activityContent, AnnualActivitySectionProps } from "@/entities/anaual_activity/index";
-
+import { AnnualActivitySectionProps, activityMeta } from "@/entities/anaual_activity/index";
+import { useActivityContent } from "@/entities/anaual_activity/useActivityContent";
+import Image from "next/image";
+import { IconCalendar } from "@tabler/icons-react";
+import { useTranslation } from "react-i18next";
+import { useClientOnly } from "@/components/use-client-only";
 
 function groupEventsByYear(events: Event[]) {
   const result: Record<string, Event[]> = {};
@@ -52,19 +56,20 @@ function groupEventsByYear(events: Event[]) {
   return result;
 }
 
-export default function AnnualActivitySection({
-  activity,
-}: AnnualActivitySectionProps) {
+export default function AnnualActivitySection({ activity }: AnnualActivitySectionProps) {
+  const mounted = useClientOnly();
   const [activities, setActivities] = useState<Event[]>([]);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const isMobile = useIsMobile();
+  const { t } = useTranslation();
+  const content = useActivityContent();
 
   // 取得所有活動
   useEffect(() => {
     async function fetchEvents() {
       const events = await getEventByTag(
-        activityContent[activity].bevytagId
+        activityMeta[activity].bevytagId
       );
       setActivities(events || []);
     }
@@ -116,12 +121,14 @@ export default function AnnualActivitySection({
     );
   }
 
+  if (!mounted) return null;
+
   return (
     <div>
       <section
         className="w-full px-0 flex flex-col justify-center items-center relative py-16 md:py-24 h-[400px]"
         style={{
-          backgroundImage: `url(${activityContent[activity].backgroundUrl})`,
+          backgroundImage: `url(${activityMeta[activity].backgroundUrl})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -132,12 +139,12 @@ export default function AnnualActivitySection({
       >
         <div className="row align-items-lg-center justify-content-left">
           <div className="col-lg-12 text-left">
-            <img
-              src={activityContent[activity].iconUrl}
+            <Image
+              src={activityMeta[activity].iconUrl}
               alt="main image"
               width={100}
               height={100}
-              style={{ width: "30vw", height: "auto" }}
+              style={{ width: isMobile ? "90vw" : "30vw", height: "auto" }}
             />
           </div>
         </div>
@@ -153,8 +160,8 @@ export default function AnnualActivitySection({
                 alignItems: "center",
               }}
             >
-              <img
-                src={activityContent[activity].animationUrl}
+              <Image
+                src={activityMeta[activity].animationUrl}
                 alt="main image"
                 width={100}
                 height={100}
@@ -164,20 +171,20 @@ export default function AnnualActivitySection({
             <div className="col-span-1">
               <CardHeader>
                 <CardTitle className="text-2xl font-bold mb-4 text-google-blue">
-                  {activityContent[activity].title}
+                  {content[activity].title}
                 </CardTitle>
                 <CardDescription className="text-lg">
-                  {activityContent[activity].description}
+                  {content[activity].description}
                 </CardDescription>
                 <CardFooter className="flex flex-col gap-4 justify-start items-start px-0 mt-4">
                   <Button
                     className={`bg-google-blue dark:bg-google-blue border border-3 rounded-lg text-xl font-medium text-black hover:bg-halftone-blue dark:hover:bg-halftone-blue hover:text-black hover:border-black`}
                   >
                     <Link
-                      href={activityContent[activity].url}
+                      href={activityMeta[activity].url}
                       target="_blank"
                     >
-                      了解更多
+                      {t('annualActivitySection.learnMore')}
                     </Link>
                   </Button>
                 </CardFooter>
@@ -187,7 +194,7 @@ export default function AnnualActivitySection({
         </Card>
       </section>
       <section className="container mx-auto px-4 py-16 md:py-16 w-full justify-center items-center">
-        <h2 className="text-4xl font-bold mb-4 text-center">活動列表</h2>
+        <h2 className="text-4xl font-bold mb-4 text-center">{t('annualActivitySection.activityList')}</h2>
         <Tabs
           value={selectedYear ?? undefined}
           className="w-full gap-4"
@@ -203,24 +210,24 @@ export default function AnnualActivitySection({
             </TabsList>
           )}
           {isMobile && (
-            <div className="flex flex-row w-full justify-center items-center relative z-10 mb-4 bg-card">
+            <div className="flex flex-row w-full justify-center items-center relative mb-4">
               <Drawer open={open} onOpenChange={setOpen}>
                 <DrawerTrigger asChild>
                   <Button
                     variant="outline"
-                    className="w-fit-content justify-start "
+                    className="w-fit-content justify-center w-2/3 text-lg text-center"
                   >
                     {selectedYear ? (
-                      <>{selectedYear}</>
+                      <><IconCalendar className="w-4 h-4 mr-2" /> {selectedYear}</>
                     ) : (
-                      <> No content yet</>
+                      <> {t('annualActivitySection.selectYear')}</>
                     )}
                   </Button>
                 </DrawerTrigger>
                 <DrawerContent>
-                  <DrawerTitle className="text-center">選擇年份</DrawerTitle>
+                  <DrawerTitle className="text-center">{t('annualActivitySection.selectYear')}</DrawerTitle>
                   <DrawerDescription className="text-center">
-                    請選擇你想要瀏覽的活動年份
+                    {t('annualActivitySection.selectYearDescription')}
                   </DrawerDescription>
                   <div className="mt-4 border-t">
                     <StatusList
