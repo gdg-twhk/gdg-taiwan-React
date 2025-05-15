@@ -1,9 +1,9 @@
-// app/not-found.tsx
 import Image from "next/image";
 import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Button } from "@/components/ui/button";
+
 export default function NotFound() {
     return (      
     <div className="flex flex-col">
@@ -21,4 +21,4 @@ export default function NotFound() {
         <SiteFooter />
     </div>
     );
-}
+} 

@@ -19,8 +19,10 @@ import { Command } from "@/components/ui/command";
 import Image from "next/image";
 import { useTranslation } from 'react-i18next';
 import { IconLocationBroken } from "@tabler/icons-react";
+import { useClientOnly } from "@/components/use-client-only";
 
 export default function ChaptersSection() {
+  const mounted = useClientOnly();
   const [chaptersByCountry, setChaptersByCountry] = useState<{[key: string]: Chapter[]}>({});
   const [sortedCountries, setSortedCountries] = useState<string[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<string>("");
@@ -82,6 +84,7 @@ export default function ChaptersSection() {
     );
   }
 
+  if (!mounted) return null;
 
   return (
     <div>

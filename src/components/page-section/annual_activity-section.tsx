@@ -35,6 +35,8 @@ import { useActivityContent } from "@/entities/anaual_activity/useActivityConten
 import Image from "next/image";
 import { IconCalendar } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
+import { useClientOnly } from "@/components/use-client-only";
+
 function groupEventsByYear(events: Event[]) {
   const result: Record<string, Event[]> = {};
   events.forEach((event) => {
@@ -55,6 +57,7 @@ function groupEventsByYear(events: Event[]) {
 }
 
 export default function AnnualActivitySection({ activity }: AnnualActivitySectionProps) {
+  const mounted = useClientOnly();
   const [activities, setActivities] = useState<Event[]>([]);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
@@ -117,6 +120,8 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
       </Command>
     );
   }
+
+  if (!mounted) return null;
 
   return (
     <div>

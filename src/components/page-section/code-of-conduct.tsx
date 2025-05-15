@@ -2,9 +2,13 @@
 
 import { Card, CardContent } from "../ui/card";
 import { useTranslation } from 'react-i18next';
+import { useClientOnly } from "@/components/use-client-only";
 
-export default function CodeOfConductSection() {
+export default function CodeOfConduct() {
   const { t } = useTranslation();
+  const mounted = useClientOnly();
+
+  if (!mounted) return null;
 
   return (
     <section className="flex flex-col items-center justify-center bg-muted">

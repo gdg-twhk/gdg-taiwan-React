@@ -22,8 +22,10 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { useTranslation } from 'react-i18next';
 import i18n from "@/i18n/config"
 import { enUS, zhTW ,zhCN, ja, ko} from "date-fns/locale";
+import { useClientOnly } from "@/components/use-client-only";
 
 export default function ActivitySection() {
+  const mounted = useClientOnly();
   const [events, setEvents] = useState<Event[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -86,6 +88,8 @@ export default function ActivitySection() {
     'ko': ko,
     'en': enUS,
   }
+
+  if (!mounted) return null;
 
   return (
     <div>

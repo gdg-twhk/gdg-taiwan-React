@@ -3,9 +3,12 @@
 import Link from "next/link";
 import { useTranslation } from 'react-i18next';
 import { LanguageToggle } from "./language-toggle";
+import { useClientOnly } from "./use-client-only";
 
 export function SiteFooter() {
+  const mounted = useClientOnly();
   const { t } = useTranslation();
+  if (!mounted) return null;
   return (
     <footer className="py-10 border-t border-gray-400 border-t-3">
       <div className="flex flex-row items-center mx-auto px-4">

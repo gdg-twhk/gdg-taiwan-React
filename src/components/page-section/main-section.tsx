@@ -8,11 +8,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { useTranslation } from 'react-i18next';
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useClientOnly } from "@/components/use-client-only";
 
 
 export function MainSection() {
+  const mounted = useClientOnly();
   const { t } = useTranslation();
   const isMobile = useIsMobile();
+  if (!mounted) return null;
 
 
 const sistersProjects = [

@@ -3,23 +3,20 @@ import { ModeToggle } from "./model-toggle"
 import Image from "next/image"
 import { useTheme } from "next-themes"
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { SiteMobileMenu } from "./site-mobile-menu";
 import { SiteDesktopMenu } from "./site-desktop-menu";
+import { useClientOnly } from "./use-client-only";
 const logo = {
   light: "/GDG-Light.svg",
   dark: "/GDG-Dark.svg"
 }
 
 export function SiteHeader() {
+  const mounted = useClientOnly();
   const { resolvedTheme } = useTheme()
-  const [mounted, setMounted] = useState(false);
   const isMobile = useIsMobile();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  if (!mounted) return null;
 
   return (
     <header className="sticky top-0 bg-background border-b-3 flex h-full w-full shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear z-10">
