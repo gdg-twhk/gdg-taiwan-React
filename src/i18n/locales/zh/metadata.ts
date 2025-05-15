@@ -26,8 +26,8 @@ export const metadata = {
         }
     },
     "chapters":{
-        "title": "全台 GDG 分會 | Google Developer Groups Taiwan",
-        "description": "全台 GDG 分會"
+        "title": "全台 GDG 社群 | Google Developer Groups Taiwan",
+        "description": "全台 GDG 社群"
     },
     "notFound":{
         "title": "找不到頁面 | Google Developer Groups Taiwan",

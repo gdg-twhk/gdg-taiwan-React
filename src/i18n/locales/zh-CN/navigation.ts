@@ -1,7 +1,7 @@
 export const navigation = {
     recentActivities: "最新活动",
     annualActivities: "年度活动",
-    chapters: "分会",
+    chapters: "探索地区",
     internationalWomensDay: {
         title: "国际妇女节",
         description: "国际妇女节是 Women Techmakers 最大的年度活动"
@@ -12,7 +12,7 @@ export const navigation = {
     },
     cloudStudyJam: {
         title: "云端研习营",
-        description: "从容器化应用程序到创建虚拟机，Study Jams 可以根据特定的云端主题和技能水平进行自订。"
+        description: "从容器化应用程序到创建虚拟机，Study Jams 可以根据特定的云端主题和技能水平进行自定义。"
     },
     devfest: {
         title: "DevFest",

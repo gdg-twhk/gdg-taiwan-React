@@ -1,7 +1,7 @@
 export const navigation = {
     recentActivities: "최신 활동",
     annualActivities: "연례 활동",
-    chapters: "챕터",
+    chapters: "지역별로 탐색하기",
     internationalWomensDay: {
         title: "국제 여성의 날",
         description: "국제 여성의 날은 Women Techmakers의 가장 큰 연례 행사입니다."

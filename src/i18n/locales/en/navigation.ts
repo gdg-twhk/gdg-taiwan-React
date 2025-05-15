@@ -1,7 +1,7 @@
 export const navigation = {
     recentActivities: "Recent Activities",
     annualActivities: "Annual Activities",
-    chapters: "Chapters",
+    chapters: "Explore by region",
     internationalWomensDay: {
         title: "International Women's Day",
         description: "International Women's Day is the largest annual event for Women Techmakers"

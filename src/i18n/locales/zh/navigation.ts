@@ -1,7 +1,7 @@
 export const navigation = {
     recentActivities: "最新活動",
     annualActivities: "年度活動",
-    chapters: "分會",
+    chapters: "探索區域",
     internationalWomensDay: {
         title: "國際婦女節",
         description: "國際婦女節是 Women Techmakers 最大的年度活動"

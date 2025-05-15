@@ -1,7 +1,7 @@
 export const navigation = {
     recentActivities: "最近の活動",
     annualActivities: "年次活動",
-    chapters: "チャプター",
+    chapters: "地域で探す",
     internationalWomensDay: {
         title: "国際女性デー",
         description: "国際女性デーは、Women Techmakersの最大の年次イベントです。"
