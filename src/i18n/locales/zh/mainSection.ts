@@ -8,7 +8,7 @@ export const mainSection = {
     sistersProjects: {
         title: "姐妹計畫",
         wtm: {
-            title: "Woman Techmakers",
+            title: "Women Techmakers",
             description: "Google Women Techmakers 是一個致力於促進女性在科技領域中的發展和參與的社群組織。透過舉辦活動、研討會、工作坊、課程和聚會等形式，致力於提供一個互動交流和學習的平台，讓女性更好地了解科技領域的最新發展，掌握相關技能，建立自信，拓展人脈，實現個人和職業生涯的目標。",
         },
         gdsc: {
