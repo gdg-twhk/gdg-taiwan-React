@@ -13,21 +13,25 @@ export const metadata = {
             "description": "国际妇女节 (IWD) 是 Women Techmakers 最大的年度活动，大使们在 3 月和 4 月期间在世界各地举办活动以庆祝这一时刻。从大型峰会到小型私密聚会，IWD 也是我们支持使命：构建一个所有女性都能在科技领域繁荣发展的世界。"
         },
         "google_io_extended":{
-            "title": "Google I/O Extended Taiwan",
+            "title": "Google I/O Extended | Google Developer Groups Taiwan",
             "description": "Google I/O 将来自全球的开发者聚集在一起，进行深入讨论、与 Google 专家实作学习，并抢先体验 Google 最新开发者产品。主赛事结束后，当地社区通过 I/O Extended 活动继续交流技术、主持问答并与其他开发者互动。"
         },
         "cloud_study_jam":{
-            "title": "Cloud Study Jam Taiwan",
+            "title": "云端研习营 | Google Developer Groups Taiwan",
             "description": "从容器化应用到建立虚拟机，Study Jams 可根据主题与技能等级进行自定义。无论是云端基础入门或深入探讨机器学习、BigQuery、认证或 Kubernetes，都能通过免费实作实验室学习 Google Cloud 的核心工具与功能。"
         },
         "devfest":{
-            "title": "DevFest Taiwan",
+            "title": "DevFest | Google Developer Groups Taiwan",
             "description": "DevFests 是由全球 Google Developer Groups (GDG) 主办的本地技术研讨会。本地主办方依据社区需求策划，从实作体验到专家技术讲座，带领参与者使用 Google 开源技术与开发工具协作创新。"
         }
     },
     "chapters":{
         "title": "全台 GDG 分会 | Google Developer Groups Taiwan",
         "description": "全台 GDG 分会"
+    },
+    "notFound":{
+        "title": "找不到页面 | Google Developer Groups Taiwan",
+        "description": "找不到页面"
     }
 };
 

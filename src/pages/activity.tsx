@@ -10,8 +10,8 @@ export default function ActivityPage() {
   return (
     <>
       <Head>
-        <title>{t("activity.title")}</title>
-        <meta name="description" content={t("activity.description")} />
+        <title>{t("metadata.activity.title")}</title>
+        <meta name="description" content={t("metadata.activity.description")} />
       </Head>
       <div>
         <div className="flex flex-col">

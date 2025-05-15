@@ -3,10 +3,9 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import AnnualActivitySection from "@/components/page-section/annual_activity-section";
 import { activityMeta } from "@/entities/anaual_activity/index";
-import { activity as activityTranslation } from "@/i18n/locales/en/activity";
 import Head from 'next/head';
 import React from "react";
-
+import { useTranslation } from "react-i18next";
 type ActivityKey = keyof typeof activityMeta;
 
 type Props = {
@@ -26,12 +25,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export default function AnnualActivityPage({ activity }: Props) {
-  const activityInfo = activityTranslation[activity];
+  const { t } = useTranslation();
   return (
     <>
       <Head>
-        <title>{`GDG Taiwan | ${activityInfo.title}`}</title>
-        <meta name="description" content={activityInfo.description} />
+        <title>{t(`metadata.annual_activity.${activity}.title`)}</title>
+        <meta name="description" content={t(`metadata.annual_activity.${activity}.description`)} />
       </Head>
       <div>
         <div className="flex flex-col">

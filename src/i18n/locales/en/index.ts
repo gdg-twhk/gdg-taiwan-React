@@ -11,6 +11,9 @@ import { activitySection } from "./activitySection";
 import { eventTypeMap } from "./eventTypeMap";
 import { audienceTypeMap } from "./audienceTypeMap";
 import { selectedCountryMap } from "./selectedCountry";
+import { notFound } from "./notFound";
+import { metadata } from "./metadata";
+
 export const en = {
   translation: {
     mainSection,
@@ -26,5 +29,7 @@ export const en = {
     eventTypeMap,
     audienceTypeMap,
     selectedCountryMap,
+    notFound,
+    metadata,
   },
 };

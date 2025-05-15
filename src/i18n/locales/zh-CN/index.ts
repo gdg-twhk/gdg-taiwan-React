@@ -11,6 +11,8 @@ import { activitySection } from "./activitySection";
 import { eventTypeMap } from "./eventTypeMap";
 import { audienceTypeMap } from "./audienceTypeMap";
 import { selectedCountryMap } from "./selectedCountry";
+import { notFound } from "./notFound";
+import { metadata } from "./metadata";
 
 export const zh_CN = {
   translation: {
@@ -27,5 +29,7 @@ export const zh_CN = {
     eventTypeMap,
     audienceTypeMap,
     selectedCountryMap,
+    notFound,
+    metadata,
   },
 };
