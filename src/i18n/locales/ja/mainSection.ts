@@ -6,7 +6,7 @@ export const mainSection = {
     recruitmentQuote: "Android、Kotlin、Firebase、Flutter、AI、Gemin、TensorFlow、またはGoogle Cloud関連のトピックについての専門知識を共有することをいとわない友人を探しています。",
     recruitmentButton: "今すぐ投稿",
     sistersProjects: {
-      title: "姉妹プロジェクト",
+      title: "手足プロジェクト",
       wtm: {
         title: "ウーマンテックメーカーズ",
         description: "Google Women Techmakersは、技術分野での女性の促進と参加を目的としたコミュニティ組織です。"

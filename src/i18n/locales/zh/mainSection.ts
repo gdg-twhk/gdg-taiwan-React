@@ -6,7 +6,7 @@ export const mainSection = {
     recruitmentQuote: "我們誠徵願意分享 Android, Kotlin, Firebase, Flutter, AI, Gemin, TensorFlow 或 Google Cloud 相關技術主題的朋友，不管是自己想分享的主題，或是想聽到任何相關的主題，只有你有一顆熱情的心，不用怕自己的主題不夠專業，我們需要的是簡單、輕鬆和快樂的 Talk。",
     recruitmentButton: "立刻投稿",
     sistersProjects: {
-        title: "姐妹計畫",
+        title: "手足計畫",
         wtm: {
             title: "Women Techmakers",
             description: "Google Women Techmakers 是一個致力於促進女性在科技領域中的發展和參與的社群組織。透過舉辦活動、研討會、工作坊、課程和聚會等形式，致力於提供一個互動交流和學習的平台，讓女性更好地了解科技領域的最新發展，掌握相關技能，建立自信，拓展人脈，實現個人和職業生涯的目標。",
