@@ -12,6 +12,7 @@ export default function HomePage() {
       <Head>
         <title>{t("metadata.home.title")}</title>
         <meta name="description" content={t("metadata.home.description")} />
+        <meta name="google-site-verification" content="x30L4M9Cq4th7Caqp23O8CWHZBMcPZhIte4ixAJLVy4" />
       </Head>
       <div>
         <div className="flex flex-col">
