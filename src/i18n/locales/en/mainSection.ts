@@ -6,7 +6,7 @@ export const mainSection = {
     recruitmentQuote: "We are looking for friends who are willing to share their expertise on Android, Kotlin, Firebase, Flutter, AI, Gemin, TensorFlow, or Google Cloud related topics. Whether it's your own topic you want to share, or any related topics you want to hear, as long as you have a passion for sharing, don't be afraid if your topic is not professional enough. We need simple, easy, and fun talks.",
     recruitmentButton: "Submit Now",  
     sistersProjects: {
-      title: "Sisters Projects",
+      title: "Siblings Projects",
       wtm: {
         title: "Women Techmakers",
         description: "Google Women Techmakers is a community organization dedicated to promoting women in the technology field and their participation. Through various forms such as events, seminars, workshops, courses, and gatherings, it aims to provide a platform for interaction and learning, enabling women to better understand the latest developments in the technology field, master relevant skills, build confidence, expand their networks, and achieve personal and professional career goals.",
