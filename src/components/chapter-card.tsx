@@ -1,7 +1,7 @@
 import { Chapter } from "@/interfaces";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { Button } from "@/components/ui/button";
-import { isCampusChapter, schoolNameFinder } from "@/helper";
+import { isCampusChapter, chapterNameFilter } from "@/helper";
 import Image from "next/image";
 import Link from "next/link";
 import { chapterNameMap } from "@/entities";
@@ -16,8 +16,8 @@ export function ChapterCard({chapter}: {chapter: Chapter}) {
     const currentLanguage = i18n.language;
 
     const chapterName = currentLanguage.includes('zh')
-      ? chapterNameMap[schoolNameFinder(chapter.title) as keyof typeof chapterNameMap]
-      : schoolNameFinder(chapter.title);
+      ? chapterNameMap[chapterNameFilter(chapter.title) as keyof typeof chapterNameMap]
+      : chapterNameFilter(chapter.title);
 
     return (
         <div className={`flex flex-col items-center p-8 gap-4 w-full items-center justify-center`}>

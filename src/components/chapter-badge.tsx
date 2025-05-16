@@ -3,7 +3,7 @@
 import { Badge } from "@/components/ui/badge"
 import { chapterNameMap } from "@/entities"
 import { IconSchool } from "@tabler/icons-react"
-import {isCampusChapter, schoolNameFinder} from "@/helper"
+import {isCampusChapter, chapterNameFilter} from "@/helper"
 import { useTranslation } from "react-i18next";
 
 export function ChapterBadge({ chapter }: { chapter: string }) {
@@ -11,8 +11,8 @@ export function ChapterBadge({ chapter }: { chapter: string }) {
   const currentLanguage = i18n.language;
 
   const chapterName = currentLanguage.includes('zh')
-      ? chapterNameMap[schoolNameFinder(chapter) as keyof typeof chapterNameMap]
-      : schoolNameFinder(chapter);
+      ? chapterNameMap[chapterNameFilter(chapter) as keyof typeof chapterNameMap]
+      : chapterNameFilter(chapter);
 
   return (
     <Badge className={isCampusChapter(chapter) ? 'bg-google-green' : 'bg-google-blue'}>
