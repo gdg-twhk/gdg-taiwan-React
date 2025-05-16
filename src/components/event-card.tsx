@@ -59,7 +59,7 @@ export function EventCard( {eventObject}: {eventObject: Event}) {
       </div>
       {/* 右側內容 */}
       <div className={`flex-1 ${isMobile ? 'flex-col justify-center' : ''}`}>
-        <div className={`flex gap-2 mb-2 ${isMobile ? 'justify-center' : ''}`}>
+        <div className={`flex gap-2 mb-2 ${isMobile ? 'items-center flex-col' : 'items-start flex-row'}`}>
           <ChapterBadge chapter={eventObject.chapter_title} />
           <AudienceTypeBadge audienceType={eventObject.audience_type} />
         </div>
