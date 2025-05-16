@@ -15,7 +15,7 @@ export const chapterNameFilter = (name: string) =>{
 
     const universityPart = parts[0].split(' on Campus');
   
-    return `GDG ${universityPart[1].trim()}`;
+    return universityPart[1].trim();
 }
 
 

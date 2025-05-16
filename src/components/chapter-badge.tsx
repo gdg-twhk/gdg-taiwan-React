@@ -18,7 +18,7 @@ export function ChapterBadge({ chapter }: { chapter: string }) {
     <Badge className={isCampusChapter(chapter) ? 'bg-google-green' : 'bg-google-blue'}>
       
       {isCampusChapter(chapter)?<IconSchool className="w-4 h-4" />:null}
-      {chapterName}
+      {isCampusChapter(chapter)? `GDG ${chapterName}` :chapter}
     </Badge>
   );
 }
