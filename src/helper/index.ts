@@ -15,7 +15,7 @@ export const schoolNameFinder = (name: string) =>{
 
     const universityPart = parts[0].split(' on Campus');
   
-    return universityPart[1].trim();
+    return `GDG ${universityPart[1].trim()}`;
 }
 
 
