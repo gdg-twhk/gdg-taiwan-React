@@ -6,7 +6,7 @@ export const isCampusChapter = (name: string) =>{
     return name.indexOf(' on Campus')!==-1
 }
 
-export const schoolNameFinder = (name: string) =>{
+export const chapterNameFilter = (name: string) =>{
 
   if(!isCampusChapter(name)){
     return name
