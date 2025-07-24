@@ -13,6 +13,7 @@ import { audienceTypeMap } from "./audienceTypeMap";
 import { selectedCountryMap } from "./selectedCountry";
 import { notFound } from "./notFound";
 import { metadata } from "./metadata";
+import { common } from "./common";
 
 export const en = {
   translation: {
@@ -31,5 +32,6 @@ export const en = {
     selectedCountryMap,
     notFound,
     metadata,
+    common,
   },
 };
