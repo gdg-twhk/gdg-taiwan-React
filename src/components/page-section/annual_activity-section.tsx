@@ -106,7 +106,11 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
               <CommandItem
                 key={year}
                 value={year}
-                className="text-center justify-center"
+                className={`text-center justify-center transition-colors ${
+                  selectedYear === year 
+                    ? 'bg-google-blue text-white dark:bg-google-blue dark:text-black' 
+                    : 'hover:bg-gray-100 dark:hover:bg-gray-800'
+                }`}
                 onSelect={(value: string) => {
                   setSelectedYear(value);
                   setOpen(false);
