@@ -18,7 +18,7 @@ import { CommandEmpty, CommandGroup, CommandItem, CommandList } from "@/componen
 import { Command } from "@/components/ui/command";
 import Image from "next/image";
 import { useTranslation } from 'react-i18next';
-import { IconLocationBroken } from "@tabler/icons-react";
+import { IconLocationBroken, IconMapPin } from "@tabler/icons-react";
 import { useClientOnly } from "@/components/use-client-only";
 
 export default function ChaptersSection() {
@@ -69,7 +69,11 @@ export default function ChaptersSection() {
               <CommandItem
                 key={country}
                 value={country}
-                className="text-center justify-center"
+                className={`text-center justify-center transition-colors ${
+                  selectedCountry === country 
+                    ? 'bg-google-red text-white dark:bg-google-red dark:text-black' 
+                    : 'hover:bg-gray-100 dark:hover:bg-gray-800'
+                }`}
                 onSelect={(value: string) => {
                   setSelectedCountry(value);
                   setOpen(false);
@@ -133,7 +137,7 @@ export default function ChaptersSection() {
                                 className="w-fit-content justify-start text-xl"
                               >
                                 {selectedCountry ? (
-                                  <><IconLocationBroken /> {t('selectedCountryMap.' + selectedCountry)}</>
+                                  <><IconMapPin className="w-5 h-5 mr-2" /> {t('selectedCountryMap.' + selectedCountry)}</>
                                 ) : (
                                   <>{t('chaptersSection.noContentYet')}</>
                                 )}
