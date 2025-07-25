@@ -18,7 +18,7 @@ import { CommandEmpty, CommandGroup, CommandItem, CommandList } from "@/componen
 import { Command } from "@/components/ui/command";
 import Image from "next/image";
 import { useTranslation } from 'react-i18next';
-import { IconLocationBroken, IconMapPin } from "@tabler/icons-react";
+import { IconMapPin } from "@tabler/icons-react";
 import { useClientOnly } from "@/components/use-client-only";
 
 export default function ChaptersSection() {
