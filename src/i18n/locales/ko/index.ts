@@ -13,7 +13,8 @@ import { audienceTypeMap } from "./audienceTypeMap";
 import { selectedCountryMap } from "./selectedCountry";
 import { notFound } from "./notFound";
 import { metadata } from "./metadata";
-import { common } from "./common";  
+import { common } from "./common";
+import { qrCodeDialog } from "./qrCodeDialog";  
 
 export const ko = {
   translation: {
@@ -33,5 +34,6 @@ export const ko = {
     notFound,
     metadata,
     common,
+    qrCodeDialog,
   },
 };

@@ -20,6 +20,7 @@ import Image from "next/image";
 import { useTranslation } from 'react-i18next';
 import { IconMapPin } from "@tabler/icons-react";
 import { useClientOnly } from "@/components/use-client-only";
+import { QRCodeDialog } from "@/components/qr-code-dialog";
 
 export default function ChaptersSection() {
   const mounted = useClientOnly();
@@ -27,6 +28,8 @@ export default function ChaptersSection() {
   const [sortedCountries, setSortedCountries] = useState<string[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<string>("");
   const [open, setOpen] = useState(false);
+  const [qrDialogOpen, setQrDialogOpen] = useState(false);
+  const [selectedChapter, setSelectedChapter] = useState<Chapter | null>(null);
   const isMobile = useIsMobile();
   const { t } = useTranslation();
 
@@ -51,6 +54,11 @@ export default function ChaptersSection() {
     if (sc) {
       setSelectedCountry(svgCountryMap[sc as keyof typeof svgCountryMap]);
     }
+  };
+
+  const handleChapterImageClick = (chapter: Chapter) => {
+    setSelectedChapter(chapter);
+    setQrDialogOpen(true);
   };
 
   function StatusList({
@@ -165,7 +173,7 @@ export default function ChaptersSection() {
                   <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {chaptersByCountry[selectedCountry]
                       ? chaptersByCountry[selectedCountry].map((chapter) => (
-                          <ChapterCard key={chapter.id} chapter={chapter} />
+                          <ChapterCard key={chapter.id} chapter={chapter} onImageClick={handleChapterImageClick} />
                         ))
                       : (
                         <Card className="row-span-3 w-full col-span-4 justify-center items-center bg-transparent">
@@ -182,6 +190,14 @@ export default function ChaptersSection() {
           </SidebarInset>
         </SidebarProvider>
       </section>
+      {selectedChapter && (
+        <QRCodeDialog
+          open={qrDialogOpen}
+          onOpenChange={setQrDialogOpen}
+          url={selectedChapter.url}
+          chapterName={selectedChapter.title}
+        />
+      )}
     </div>
   );
 }

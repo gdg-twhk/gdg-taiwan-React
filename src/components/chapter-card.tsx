@@ -8,7 +8,7 @@ import { chapterNameMap } from "@/entities";
 import { useTranslation } from 'react-i18next';
 import { defaultImage } from "@/entities/common_pic";
 
-export function ChapterCard({chapter}: {chapter: Chapter}) {
+export function ChapterCard({chapter, onImageClick}: {chapter: Chapter, onImageClick?: (chapter: Chapter) => void}) {
     const { t } = useTranslation();
     const { i18n } = useTranslation();
     const eventTypeColor = isCampusChapter(chapter.title) ? 'green' : 'blue';
@@ -21,7 +21,10 @@ export function ChapterCard({chapter}: {chapter: Chapter}) {
 
     return (
         <div className={`flex flex-col items-center p-8 gap-4 w-full items-center justify-center`}>
-        <div className="flex-shrink-0 w-32 h-32 rounded-full flex items-center justify-center overflow-hidden shadow-md">
+        <div 
+          className="flex-shrink-0 w-32 h-32 rounded-full flex items-center justify-center overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition-shadow"
+          onClick={() => onImageClick?.(chapter)}
+        >
           <Avatar className="w-full h-full">
             <AvatarImage
               src= {chapter.logo}
