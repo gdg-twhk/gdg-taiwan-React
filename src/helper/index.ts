@@ -66,6 +66,20 @@ export const collectChaptersByCountry = (chapters: Chapter[])=>{
     acc[country].push(chapter);
     return acc;
   }, {});
+  
+  // Sort chapters within each country: non-campus chapters first, then campus chapters
+  Object.keys(chaptersByCountry).forEach(country => {
+    chaptersByCountry[country].sort((a, b) => {
+      const aIsCampus = isCampusChapter(a.title);
+      const bIsCampus = isCampusChapter(b.title);
+      
+      if (aIsCampus === bIsCampus) {
+        return 0; // Keep original order if both are same type
+      }
+      return aIsCampus ? 1 : -1; // Non-campus (false) comes first, campus (true) comes last
+    });
+  });
+  
   return chaptersByCountry;
 } 
 

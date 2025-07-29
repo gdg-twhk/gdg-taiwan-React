@@ -7,8 +7,9 @@ import Link from "next/link";
 import { chapterNameMap } from "@/entities";
 import { useTranslation } from 'react-i18next';
 import { defaultImage } from "@/entities/common_pic";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
-export function ChapterCard({chapter}: {chapter: Chapter}) {
+export function ChapterCard({chapter, onImageClick}: {chapter: Chapter, onImageClick?: (chapter: Chapter) => void}) {
     const { t } = useTranslation();
     const { i18n } = useTranslation();
     const eventTypeColor = isCampusChapter(chapter.title) ? 'green' : 'blue';
@@ -21,26 +22,36 @@ export function ChapterCard({chapter}: {chapter: Chapter}) {
 
     return (
         <div className={`flex flex-col items-center p-8 gap-4 w-full items-center justify-center`}>
-        <div className="flex-shrink-0 w-32 h-32 rounded-full flex items-center justify-center overflow-hidden shadow-md">
-          <Avatar className="w-full h-full">
-            <AvatarImage
-              src= {chapter.logo}
-              alt="Event Logo"
-              width={100}
-              height={100}
-              className="object-cover w-full h-full"
-            />
-            <AvatarFallback>
-              <Image
-                src={defaultImage}
-                alt="Event Logo"
-                width={100}
-                height={100}
-                className="object-cover w-full h-full"
-              />
-            </AvatarFallback>
-          </Avatar>
-        </div>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <div 
+              className="flex-shrink-0 w-32 h-32 rounded-full flex items-center justify-center overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => onImageClick?.(chapter)}
+            >
+              <Avatar className="w-full h-full">
+                <AvatarImage
+                  src= {chapter.logo}
+                  alt="Event Logo"
+                  width={100}
+                  height={100}
+                  className="object-cover w-full h-full"
+                />
+                <AvatarFallback>
+                  <Image
+                    src={defaultImage}
+                    alt="Event Logo"
+                    width={100}
+                    height={100}
+                    className="object-cover w-full h-full"
+                  />
+                </AvatarFallback>
+              </Avatar>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{t('chapterCard.clickForQR')}</p>
+          </TooltipContent>
+        </Tooltip>
         <div className="flex-1 flex flex-col items-center justify-center">
           <h1 className="text-xl font-bold mb-2 text-center">
             {isCampusChapter(chapter.title) ? `GDG ${chapterName}` : chapterName}
