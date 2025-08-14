@@ -1,4 +1,5 @@
 export const navigation = {
+    home: "Home",
     recentActivities: "Recent Activities",
     annualActivities: "Annual Activities",
     chapters: "Explore by region",

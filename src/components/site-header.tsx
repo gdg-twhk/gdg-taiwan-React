@@ -7,6 +7,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { SiteMobileMenu } from "./site-mobile-menu";
 import { SiteDesktopMenu } from "./site-desktop-menu";
 import { useClientOnly } from "./use-client-only";
+import { LanguageToggle } from "./language-toggle";
 const logo = {
   light: "/GDG-Light.svg",
   dark: "/GDG-Dark.svg"
@@ -40,8 +41,14 @@ export function SiteHeader() {
         {!isMobile && (
           <div className="ml-auto flex items-between justify-between gap-2 w-1/3 ">
             <SiteDesktopMenu />
-        </div>
+          </div>
         )}
+        {!isMobile && (
+          <div className="flex items-center justify-between gap-2 ml-auto">
+            <LanguageToggle />
+          </div>
+        )}
+        
         <div className="flex items-center justify-between gap-2">
           <ModeToggle />
         </div>

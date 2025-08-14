@@ -17,16 +17,16 @@ export function SiteDesktopMenu() {
   const { t } = useTranslation();
 
   return (
-    <NavigationMenu className="w-full">
+    <NavigationMenu className="w-full" viewport={false}>
       <NavigationMenuList>
       <NavigationMenuItem>
         <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
           <Link href="/activity">{t('navigation.recentActivities')}</Link>
         </NavigationMenuLink>
       </NavigationMenuItem>
-      <NavigationMenuItem>
+      <NavigationMenuItem className="relative z-[999]">
         <NavigationMenuTrigger>{t('navigation.annualActivities')}</NavigationMenuTrigger>
-          <NavigationMenuContent className="bg-card">
+          <NavigationMenuContent className="bg-card !absolute !top-full !left-0 !z-[9999] shadow-lg border !transform-none">
         <ul className="grid gap-3 p-6 md:w-[400px]">
           <ListItem href="/annual_activity/international_womens_day" title={t('navigation.internationalWomensDay.title')}>
             {t('navigation.internationalWomensDay.description')}

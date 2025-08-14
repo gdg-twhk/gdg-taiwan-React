@@ -142,7 +142,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
         }}
       >
         <div className="row align-items-lg-center justify-content-left">
-          <div className="col-lg-12 text-left">
+          <div className="col-lg-12 text-center">
             <Image
               src={activityMeta[activity].iconUrl}
               alt="main image"
@@ -172,7 +172,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
                 style={{ width: "50%", height: "auto" }}
               />
             </div>
-            <div className="col-span-1">
+            <div className="col-span-1 text-center md:text-left">
               <CardHeader>
                 <CardTitle className="text-2xl font-bold mb-4 text-google-blue">
                   {content[activity].title}
@@ -180,7 +180,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
                 <CardDescription className="text-lg">
                   {content[activity].description}
                 </CardDescription>
-                <CardFooter className="flex flex-col gap-4 justify-start items-start px-0 mt-4">
+                <CardFooter className="flex flex-col gap-4 justify-start items-center md:items-start px-0 mt-4">
                   <Button
                     className={`bg-google-blue dark:bg-google-blue border border-3 rounded-lg text-xl font-medium text-black hover:bg-halftone-blue dark:hover:bg-halftone-blue hover:text-black hover:border-black`}
                   >

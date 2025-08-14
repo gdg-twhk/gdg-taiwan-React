@@ -198,7 +198,7 @@ export default function ActivitySection() {
                   <h1 className="text-2xl font-bold">{dates[currentPage] ? getDateString(dates[currentPage]) : <span>Pick a date</span>}</h1>
                   
                   <PaginationItem>
-                  {currentPage < totalPages ? (
+                  {currentPage < totalPages-1 ? (
                       <PaginationNext onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} />
                   ) : (
                       <PaginationNext isActive={false} />
@@ -209,7 +209,7 @@ export default function ActivitySection() {
           )}
           </header>
           <div className="gap-4 px-4 py-4 overflow-auto">
-            <div className="flex flex-col gap-4">              
+            <div className="flex flex-col gap-4 items-center">              
               {eventsByDate[dates[currentPage]]?eventsByDate[dates[currentPage]].map((event:Event  ) => (
                 <EventCard key={event.id} eventObject={event} />
               )):null}
