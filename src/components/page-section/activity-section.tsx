@@ -209,7 +209,7 @@ export default function ActivitySection() {
           )}
           </header>
           <div className="gap-4 px-4 py-4 overflow-auto">
-            <div className="flex flex-col gap-4">              
+            <div className="flex flex-col gap-4 items-center">              
               {eventsByDate[dates[currentPage]]?eventsByDate[dates[currentPage]].map((event:Event  ) => (
                 <EventCard key={event.id} eventObject={event} />
               )):null}

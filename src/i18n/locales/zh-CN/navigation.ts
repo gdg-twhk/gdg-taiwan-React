@@ -1,4 +1,5 @@
 export const navigation = {
+    home: "首页",
     recentActivities: "最新活动",
     annualActivities: "年度活动",
     chapters: "探索地区",

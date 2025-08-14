@@ -1,4 +1,5 @@
 export const navigation = {
+    home: "홈",
     recentActivities: "최신 활동",
     annualActivities: "연례 활동",
     chapters: "지역별로 탐색하기",
