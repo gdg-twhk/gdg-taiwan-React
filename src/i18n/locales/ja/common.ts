@@ -4,5 +4,9 @@ export const common = {
     light: "ライト",
     dark: "ダーク",
     system: "システム"
+  },
+  pagination: {
+    previous: "前へ",
+    next: "次へ"
   }
 }
