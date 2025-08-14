@@ -20,7 +20,7 @@ export function SiteHeader() {
   if (!mounted) return null;
 
   return (
-    <header className="sticky top-0 bg-background border-b-3 flex h-full w-full shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear z-10 overflow-hidden">
+    <header className="sticky top-0 bg-background border-b-3 flex h-full w-full shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear z-10">
       <div className={`flex flex-row h-full w-full items-${isMobile ? "between" : "center"} justify-${isMobile ? "between" : "center"} gap-1 px-4 lg:gap-2 lg:px-6`}>
         {isMobile && (
           <div className="flex items-center justify-between gap-2">
