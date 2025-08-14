@@ -198,7 +198,7 @@ export default function ActivitySection() {
                   <h1 className="text-2xl font-bold">{dates[currentPage] ? getDateString(dates[currentPage]) : <span>Pick a date</span>}</h1>
                   
                   <PaginationItem>
-                  {currentPage < totalPages ? (
+                  {currentPage < totalPages-1 ? (
                       <PaginationNext onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} />
                   ) : (
                       <PaginationNext isActive={false} />
