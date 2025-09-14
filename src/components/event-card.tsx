@@ -3,12 +3,10 @@
 import Image from "next/image";
 import { Event } from "@/interfaces";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ChapterBadge } from "@/components/chapter-badge";
 import { AudienceTypeBadge } from "@/components/audience-type-badge";
 import Link from "next/link";
-import { useTheme } from "next-themes";
 import {isCampusChapter} from "@/helper/index"
 import { useTranslation } from "react-i18next";
 import { defaultImage } from "@/entities/common_pic";
@@ -16,7 +14,6 @@ import { MapPinIcon, ClockIcon } from "lucide-react";
 
 export function EventCard( {eventObject}: {eventObject: Event}) {
   const isMobile = useIsMobile();
-  const { resolvedTheme } = useTheme();
   const { t, i18n } = useTranslation();
 
   const eventTypeColor = isCampusChapter(eventObject.chapter_title) ? 'green' : 'blue';
@@ -44,60 +41,93 @@ export function EventCard( {eventObject}: {eventObject: Event}) {
     });
   };
 
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return {
+      day: date.getDate().toString(),
+      month: date.toLocaleDateString(i18n.language, { month: 'short' }).toUpperCase()
+    };
+  };
+
+  const startDate = formatDate(eventObject.start_date_iso);
+
   return (
-    <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} items-center p-8 gap-8 w-full`}>
-      {/* 左側 Mock 圓形圖片 */}
-      <div className="flex-shrink-0 w-48 h-48 rounded-full flex items-center justify-center overflow-hidden shadow-md">
-        <Avatar className="w-full h-full">
-          <AvatarImage
-            src={eventObject.picture_url ? eventObject.picture_url : defaultImage}
-            alt="Event Logo"
-            width={100}
-            height={100}
-            className="object-cover w-full h-full"
-          />
-          <AvatarFallback>
-            <Image
-              src={defaultImage}
-              alt="Event Logo"
-              width={100}
-              height={100}
-              className="object-cover w-full h-full"
-            />
-          </AvatarFallback>
-        </Avatar>
+    <div className={`relative overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-700 group cursor-pointer ${isMobile ? 'h-[500px]' : 'h-[400px]'} w-full mx-auto`}>
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <Image
+          src={eventObject.cropped_banner_url || defaultImage}
+          alt="Event Background"
+          fill
+          className="object-cover group-hover:scale-105 transition-transform duration-700"
+        />
+        {/* Gradient Overlay - stronger to reduce background noise */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-black/40"></div>
+        {/* Additional blur overlay for text areas */}
+        <div className="absolute inset-0 backdrop-blur-[1px]"></div>
       </div>
-      {/* 右側內容 */}
-      <div className={`flex-1 ${isMobile ? 'flex-col justify-center' : ''}`}>
-        <div className={`flex gap-2 mb-2 ${isMobile ? 'items-center flex-col' : 'items-start flex-row'}`}>
+
+      {/* Date Badge */}
+      <div className={`absolute top-6 right-6 backdrop-blur-md rounded-2xl p-3 text-center min-w-[80px] border border-white/10`}>
+        <div className="text-white text-xs font-medium opacity-90">{startDate.month}</div>
+        <div className="text-white text-2xl font-bold leading-none">{startDate.day}</div>
+      </div>
+
+      {/* Content */}
+      <div className="relative h-full flex flex-col justify-between p-8 text-white">
+        {/* Top Section - Badges */}
+        <div className="flex gap-3 flex-wrap">
           <ChapterBadge chapter={eventObject.chapter_title} />
           <AudienceTypeBadge audienceType={eventObject.audience_type} />
         </div>
-        <h1 className={`font-bold mb-2 ${isMobile ? 'text-center text-4xl' : 'text-3xl'}`}>{eventObject.title}</h1>
-        <h3 className={`text-base mb-2 inline-block text-google-${eventTypeColor} ${isMobile ? 'text-center w-full text-xl ' : 'font-medium '}`}>{eventTypeMap[eventObject.event_type_title as keyof typeof eventTypeMap] || eventObject.event_type_title}</h3>
-        <p className={`text-lg mb-6 ${isMobile ? 'text-center' : ''}`}>
-          {eventObject.description_short}
-        </p>
 
-        {/* Event Details */}
-        <div className={`space-y-3 mb-6 ${isMobile ? 'text-center' : ''}`}>
-          <div className={`flex items-center gap-3 text-base ${isMobile ? 'justify-center' : ''}`}>
-            <ClockIcon className="w-5 h-5 flex-shrink-0 text-muted-foreground" />
-            <span>{formatTime(eventObject.start_date_iso)} ~ {formatTime(eventObject.end_date_iso)}</span>
+        {/* Bottom Section - Main Content */}
+        <div className="space-y-4">
+          {/* Title and Type */}
+          <div className="space-y-2">
+            <h1 className={`font-bold leading-tight text-white ${isMobile ? 'text-2xl' : 'text-3xl'}`}>
+              {eventObject.title}
+            </h1>
+            <h2 className={`text-lg font-semibold text-google-${eventTypeColor}-900 opacity-90`}>
+              {eventTypeMap[eventObject.event_type_title as keyof typeof eventTypeMap] || eventObject.event_type_title}
+            </h2>
           </div>
 
-          {eventObject.venue_name && (
-            <div className={`flex items-center gap-3 text-base ${isMobile ? 'justify-center' : ''}`}>
-              <MapPinIcon className="w-5 h-5 flex-shrink-0 text-muted-foreground" />
-              <span className={isMobile ? '' : 'truncate'}>{eventObject.venue_name}</span>
+          {/* Event Details */}
+          <div className="space-y-2">
+            <div className="flex items-center gap-3 text-sm text-white/90">
+              <ClockIcon className="w-4 h-4 flex-shrink-0" />
+              <span className="font-medium">
+                {formatTime(eventObject.start_date_iso)} ~ {formatTime(eventObject.end_date_iso)}
+              </span>
             </div>
-          )}
-        </div>
 
-        <Button className={`bg-google-${eventTypeColor} dark:bg-google-${eventTypeColor} border ${resolvedTheme === 'dark' ? 'border-white' : 'border-dark'} border-3 rounded-lg text-xl font-medium text-black hover:bg-halftone-${eventTypeColor} dark:hover:bg-halftone-${eventTypeColor} hover:text-black hover:border-black ${isMobile ? 'w-full' : ''}`}>
-              <Link href={eventObject.url} target="_blank">{t('eventCard.learnMore')}</Link>
-        </Button>
+            {eventObject.venue_name && (
+              <div className="flex items-center gap-3 text-sm text-white/90">
+                <MapPinIcon className="w-4 h-4 flex-shrink-0" />
+                <span className="font-medium truncate">{eventObject.venue_name}</span>
+              </div>
+            )}
+          </div>
+
+          {/* Description */}
+          <p className={`text-white/80 leading-relaxed ${isMobile ? 'text-sm line-clamp-2' : 'text-base line-clamp-3'}`}>
+            {eventObject.description_short}
+          </p>
+
+          {/* Action Button */}
+          <div className="pt-2">
+            <Button
+              asChild
+              className={`bg-white/90 hover:bg-white text-black font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm ${isMobile ? 'w-full' : ''}`}
+            >
+              <Link href={eventObject.url} target="_blank">
+                {t('eventCard.learnMore')}
+              </Link>
+            </Button>
+          </div>
         </div>
+      </div>
     </div>
   );
 }
