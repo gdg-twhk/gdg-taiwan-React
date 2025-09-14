@@ -1,6 +1,7 @@
 export const activitySection = {
     title: "全台近期活動",
     recentActivities: "全台近期活動",
+    pickADate: "選擇日期",
     calendar: {
         close: "關閉選單",
         apple: "加入到 Apple 日曆",

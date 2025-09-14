@@ -2,6 +2,7 @@ export const activitySection = {
     title: "전국 최근 활동",
     recentActivities: "전국 최근 활동",
     thisMonthActivities: "{{month}} 활동",
+    pickADate: "날짜 선택",
     calendar: {
         close: "메뉴 닫기",
         apple: "Apple 캘린더에 추가",
