@@ -4,7 +4,7 @@ import { Event, Chapter } from '@/interfaces';
 
 export const getUpcomingEvents = async (): Promise<Event[]> => {
   try{
-    const response = await axios.get(`${API_URL}/search/event?q=(TW)&around_radius=200&status=upcoming`);
+    const response = await axios.get(`${API_URL}/search/event?q=Taiwan&around_radius=200&status=upcoming`);
     return response.data.results;
   } catch (error) {
     console.error(error);
