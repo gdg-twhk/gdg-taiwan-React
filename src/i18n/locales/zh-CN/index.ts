@@ -16,7 +16,7 @@ import { metadata } from "./metadata";
 import { common } from "./common";
 import { qrCodeDialog } from "./qrCodeDialog";
 
-export const zh_CN = {
+export const zhCN = {
   translation: {
     mainSection,
     navigation,

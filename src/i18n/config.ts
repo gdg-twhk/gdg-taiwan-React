@@ -4,14 +4,15 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 // 匯入各語系檔案
 import { en } from './locales/en/index';
 import { zh } from './locales/zh/index';
-import { zh_CN } from './locales/zh-CN/index';
+import { zhCN } from './locales/zh-CN/index';
 import { ja } from './locales/ja/index';
 import { ko } from './locales/ko/index';
+import { supportedLanguages } from './languages';
 
 const resources = {
   en,
   zh,
-  zh_CN,
+  'zh-CN': zhCN,
   ja,
   ko,
   // 如有其他語系可在此新增
@@ -22,7 +23,8 @@ i18n
   .use(initReactI18next) // React Hooks 支援
   .init({
     resources,
-    fallbackLng: 'zh', // 找不到時預設中文
+    supportedLngs: supportedLanguages.map(lang => lang.code),
+    fallbackLng: ['en'], // 找不到嘗試英文
     interpolation: { escapeValue: false },
   });
 
