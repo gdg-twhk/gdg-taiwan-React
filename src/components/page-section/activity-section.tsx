@@ -14,7 +14,6 @@ import { Separator } from "@/components/ui/separator";
 import { Calendar } from "@/components/ui/calendar";
 import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationNext } from "@/components/ui/pagination";
 import { collectEventsByDate, sortEventsByDate } from "@/helper";
-import { EventCard } from "@/components/event-card";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { CalendarIcon } from "lucide-react"
@@ -23,6 +22,8 @@ import { useTranslation } from 'react-i18next';
 import i18n from "@/i18n/config"
 import { enUS, zhTW ,zhCN, ja, ko} from "date-fns/locale";
 import { useClientOnly } from "@/components/use-client-only";
+import { EventCard } from "@/components/event-card";
+import { useMemo } from 'react';
 
 export default function ActivitySection() {
   const mounted = useClientOnly();
@@ -47,6 +48,21 @@ export default function ActivitySection() {
     }
     fetchEvents();
   }, []);
+
+  const eventsInThisMonth = useMemo(() => {
+    const today = new Date();
+    const currentMonth = today.getMonth();
+    const currentYear = today.getFullYear();
+    return events.filter(event => {
+      const eventDate = new Date(event.start_date_iso);
+      return eventDate.getMonth() === currentMonth && eventDate.getFullYear() === currentYear;
+    });
+  }, [events]);
+
+  const currentMonthName = useMemo(() => {
+    const today = new Date();
+    return today.toLocaleDateString(i18n.language, { month: 'long' });
+  }, [i18n.language]);
 
   useEffect(() => {
     i18n.loadNamespaces(['activitySection']);
@@ -155,6 +171,16 @@ export default function ActivitySection() {
               </CardHeader>
             </Card>
             </SidebarGroupContent>
+            <SidebarGroupContent>
+            <Card>
+              <CardHeader className="flex flex-col justify-between">
+              <CardDescription>{t('activitySection.thisMonthActivities', { month: currentMonthName })}</CardDescription>
+              <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
+                {eventsInThisMonth.length}
+              </CardTitle>
+              </CardHeader>
+            </Card>
+            </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
       </Sidebar>
@@ -209,10 +235,15 @@ export default function ActivitySection() {
           )}
           </header>
           <div className="gap-4 px-4 py-4 overflow-auto">
-            <div className="flex flex-col gap-4 items-center">              
-              {eventsByDate[dates[currentPage]]?eventsByDate[dates[currentPage]].map((event:Event  ) => (
+          <div className="flex flex-col gap-4 items-center">              
+              {eventsByDate[dates[currentPage]]?.length > 0 ? eventsByDate[dates[currentPage]].map((event:Event  ) => (
                 <EventCard key={event.id} eventObject={event} />
               )):null}
+              {eventsByDate[dates[currentPage]]?.length === 0 ? (
+                <div className="text-center text-lg text-muted-foreground">
+                  {t('activitySection.noEvents')}
+                </div>
+              ):null}
             </div>
           </div>
       </SidebarInset>

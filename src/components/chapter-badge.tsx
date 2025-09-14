@@ -14,11 +14,13 @@ export function ChapterBadge({ chapter }: { chapter: string }) {
       ? chapterNameMap[chapterNameFilter(chapter) as keyof typeof chapterNameMap]
       : chapterNameFilter(chapter);
 
+  const chapterShortName = currentLanguage.includes('zh') ? chapterName : chapterName.replace(/[^A-Z]/g, "");
+
   return (
     <Badge className={isCampusChapter(chapter) ? 'bg-google-green' : 'bg-google-blue'}>
       
       {isCampusChapter(chapter)?<IconSchool className="w-4 h-4" />:null}
-      {isCampusChapter(chapter)? `GDG ${chapterName}` :chapter}
+      {isCampusChapter(chapter)? `GDG ${chapterShortName}` : chapterName}
     </Badge>
   );
 }

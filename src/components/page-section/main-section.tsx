@@ -10,13 +10,12 @@ import { useTranslation } from 'react-i18next';
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useClientOnly } from "@/components/use-client-only";
 
-
 export function MainSection() {
   const mounted = useClientOnly();
   const { t } = useTranslation();
   const isMobile = useIsMobile();
-  if (!mounted) return null;
 
+  if (!mounted) return null;
 
 const sistersProjects = [
   {
@@ -79,6 +78,7 @@ const sistersProjects = [
           </div>
         </div>
       </section>
+
       <section className="container mx-auto px-4 py-10 md:py-24">
         <div className="flex flex-col md:flex-row items-center gap-8">
           {/* 左側：照片區塊 */}

@@ -9,5 +9,6 @@ export const activitySection = {
         yahoo: "加入到 Yahoo 行事曆",
         ical: "下載 iCal 檔案",
         subscribe: "訂閱全台GDG活動行事曆"
-    }
+    },
+    thisMonthActivities: '{{month}}活動'
 };

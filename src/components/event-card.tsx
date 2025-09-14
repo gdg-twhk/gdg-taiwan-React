@@ -12,11 +12,12 @@ import { useTheme } from "next-themes";
 import {isCampusChapter} from "@/helper/index"
 import { useTranslation } from "react-i18next";
 import { defaultImage } from "@/entities/common_pic";
+import { MapPinIcon, ClockIcon } from "lucide-react";
 
 export function EventCard( {eventObject}: {eventObject: Event}) {
   const isMobile = useIsMobile();
   const { resolvedTheme } = useTheme();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const eventTypeColor = isCampusChapter(eventObject.chapter_title) ? 'green' : 'blue';
 
@@ -33,6 +34,15 @@ export function EventCard( {eventObject}: {eventObject: Event}) {
     "Women's Online Safety Program": t('eventTypeMap.WomenOnlineSafetyProgram'),
     "Google Hosted Summit": t('eventTypeMap.GoogleHostedSummit')
   }
+
+  const formatTime = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleTimeString(i18n.language, {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    });
+  };
 
   return (
     <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} items-center p-8 gap-8 w-full`}>
@@ -68,6 +78,22 @@ export function EventCard( {eventObject}: {eventObject: Event}) {
         <p className={`text-lg mb-6 ${isMobile ? 'text-center' : ''}`}>
           {eventObject.description_short}
         </p>
+
+        {/* Event Details */}
+        <div className={`space-y-3 mb-6 ${isMobile ? 'text-center' : ''}`}>
+          <div className={`flex items-center gap-3 text-base ${isMobile ? 'justify-center' : ''}`}>
+            <ClockIcon className="w-5 h-5 flex-shrink-0 text-muted-foreground" />
+            <span>{formatTime(eventObject.start_date_iso)} ~ {formatTime(eventObject.end_date_iso)}</span>
+          </div>
+
+          {eventObject.venue_name && (
+            <div className={`flex items-center gap-3 text-base ${isMobile ? 'justify-center' : ''}`}>
+              <MapPinIcon className="w-5 h-5 flex-shrink-0 text-muted-foreground" />
+              <span className={isMobile ? '' : 'truncate'}>{eventObject.venue_name}</span>
+            </div>
+          )}
+        </div>
+
         <Button className={`bg-google-${eventTypeColor} dark:bg-google-${eventTypeColor} border ${resolvedTheme === 'dark' ? 'border-white' : 'border-dark'} border-3 rounded-lg text-xl font-medium text-black hover:bg-halftone-${eventTypeColor} dark:hover:bg-halftone-${eventTypeColor} hover:text-black hover:border-black ${isMobile ? 'w-full' : ''}`}>
               <Link href={eventObject.url} target="_blank">{t('eventCard.learnMore')}</Link>
         </Button>

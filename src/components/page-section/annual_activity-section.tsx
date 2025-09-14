@@ -12,7 +12,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { EventCard } from "@/components/event-card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Drawer,
@@ -36,6 +35,7 @@ import Image from "next/image";
 import { IconCalendar } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
 import { useClientOnly } from "@/components/use-client-only";
+import { ModernEventCard } from "../modern-event-card";
 
 function groupEventsByYear(events: Event[]) {
   const result: Record<string, Event[]> = {};
@@ -243,13 +243,20 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
               </Drawer>
             </div>
           )}
-          <div className="relative">
+          <div className="relative items-center">
             {years.map((year) => (
               <TabsContent key={year} value={year} className="gap-4">
-                <div className="flex flex-col gap-4 w-full">
-                  {(eventsByYear[year] || []).map((event) => (
-                    <EventCard key={event.id} eventObject={event} />
-                  ))}
+                <div className="gap-4 px-4 py-4 overflow-auto w-full justify-center items-center">
+                  <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl`}>              
+                    {eventsByYear[year]?.length > 0 ? eventsByYear[year].sort((a, b) => new Date(a.start_date_iso).getTime() - new Date(b.start_date_iso).getTime()).map((event:Event) => (
+                      <ModernEventCard key={event.id} eventObject={event} />
+                    )):null}
+                    {eventsByYear[year]?.length === 0 ? (
+                      <div className="text-center text-lg text-muted-foreground">
+                        {t('annualActivitySection.noEvents')}
+                      </div>
+                    ):null}
+                  </div>
                 </div>
               </TabsContent>
             ))}
