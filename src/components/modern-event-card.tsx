@@ -63,7 +63,7 @@ export function ModernEventCard({ eventObject }: { eventObject: Event }) {
   };
 
   return (
-    <Card className={`group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 py-0 overflow-hidden max-w-md ${isMobile ? 'w-full' : ''} flex flex-col h-full`}>
+    <Card className={`group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 py-0 overflow-hidden max-w-md ${isMobile ? 'w-full' : ''} flex flex-col`}>
       {/* Event Image */}
       <div className="relative h-48 overflow-hidden">
         <Image
@@ -108,8 +108,8 @@ export function ModernEventCard({ eventObject }: { eventObject: Event }) {
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="pt-0 pb-4 flex-grow">
-        <CardDescription className="text-sm mb-4 line-clamp-3">
+      <CardContent className="pt-0 pb-4">
+        <CardDescription className="text-sm mb-4">
           {eventObject.description_short}
         </CardDescription>
 

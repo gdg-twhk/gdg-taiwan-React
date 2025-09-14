@@ -185,33 +185,7 @@ export default function ActivitySection() {
         </SidebarContent>
       </Sidebar>
       <SidebarInset className="flex flex-col flex-3 h-full">
-          <header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4 justify-center">
-          {isMobile ? (
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button variant="outline">
-                  <CalendarIcon />
-                  {dates[currentPage] ?  getDateString(dates[currentPage]) : <span>Pick a date</span>} 
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  onSelect={(day) => handleClickCalendar(day)}
-                  className="rounded-md"
-                  modifiers={{
-                    selected: (day) => events.slice(0, -1).some((event) => new Date(event.start_date_iso).toDateString() === day.toDateString()),
-                  }}
-                  modifiersClassNames={{
-                    today: 'text-red-500 border-red-500 rounded-md border-2', 
-                  }}
-                  onDayClick={(day) => handleClickCalendar(day)}
-                  locale={calendarLocale[i18n.language as keyof typeof calendarLocale]}
-                />
-              </PopoverContent>
-            </Popover>
-          ) : (   
-          
+          <header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4 justify-center">        
           <Pagination className="w-full">
               <PaginationContent className="flex flex-row justify-between w-full">
                   <PaginationItem>
@@ -221,7 +195,35 @@ export default function ActivitySection() {
                       <PaginationPrevious isActive={false}/>
                   )}
                   </PaginationItem>
-                  <h1 className="text-2xl font-bold">{dates[currentPage] ? getDateString(dates[currentPage]) : <span>Pick a date</span>}</h1>
+                  {!isMobile ? (
+                  <h1 className="text-2xl font-bold">{dates[currentPage] ? getDateString(dates[currentPage]) : <span>{t('activitySection.pickADate')}</span>}</h1>
+                  ) : (
+                    <PaginationItem>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button variant="outline">
+                            <CalendarIcon />
+                            {dates[currentPage] ?  getDateString(dates[currentPage]) : <span>{t('activitySection.pickADate')}</span>}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0">
+                          <Calendar
+                            mode="single"
+                            onSelect={(day) => handleClickCalendar(day)}
+                            className="rounded-md"
+                            modifiers={{
+                              selected: (day) => events.slice(0, -1).some((event) => new Date(event.start_date_iso).toDateString() === day.toDateString()),
+                            }}
+                            modifiersClassNames={{
+                              today: 'text-red-500 border-red-500 rounded-md border-2', 
+                            }}
+                            onDayClick={(day) => handleClickCalendar(day)}
+                            locale={calendarLocale[i18n.language as keyof typeof calendarLocale]}
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </PaginationItem>
+                  )}
                   
                   <PaginationItem>
                   {currentPage < totalPages-1 ? (
@@ -232,7 +234,6 @@ export default function ActivitySection() {
                   </PaginationItem>
               </PaginationContent>
           </Pagination>
-          )}
           </header>
           <div className="gap-4 px-4 py-4 overflow-auto">
           <div className="flex flex-col gap-4 items-center">              
