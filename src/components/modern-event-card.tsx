@@ -5,7 +5,7 @@ import { Event } from "@/interfaces";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CalendarIcon, MapPinIcon, ClockIcon, UsersIcon, ExternalLinkIcon } from "lucide-react";
+import { MapPinIcon, ClockIcon, UsersIcon, ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
 import { isCampusChapter } from "@/helper/index";
 import { useTranslation } from "react-i18next";
@@ -36,16 +36,6 @@ export function ModernEventCard({ eventObject }: { eventObject: Event }) {
     "Virtual": t('audienceTypeMap.Virtual'),
     "In-person": t('audienceTypeMap.In-person'),
     "Hybrid": t('audienceTypeMap.Hybrid')
-  };
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString(i18n.language, {
-      weekday: 'short',
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
-    });
   };
 
   const formatTime = (dateString: string) => {
@@ -125,11 +115,6 @@ export function ModernEventCard({ eventObject }: { eventObject: Event }) {
 
         {/* Event Details */}
         <div className="space-y-2 text-sm text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <CalendarIcon className="w-4 h-4 flex-shrink-0" />
-            <span>{formatDate(eventObject.start_date_iso)}</span>
-          </div>
-
           <div className="flex items-center gap-2">
             <ClockIcon className="w-4 h-4 flex-shrink-0" />
             <span>{formatTime(eventObject.start_date_iso)} ~ {formatTime(eventObject.end_date_iso)}</span>
