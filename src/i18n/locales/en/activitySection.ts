@@ -1,6 +1,7 @@
 export const activitySection = {
     title: "All Activities",
     recentActivities: "Recent Activities in Taiwan",
+    thisMonthActivities: "{{month}} Activities",
     calendar: {
         close: "Close",
         apple: "Add to Apple Calendar",

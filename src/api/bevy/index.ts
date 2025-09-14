@@ -12,6 +12,16 @@ export const getUpcomingEvents = async (): Promise<Event[]> => {
   }
 }
 
+export const getLiveEvents = async (): Promise<Event[]> => {
+  try{
+    const response = await axios.get(`${API_URL}/search/event?q=Taiwan&around_radius=200&status=upcoming&page_size=10`);
+    return response.data.results;
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Failed to fetch live events: ${error}`);
+  }
+}
+
 
 export const getEventByTag = async(eventTagsId: string): Promise<Event[]> =>{
   try{

@@ -9,14 +9,35 @@ import Image from "next/image";
 import { useTranslation } from 'react-i18next';
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useClientOnly } from "@/components/use-client-only";
-
+import { Event } from "@/interfaces";
+import { useEffect, useState } from "react";
+import { getLiveEvents } from "@/api/bevy";
+import { ModernEventCard } from "@/components/modern-event-card";
 
 export function MainSection() {
   const mounted = useClientOnly();
   const { t } = useTranslation();
   const isMobile = useIsMobile();
-  if (!mounted) return null;
+  const [liveEvents, setLiveEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    async function fetchLiveEvents() {
+      try {
+        setLoading(true);
+        const events = await getLiveEvents();
+        setLiveEvents(events || []);
+      } catch (error) {
+        console.error('Failed to fetch live events:', error);
+        setLiveEvents([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchLiveEvents();
+  }, []);
+
+  if (!mounted) return null;
 
 const sistersProjects = [
   {
@@ -79,6 +100,25 @@ const sistersProjects = [
           </div>
         </div>
       </section>
+
+      {/* Live Events Section */}
+      <section className="container mx-auto px-4 py-16 md:py-16">
+        <div className="flex flex-col items-center w-full">
+          <h2 className="text-3xl font-bold mb-8 text-center">{t('liveEventsSection.title', 'Live Events')}</h2>
+          {loading ? (
+            <div className="text-lg text-muted-foreground">{t('liveEventsSection.loading', 'Loading live events...')}</div>
+          ) : liveEvents.length === 0 ? (
+            <div className="text-lg text-muted-foreground">{t('liveEventsSection.noEvents', 'No live events at the moment.')}</div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+              {liveEvents.map((event: Event) => (
+                <ModernEventCard key={event.id} eventObject={event} />
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
       <section className="container mx-auto px-4 py-10 md:py-24">
         <div className="flex flex-col md:flex-row items-center gap-8">
           {/* 左側：照片區塊 */}
