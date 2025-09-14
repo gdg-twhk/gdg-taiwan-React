@@ -5,7 +5,6 @@ import { Event } from "@/interfaces";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ChapterBadge } from "@/components/chapter-badge";
-import { AudienceTypeBadge } from "@/components/audience-type-badge";
 import Link from "next/link";
 import {isCampusChapter} from "@/helper/index"
 import { useTranslation } from "react-i18next";
@@ -32,6 +31,12 @@ export function EventCard( {eventObject}: {eventObject: Event}) {
     "Google Hosted Summit": t('eventTypeMap.GoogleHostedSummit')
   }
 
+  const audienceTypeMap = {
+    "Virtual": t('audienceTypeMap.Virtual'),
+    "In-person": t('audienceTypeMap.In-person'),
+    "Hybrid": t('audienceTypeMap.Hybrid')
+}
+
   const formatTime = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleTimeString(i18n.language, {
@@ -41,18 +46,8 @@ export function EventCard( {eventObject}: {eventObject: Event}) {
     });
   };
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return {
-      day: date.getDate().toString(),
-      month: date.toLocaleDateString(i18n.language, { month: 'short' }).toUpperCase()
-    };
-  };
-
-  const startDate = formatDate(eventObject.start_date_iso);
-
   return (
-    <div className={`relative overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-700 group cursor-pointer ${isMobile ? 'h-[500px]' : 'h-[400px]'} w-full mx-auto`}>
+    <div className={`relative overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-700 group cursor-pointer min-h-[400px] w-full mx-auto`}>
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
@@ -67,18 +62,11 @@ export function EventCard( {eventObject}: {eventObject: Event}) {
         <div className="absolute inset-0 backdrop-blur-[1px]"></div>
       </div>
 
-      {/* Date Badge */}
-      <div className={`absolute top-6 right-6 backdrop-blur-md rounded-2xl p-3 text-center min-w-[80px] border border-white/10`}>
-        <div className="text-white text-xs font-medium opacity-90">{startDate.month}</div>
-        <div className="text-white text-2xl font-bold leading-none">{startDate.day}</div>
-      </div>
-
       {/* Content */}
       <div className="relative h-full flex flex-col justify-between p-8 text-white">
         {/* Top Section - Badges */}
-        <div className="flex gap-3 flex-wrap">
+        <div className="flex gap-3 flex-wrap mb-10">
           <ChapterBadge chapter={eventObject.chapter_title} />
-          <AudienceTypeBadge audienceType={eventObject.audience_type} />
         </div>
 
         {/* Bottom Section - Main Content */}
@@ -89,7 +77,7 @@ export function EventCard( {eventObject}: {eventObject: Event}) {
               {eventObject.title}
             </h1>
             <h2 className={`text-lg font-semibold text-google-${eventTypeColor}-900 opacity-90`}>
-              {eventTypeMap[eventObject.event_type_title as keyof typeof eventTypeMap] || eventObject.event_type_title}
+            {eventTypeMap[eventObject.event_type_title as keyof typeof eventTypeMap] || eventObject.event_type_title}
             </h2>
           </div>
 
@@ -98,20 +86,18 @@ export function EventCard( {eventObject}: {eventObject: Event}) {
             <div className="flex items-center gap-3 text-sm text-white/90">
               <ClockIcon className="w-4 h-4 flex-shrink-0" />
               <span className="font-medium">
-                {formatTime(eventObject.start_date_iso)} ~ {formatTime(eventObject.end_date_iso)}
+              {formatTime(eventObject.start_date_iso)} ~ {formatTime(eventObject.end_date_iso)}
               </span>
             </div>
-
-            {eventObject.venue_name && (
-              <div className="flex items-center gap-3 text-sm text-white/90">
-                <MapPinIcon className="w-4 h-4 flex-shrink-0" />
-                <span className="font-medium truncate">{eventObject.venue_name}</span>
-              </div>
-            )}
+            <div className="flex items-center gap-3 text-sm text-white/90">
+              <MapPinIcon className="w-4 h-4 flex-shrink-0" />
+              <span className="font-medium truncate">{audienceTypeMap[eventObject.audience_type as keyof typeof audienceTypeMap]}{ eventObject.venue_name ? " · " + eventObject.venue_name : ''}</span>
+            </div>
+          
           </div>
 
           {/* Description */}
-          <p className={`text-white/80 leading-relaxed ${isMobile ? 'text-sm line-clamp-2' : 'text-base line-clamp-3'}`}>
+          <p className={`text-white/80 leading-relaxed ${isMobile ? 'text-sm' : 'text-base'}`}>
             {eventObject.description_short}
           </p>
 
