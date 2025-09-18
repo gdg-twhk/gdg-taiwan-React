@@ -15,4 +15,8 @@ export const activity = {
     title: "DevFest",
     description: "DevFests는 전 세계 Google Developer Groups (GDG)이 주최하는 지역 기술 세미나입니다. 지역 주최자는 커뮤니티의 요구에 따라 기획하며, 실습 경험에서 전문가 기술 강연에 이르기까지, 참가자들이 Google 오픈 소스 기술과 개발 도구를 사용하여 협력하고 혁신할 수 있도록 이끕니다.",
   },
+  build_with_ai: {
+    title: "Build with AI",
+    description: "모든 기술 수준의 개발자들이 Google의 최신 AI 기술을 배우고 구축할 수 있는 이벤트입니다. 핸즈온 워크숍과 Google 전문가의 강연을 통해 생성형 AI를 탐색해 보세요.",
+  },
 } as const; 

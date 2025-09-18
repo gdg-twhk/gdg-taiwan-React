@@ -1,18 +1,22 @@
 export const activity = {
   international_womens_day: {
-    title: "國際婦女節",
-    description: "國際婦女節 (IWD) 是 Women Techmakers 最大的年度活動，大使們在 3 月和 4 月期間在世界各地舉辦活動以慶祝這一時刻。從大型峰會到小型私密聚會，IWD 也是我們支持使命：建構一個所有女性都能在科技領域繁榮茁壯的世界。",
+    title: "国际妇女节",
+    description: "国际妇女节 (IWD) 是 Women Techmakers 最大的年度活动，大使们在 3 月和 4 月期间在世界各地举办活动以庆祝这一时刻。从大型峰会到小型私密聚会，IWD 也是我们支持使命：构建一个所有女性都能在科技领域繁荣茁壮的世界。",
   },
   google_io_extended: {
-    title: "Google I/O 延伸活動",
-    description: "Google I/O 將來自全球的開發者聚集在一起，進行深入討論、與 Google 專家實作學習，並搶先體驗 Google 最新開發者產品。主賽事結束後，當地社群透過 I/O Extended 活動繼續交流技術、主持問答並與其他開發者互動。",
+    title: "Google I/O 延伸活动",
+    description: "Google I/O 将来自全球的开发者聚集在一起，进行深入讨论、与 Google 专家实作学习，并抢先体验 Google 最新开发者产品。主赛事结束后，当地社群透过 I/O Extended 活动继续交流技术、主持问答并与其他开发者互动。",
   },
   cloud_study_jam: {
     title: "Cloud Study Jam",
-    description: "從容器化應用到建立虛擬機，Study Jams 可根據主題與技能等級進行自訂。無論是雲端基礎入門或深入探討機器學習、BigQuery、認證或 Kubernetes，都能透過免費實作實驗室學習 Google Cloud 的核心工具與功能。",
+    description: "从容器化应用到建立虚拟机，Study Jams 可根据主题与技能等级进行自订。无论是云端基础入门或深入探讨机器学习、BigQuery、认证或 Kubernetes，都能透过免费实作实验室学习 Google Cloud 的核心工具与功能。",
   },
   devfest: {
     title: "DevFest",
-    description: "DevFests 是由全球 Google Developer Groups (GDG) 主辦的在地技術研討會。當地主辦方依據社群需求策劃，從實作體驗到專家技術講座，帶領參與者使用 Google 開源技術與開發工具協作創新。",
+    description: "DevFests 是由全球 Google Developer Groups (GDG) 主办的在地技术研讨会。当地主办方依据社群需求策划，从实作体验到专家技术讲座，带领参与者使用 Google 开源技术与开发工具协作创新。",
+  },
+  build_with_ai: {
+    title: "Build with AI",
+    description: "这是一个为各种技能水平的开发者设计的活动，旨在学习和使用 Google 最新的 AI 技术进行构建。通过实践工作坊和 Google 专家的演讲，探索生成式 AI。",
   },
 } as const; 
