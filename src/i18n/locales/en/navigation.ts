@@ -18,5 +18,9 @@ export const navigation = {
     devfest: {
         title: "DevFest",
         description: "Local technical workshops hosted by global Google Developer Groups (GDGs)."
+    },
+    buildWithAi: {
+        title: "Build with AI",
+        description: "An event for developers of all skill levels to learn and build with Google's latest AI technologies."
     }
 }

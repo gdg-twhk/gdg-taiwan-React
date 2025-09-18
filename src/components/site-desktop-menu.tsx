@@ -37,6 +37,9 @@ export function SiteDesktopMenu() {
           <ListItem href="/annual_activity/cloud_study_jam" title={t('navigation.cloudStudyJam.title')}>
             {t('navigation.cloudStudyJam.description')}
           </ListItem>
+          <ListItem href="/annual_activity/build_with_ai" title={t('navigation.buildWithAi.title')}>
+            {t('navigation.buildWithAi.description')}
+          </ListItem>
           <ListItem href="/annual_activity/devfest" title={t('navigation.devfest.title')}>
             {t('navigation.devfest.description')}
           </ListItem>

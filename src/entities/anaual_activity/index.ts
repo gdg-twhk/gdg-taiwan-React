@@ -11,7 +11,14 @@ export const activityMeta = {
       backgroundUrl: "/event/io-extends/banner.svg",
       iconUrl: "/event/io-extends/logo-white.svg",
       animationUrl: "/event/io-extends/giphy.gif",
-      url: "https://gdg.community.dev/ioextends/",
+      url: "https://gdg.community.dev/ioextended/",
+    },
+    build_with_ai: {
+      bevytagId: "73",
+      backgroundUrl: "/event/build-with-ai/banner.jpg",
+      iconUrl: "/event/build-with-ai/logo.png",
+      animationUrl: "/event/build-with-ai/logo.png",
+      url: "https://ai.google/build/",
     },
     cloud_study_jam: {
       bevytagId: "23",

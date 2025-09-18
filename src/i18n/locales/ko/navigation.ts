@@ -18,5 +18,9 @@ export const navigation = {
     devfest: {
         title: "DevFest",
         description: "전 세계 Google Developer Group (GDG)이 주최하는 지역 기술 세미나입니다."
+    },
+    buildWithAi: {
+        title: "Build with AI",
+        description: "모든 기술 수준의 개발자들이 Google의 최신 AI 기술을 배우고 구축할 수 있는 이벤트입니다."
     }
 }

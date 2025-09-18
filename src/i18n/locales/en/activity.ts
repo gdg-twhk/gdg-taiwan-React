@@ -15,4 +15,8 @@ export const activity = {
     title: "DevFest",
     description: "DevFests are local tech conferences hosted by Google Developer Groups (GDG) around the globe. Each DevFest event is organized by local organizers to meet the needs and interests of their local developer community, fostering a tech-open culture. Whether through hands-on learning experiences or expert-led tech talks in local languages, or simply networking with other local developers, DevFest participants learn how to collaborate and innovate together using Google's open-source technologies and developer tools.",
   },
+  build_with_ai: {
+    title: "Build with AI",
+    description: "An event for developers of all skill levels to learn and build with Google's latest AI technologies. Explore generative AI through hands-on workshops and talks from Google experts.",
+  },
 } as const; 
