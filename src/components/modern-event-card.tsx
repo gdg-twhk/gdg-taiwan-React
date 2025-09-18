@@ -76,11 +76,11 @@ export function ModernEventCard({ eventObject }: { eventObject: Event }) {
 
         {/* Date Badge */}
         <div className="absolute top-4 left-4">
-          <div className={`bg-google-blue/90 rounded-lg p-2 text-center shadow-sm`}>
-            <div className="text-xs font-medium text-white">
+          <div className={`bg-google-${eventTypeColor} rounded-lg p-2 text-center shadow-sm text-primary-foreground`}>
+            <div className="text-xs font-medium">
               {new Date(eventObject.start_date_iso).toLocaleDateString(i18n.language, { month: 'short' }).toUpperCase()}
             </div>
-            <div className="text-lg font-bold text-foreground">
+            <div className="text-lg font-bold text-primary-foreground">
               {new Date(eventObject.start_date_iso).getDate()}
             </div>
           </div>
@@ -88,7 +88,7 @@ export function ModernEventCard({ eventObject }: { eventObject: Event }) {
 
         {/* Event Type Badge */}
         <div className="absolute top-4 right-4">
-          <Badge variant={getEventTypeVariant()} className="bg-google-blue/90">
+          <Badge variant={getEventTypeVariant()} className={`bg-google-${eventTypeColor} text-primary-foreground`}>
             {eventTypeMap[eventObject.event_type_title as keyof typeof eventTypeMap] || eventObject.event_type_title}
           </Badge>
         </div>
