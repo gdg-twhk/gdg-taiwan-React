@@ -129,7 +129,7 @@ export function ModernEventCard({ eventObject }: { eventObject: Event }) {
         </div>
       </CardContent>
 
-      <CardFooter className="pt-0 pb-4">
+      <CardFooter className="pt-0 pb-4 mt-auto">
         <Button
           asChild
           className={`w-full bg-google-${eventTypeColor} dark:bg-google-${eventTypeColor} hover:bg-halftone-${eventTypeColor} dark:hover:bg-halftone-${eventTypeColor} text-black hover:text-black group`}
