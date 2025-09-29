@@ -22,7 +22,7 @@ import { useTranslation } from "react-i18next";
 import { useClientOnly } from "@/components/use-client-only";
 import { ModernEventCard } from "../modern-event-card";
 import { isCampusChapter, getCountyFromChapterName, sortCountryList } from "@/helper/index";
-import { Separator } from "@/components/ui/separator";
+import { Separator } from "@/components/ui/separator"
 interface FilterState {
   year: string | null; // 'all' | specific year string
   cities: string[];
@@ -204,7 +204,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
                 </CardDescription>
                 <CardFooter className="flex flex-col gap-4 justify-start items-center md:items-start px-0 mt-4">
                   <Button
-                    className={`bg-google-blue dark:bg-google-blue border border-3 rounded-lg text-xl font-medium text-black hover:bg-halftone-blue dark:hover:bg-halftone-blue hover:text-black hover:border-black`}
+                    className={`bg-google-blue dark:bg-google-blue border border-3  text-xl font-medium text-black hover:bg-halftone-blue dark:hover:bg-halftone-blue hover:text-black hover:border-black`}
                   >
                     <Link
                       href={activityMeta[activity].url}
@@ -221,10 +221,10 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
       </section>
 
       {/* 篩選區域 */}
-      <section className="container mx-auto px-4 py-6">
-        <div className="flex flex-col space-y-4">
+      <section className="container mx-auto py-6">
+        <div className="flex flex-col bg-card rounded-lg border-2 p-4">
           {/* 年份篩選列 */}
-          <div className="card border-2 bg-card rounded-lg p-4 overflow-x-auto">
+          <div className="card bg-card p-4 overflow-x-auto">
             <div className="flex gap-2 items-center min-w-max">
               <Button
                 variant={filters.year === 'all' ? "default" : "outline"}
@@ -234,7 +234,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
               >
                 {t('annualActivitySection.allYears')}
               </Button>
-              <Separator orientation="vertical" className="h-6 mx-2 flex-shrink-0" />
+              <Separator orientation="vertical" />
               {availableOptions.years.map((year) => (
                 <Button
                   key={year}
@@ -250,7 +250,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
           </div>
 
           {/* 分會城市篩選列 */}
-          <div className="card border-2 bg-card rounded-lg p-4 overflow-x-auto">
+          <div className="card bg-card  p-4 overflow-x-auto">
             <div className="flex gap-2 items-center min-w-max">
               <Button
                 variant={filters.cities.length === 0 ? "default" : "outline"}
@@ -260,7 +260,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
               >
                 {t('annualActivitySection.allCities')}
               </Button>
-              <Separator orientation="vertical" className="h-6 mx-2 flex-shrink-0" />
+              <Separator orientation="vertical" />
               {availableOptions.cities.map((city) => (
                 <Button
                   key={city}
@@ -282,7 +282,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
           </div>
 
           {/* 活動類型篩選列 */}
-          <div className="card border-2 bg-card rounded-lg p-4 overflow-x-auto">
+          <div className="card bg-card  p-4 overflow-x-auto">
             <div className="flex gap-2 items-center min-w-max">
               <Button
                 variant={filters.eventTypes.length === 0 ? "default" : "outline"}
@@ -292,7 +292,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
               >
                 {t('annualActivitySection.allEventTypes')}
               </Button>
-              <Separator orientation="vertical" className="h-6 mx-2 flex-shrink-0" />
+              <Separator orientation="vertical" />
               {availableOptions.eventTypes.map((type) => (
                 <Button
                   key={type}
@@ -314,7 +314,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
           </div>
 
           {/* 參與者類型篩選列 */}
-          <div className="card border-2 bg-card rounded-lg p-4 overflow-x-auto">
+          <div className="card bg-card  p-4 overflow-x-auto">
             <div className="flex gap-2 items-center min-w-max">
               <Button
                 variant={filters.audienceTypes.length === 0 ? "default" : "outline"}
@@ -324,7 +324,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
               >
                 {t('annualActivitySection.allAudienceTypes')}
               </Button>
-              <Separator orientation="vertical" className="h-6 mx-2 flex-shrink-0" />
+              <Separator orientation="vertical" />
               {availableOptions.audienceTypes.map((type) => (
                 <Button
                   key={type}
@@ -342,25 +342,22 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
                   {audienceTypeMap[type as keyof typeof audienceTypeMap] || type}
                 </Button>
               ))}
+              <Separator orientation="vertical"/>
+              <div className="flex items-center gap-3 px-4 py-2 h-10 bg-white border border-gray-300 rounded-full shadow-sm hover:shadow-md transition-shadow w-fit">
+                <IconSchool className="w-4 h-4 text-gray-500" />
+                <span className="text-sm font-medium text-gray-700">
+                  {filters.showCampusOnly ? t('annualActivitySection.campusOnly') : t('annualActivitySection.allEvents')}
+                </span>
+                <Switch
+                  checked={filters.showCampusOnly}
+                  onCheckedChange={(checked: boolean) => setFilters(prev => ({ ...prev, showCampusOnly: checked }))}
+                  className={filters.showCampusOnly ? "bg-google-green" : "bg-google-blue"}
+                />
+              </div>
             </div>
           </div>
 
-          {/* 其他篩選器列 */}
-          <div className="card border-2 bg-card rounded-lg p-4 overflow-x-auto">
-            <div className="flex items-center gap-3 px-4 py-2 h-10 bg-white border border-gray-300 rounded-full shadow-sm hover:shadow-md transition-shadow w-fit">
-              <IconSchool className="w-4 h-4 text-gray-500" />
-              <span className="text-sm font-medium text-gray-700">
-                {filters.showCampusOnly ? t('annualActivitySection.campusOnly') : t('annualActivitySection.allEvents')}
-              </span>
-              <Switch
-                checked={filters.showCampusOnly}
-                onCheckedChange={(checked: boolean) => setFilters(prev => ({ ...prev, showCampusOnly: checked }))}
-                className={filters.showCampusOnly ? "bg-google-green" : "bg-google-blue"}
-              />
-            </div>
-          </div>
-
-          <div className="md:flex md:flex-wrap gap-3 items-left card border-2 bg-card rounded-lg p-4 md:justify-center overflow-x-auto">
+          <div className="md:flex md:flex-wrap gap-3 rounded-lg items-left card border-2 bg-card  p-4 md:justify-center overflow-x-auto">
             <div className="flex gap-3 items-center md:flex-wrap md:justify-center w-max md:w-auto">
             <div className="flex items-center gap-2 text-sm text-gray">
             <IconEye className="w-4 h-4" />
