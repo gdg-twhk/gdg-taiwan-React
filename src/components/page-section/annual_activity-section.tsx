@@ -17,7 +17,7 @@ import Link from "next/link";
 import { AnnualActivitySectionProps, activityMeta } from "@/entities/anaual_activity/index";
 import { useActivityContent } from "@/entities/anaual_activity/useActivityContent";
 import Image from "next/image";
-import { IconSchool, IconX, IconEye } from "@tabler/icons-react";
+import { IconSchool, IconX, IconEye, IconCalendar, IconMapPin, IconTag } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
 import { useClientOnly } from "@/components/use-client-only";
 import { ModernEventCard } from "../modern-event-card";
@@ -222,7 +222,89 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
 
       {/* 篩選區域 */}
       <section className="container mx-auto py-6">
-        <div className="flex flex-col bg-card rounded-lg border-2 p-4">
+        {/* Mobile Filter Interface */}
+        <div className="md:hidden">
+          <div className="bg-white rounded-lg border p-4 mb-4">
+            <div className="flex flex-wrap gap-2 items-center">
+              {/* Year Filter Chip */}
+              <div className="flex items-center gap-1 bg-gray-100 rounded-full px-3 py-2 text-sm">
+                <IconCalendar className="w-4 h-4 text-gray-600" />
+                <span className="text-gray-700">
+                  {filters.year === 'all' ? t('annualActivitySection.allYears') : filters.year}
+                </span>
+              </div>
+
+              {/* Cities Filter Chip */}
+              <div className="flex items-center gap-1 bg-gray-100 rounded-full px-3 py-2 text-sm">
+                <IconMapPin className="w-4 h-4 text-gray-600" />
+                <span className="text-gray-700">
+                  {filters.cities.length === 0
+                    ? t('annualActivitySection.allCities')
+                    : filters.cities.length === 1
+                      ? t('selectedCountryMap.' + filters.cities[0])
+                      : `${filters.cities.length} 個城市`
+                  }
+                </span>
+              </div>
+
+              {/* Event Types Filter Chip */}
+              <div className="flex items-center gap-1 bg-gray-100 rounded-full px-3 py-2 text-sm">
+                <IconTag className="w-4 h-4 text-gray-600" />
+                <span className="text-gray-700">
+                  {filters.eventTypes.length === 0
+                    ? t('annualActivitySection.allEventTypes')
+                    : filters.eventTypes.length === 1
+                      ? (eventTypeMap[filters.eventTypes[0] as keyof typeof eventTypeMap] || filters.eventTypes[0])
+                      : `${filters.eventTypes.length} 個類型`
+                  }
+                </span>
+              </div>
+
+              {/* Audience Types Filter Chip */}
+              {filters.audienceTypes.length > 0 && (
+                <div className="flex items-center gap-1 bg-gray-100 rounded-full px-3 py-2 text-sm">
+                  <span className="text-gray-700">
+                    {filters.audienceTypes.length === 1
+                      ? (audienceTypeMap[filters.audienceTypes[0] as keyof typeof audienceTypeMap] || filters.audienceTypes[0])
+                      : `${filters.audienceTypes.length} 個參與方式`
+                    }
+                  </span>
+                </div>
+              )}
+
+              {/* Campus Toggle */}
+              <div className="flex items-center gap-2 bg-gray-100 rounded-full px-3 py-2 text-sm">
+                <IconSchool className="w-4 h-4 text-gray-600" />
+                <span className="text-gray-700">校園活動</span>
+                <Switch
+                  checked={filters.showCampusOnly}
+                  onCheckedChange={(checked: boolean) => setFilters(prev => ({ ...prev, showCampusOnly: checked }))}
+                  className={`scale-75 ${filters.showCampusOnly ? "bg-google-green" : "bg-gray-400"}`}
+                />
+              </div>
+
+              {/* Clear All Button */}
+              {(filters.year !== 'all' || filters.cities.length > 0 || filters.eventTypes.length > 0 || filters.audienceTypes.length > 0 || filters.showCampusOnly) && (
+                <button
+                  onClick={() => setFilters({ year: 'all', cities: [], eventTypes: [], audienceTypes: [], showCampusOnly: false })}
+                  className="flex items-center gap-1 text-red-600 bg-red-50 rounded-full px-3 py-2 text-sm hover:bg-red-100 transition-colors"
+                >
+                  <IconX className="w-4 h-4" />
+                  <span>清除全部</span>
+                </button>
+              )}
+            </div>
+
+            {/* Results Count */}
+            <div className="flex items-center gap-2 text-sm text-gray-600 mt-3 pt-3 border-t">
+              <IconEye className="w-4 h-4" />
+              <span>{t('annualActivitySection.showingResults', { count: displayEvents.length })}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop Filter Interface */}
+        <div className="hidden md:flex flex-col bg-card rounded-lg border-2 p-4">
           {/* 年份篩選列 */}
           <div className="card bg-card p-4 overflow-x-auto">
             <div className="flex gap-2 items-center min-w-max">
@@ -357,25 +439,24 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
             </div>
           </div>
 
-          <div className="md:flex md:flex-wrap gap-3 rounded-lg items-left card border-2 bg-card  p-4 md:justify-center overflow-x-auto">
-            <div className="flex gap-3 items-center md:flex-wrap md:justify-center w-max md:w-auto">
-            <div className="flex items-center gap-2 text-sm text-gray">
-            <IconEye className="w-4 h-4" />
-            <span>{t('annualActivitySection.showingResults', { count: displayEvents.length })}</span>
-          </div>
-            
+          {/* Desktop Results Display */}
+          <div className="flex flex-wrap gap-3 items-center justify-between pt-4 border-t">
+            <div className="flex items-center gap-2 text-sm text-gray-600">
+              <IconEye className="w-4 h-4" />
+              <span>{t('annualActivitySection.showingResults', { count: displayEvents.length })}</span>
+            </div>
+
             {(filters.year !== 'all' || filters.cities.length > 0 || filters.eventTypes.length > 0 || filters.audienceTypes.length > 0 || filters.showCampusOnly) && (
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setFilters({ year: 'all', cities: [], eventTypes: [], audienceTypes: [], showCampusOnly: false })}
-                className="h-8 px-3 text-google-red hover:text-google-red-500"
+                className="h-8 px-3 text-red-600 hover:text-red-500 hover:bg-red-50"
               >
-                <IconX className="w-4 h-4 mr-1 text-google-red" />
+                <IconX className="w-4 h-4 mr-1" />
                 {t('annualActivitySection.clearFilters')}
               </Button>
             )}
-            </div>
           </div>
         </div>
       </section>
