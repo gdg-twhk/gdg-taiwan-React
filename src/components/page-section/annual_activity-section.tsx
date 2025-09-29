@@ -24,8 +24,7 @@ import { ModernEventCard } from "../modern-event-card";
 import { isCampusChapter, getCountyFromChapterName, sortCountryList } from "@/helper/index";
 import { Separator } from "@/components/ui/separator"
 interface FilterState {
-  timeRange: string | null; // 'all' | 'thisWeek' | 'weekend' | 'thisMonth' | 'custom'
-  customDateRange: { start: Date | null; end: Date | null } | null;
+  year: string | null; // 'all' | specific year string
   cities: string[];
   eventTypes: string[];
   showCampusOnly: boolean;
@@ -33,52 +32,15 @@ interface FilterState {
 
 
 
-function getTimeRangeFilter(timeRange: string | null, customDateRange: { start: Date | null; end: Date | null } | null) {
-  const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
-  switch (timeRange) {
-    case 'thisWeek': {
-      const startOfWeek = new Date(today);
-      startOfWeek.setDate(today.getDate() - today.getDay());
-      const endOfWeek = new Date(startOfWeek);
-      endOfWeek.setDate(startOfWeek.getDate() + 6);
-      endOfWeek.setHours(23, 59, 59, 999);
-      return { start: startOfWeek, end: endOfWeek };
-    }
-    case 'weekend': {
-      const saturday = new Date(today);
-      saturday.setDate(today.getDate() + (6 - today.getDay()));
-      const sunday = new Date(saturday);
-      sunday.setDate(saturday.getDate() + 1);
-      sunday.setHours(23, 59, 59, 999);
-      return { start: saturday, end: sunday };
-    }
-    case 'thisMonth': {
-      const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-      const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-      endOfMonth.setHours(23, 59, 59, 999);
-      return { start: startOfMonth, end: endOfMonth };
-    }
-    case 'custom':
-      return customDateRange && customDateRange.start && customDateRange.end
-        ? { start: customDateRange.start, end: customDateRange.end }
-        : null;
-    default:
-      return null;
-  }
-}
-
 function filterEvents(events: Event[], filters: FilterState): Event[] {
   return events.filter(event => {
-    // Time range filter
-    if (filters.timeRange && filters.timeRange !== 'all') {
-      const timeFilter = getTimeRangeFilter(filters.timeRange, filters.customDateRange);
-      if (timeFilter) {
-        const eventDate = new Date(event.start_date_iso);
-        if (eventDate < timeFilter.start || eventDate > timeFilter.end) {
-          return false;
-        }
+    // Year filter
+    if (filters.year && filters.year !== 'all') {
+      const eventYear = event.start_date_iso
+        ? new Date(event.start_date_iso).getFullYear().toString()
+        : "未知";
+      if (eventYear !== filters.year) {
+        return false;
       }
     }
 
@@ -112,8 +74,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
   const mounted = useClientOnly();
   const [activities, setActivities] = useState<Event[]>([]);
   const [filters, setFilters] = useState<FilterState>({
-    timeRange: 'all',
-    customDateRange: null,
+    year: 'all',
     cities: [],
     eventTypes: [],
     showCampusOnly: false,
@@ -152,8 +113,13 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
     const citySet = new Set(activities.map(event => getCountyFromChapterName(event.chapter_title)).filter(Boolean));
     const cities = sortCountryList([...citySet]);
     const eventTypes = [...new Set(activities.map(event => event.event_type_title).filter(Boolean))].sort();
+    const years = [...new Set(activities.map(event => {
+      return event.start_date_iso
+        ? new Date(event.start_date_iso).getFullYear().toString()
+        : "未知";
+    }))].sort((a, b) => b.localeCompare(a)); // Sort in descending order (newest first)
 
-    return { cities, eventTypes };
+    return { cities, eventTypes, years };
   }, [activities]);
 
   // 篩選後的活動
@@ -241,30 +207,29 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
       {/* 篩選區域 */}
       <section className="container mx-auto px-4 py-6">
         <div className="flex flex-col space-y-4">
-          {/* 時間範圍篩選列 */}
-          <div className="md:flex md:flex-wrap gap-3 items-center card border-2 bg-card rounded-lg p-4 md:justify-center overflow-x-auto">
-            <div className="flex gap-3 items-center md:flex-wrap md:justify-center w-max md:w-auto">
-            {/* 時間範圍快速篩選 */}
-            <div className="flex gap-2">
-              {(['all', 'thisWeek', 'weekend', 'thisMonth'] as const).map((timeRange) => (
-                <Button
-                  key={timeRange}
-                  variant={filters.timeRange === timeRange ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setFilters(prev => ({ ...prev, timeRange, customDateRange: null }))}
-                  className="h-10 px-4 rounded-full"
-                >
-                  {t(`annualActivitySection.${timeRange === 'all' ? 'allTime' : timeRange}`)}
-                </Button>
-              ))}
+          {/* 年份篩選列 */}
+          <div className="md:flex md:flex-wrap gap-3 items-left card border-2 bg-card rounded-lg p-4 md:justify-center overflow-x-auto">
+            {/* 年份快速篩選 */}
+            <div className="flex gap-2 flex-wrap">
               <Button
-                variant={filters.timeRange === 'custom' ? "default" : "outline"}
+                variant={filters.year === 'all' ? "default" : "outline"}
                 size="sm"
-                onClick={() => setFilters(prev => ({ ...prev, timeRange: 'custom' }))}
+                onClick={() => setFilters(prev => ({ ...prev, year: 'all' }))}
                 className="h-10 px-4 rounded-full"
               >
-                {t('annualActivitySection.customRange')}
+                {t('annualActivitySection.allYears')}
               </Button>
+              {availableOptions.years.map((year) => (
+                <Button
+                  key={year}
+                  variant={filters.year === year ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setFilters(prev => ({ ...prev, year }))}
+                  className="h-10 px-4 rounded-full"
+                >
+                  {year}
+                </Button>
+              ))}
             </div>
             <Separator />
             <div className="flex gap-2 flex-wrap">
@@ -294,13 +259,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
                 </Button>
               ))}
             </div>
-            </div>
-          </div>
-
-          {/* 活動類型篩選列 */}
-          <div className="md:flex md:flex-wrap gap-3 items-center card border-2 bg-card rounded-lg p-4 md:justify-center overflow-x-auto">
-            <div className="flex gap-3 items-center md:flex-wrap md:justify-center w-max md:w-auto">
-            {/* 活動類型快速篩選 */}
+            <Separator />
             <div className="flex gap-2 flex-wrap">
               <Button
                 variant={filters.eventTypes.length === 0 ? "default" : "outline"}
@@ -328,14 +287,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
                 </Button>
               ))}
             </div>
-            </div>
-          </div>
-
-          {/* 其他篩選器列 */}
-          <div className="md:flex md:flex-wrap gap-3 items-center card border-2 bg-card rounded-lg p-4 md:justify-center overflow-x-auto">
-            <div className="flex gap-3 items-center md:flex-wrap md:justify-center w-max md:w-auto">
-
-            {/* 校園活動開關 */}
+            <Separator />
             <div className="flex items-center gap-3 px-4 py-2 h-10 bg-white border border-gray-300 rounded-full shadow-sm hover:shadow-md transition-shadow">
               <IconSchool className="w-4 h-4 text-gray-500" />
               <span className="text-sm font-medium text-gray-700">
@@ -344,29 +296,30 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
               <Switch
                 checked={filters.showCampusOnly}
                 onCheckedChange={(checked: boolean) => setFilters(prev => ({ ...prev, showCampusOnly: checked }))}
-                className={filters.showCampusOnly ? "bg-green-500" : "bg-blue-500"}
+                className={filters.showCampusOnly ? "bg-google-green" : "bg-google-blue"}
               />
             </div>
+          </div>
 
-            {/* 清除全部按鈕 */}
-            {(filters.timeRange !== 'all' || filters.cities.length > 0 || filters.eventTypes.length > 0 || filters.showCampusOnly) && (
+          <div className="md:flex md:flex-wrap gap-3 items-left card border-2 bg-card rounded-lg p-4 md:justify-center overflow-x-auto">
+            <div className="flex gap-3 items-center md:flex-wrap md:justify-center w-max md:w-auto">
+            <div className="flex items-center gap-2 text-sm text-gray">
+            <IconEye className="w-4 h-4" />
+            <span>{t('annualActivitySection.showingResults', { count: displayEvents.length })}</span>
+          </div>
+            
+            {(filters.year !== 'all' || filters.cities.length > 0 || filters.eventTypes.length > 0 || filters.showCampusOnly) && (
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setFilters({ timeRange: 'all', customDateRange: null, cities: [], eventTypes: [], showCampusOnly: false })}
-                className="h-8 px-3 text-gray-600 hover:text-gray-900"
+                onClick={() => setFilters({ year: 'all', cities: [], eventTypes: [], showCampusOnly: false })}
+                className="h-8 px-3 text-google-red hover:text-google-red-500"
               >
-                <IconX className="w-4 h-4 mr-1" />
+                <IconX className="w-4 h-4 mr-1 text-google-red" />
                 {t('annualActivitySection.clearFilters')}
               </Button>
             )}
             </div>
-          </div>
-
-          {/* 瀏覽統計 */}
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <IconEye className="w-4 h-4" />
-            <span>{t('annualActivitySection.showingResults', { count: displayEvents.length })}</span>
           </div>
         </div>
       </section>
