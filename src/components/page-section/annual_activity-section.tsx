@@ -310,7 +310,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
 
       {/* Sticky Year Header */}
       <div
-        className={`fixed top-16 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
           stickyYear
             ? 'translate-y-0 opacity-100'
             : '-translate-y-full opacity-0'
@@ -332,16 +332,11 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
                     <div className="text-lg md:text-xl font-semibold text-foreground transition-all duration-300 hover:text-primary">
                       {stickyYear || ''}{t('annualActivitySection.yearSuffix')}
                     </div>
-                    {/* Subtle glow effect - only on desktop */}
-                    <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 hover:opacity-100 transition-opacity duration-300 hidden md:block"></div>
                   </div>
 
                   {/* Mobile: Simple divider lines, Desktop: Gradient lines */}
                   <div className="flex-1 h-px bg-border md:bg-gradient-to-l md:from-transparent md:via-primary/60 md:to-primary"></div>
                 </div>
-
-                {/* Bottom accent line - only on desktop */}
-                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 md:w-24 h-0.5 bg-primary/30 md:bg-gradient-to-r md:from-primary/40 md:via-primary md:to-primary/40 rounded-full hidden md:block md:animate-pulse"></div>
               </div>
             )}
           </div>
@@ -379,13 +374,6 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
 
                         {/* Mobile: Simple lines, Desktop: Gradient lines */}
                         <div className="flex-1 h-px bg-border md:bg-gradient-to-l md:from-transparent md:via-primary/40 md:to-primary/70"></div>
-                      </div>
-
-                      {/* Bottom decorative elements - only on desktop */}
-                      <div className="justify-center mt-3 space-x-2 hidden md:flex">
-                        <div className="w-2 h-2 bg-primary/30 rounded-full animate-pulse"></div>
-                        <div className="w-1 h-1 bg-primary/50 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                        <div className="w-2 h-2 bg-primary/30 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
                       </div>
                     </div>
                   </div>
