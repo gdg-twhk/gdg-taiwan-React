@@ -23,6 +23,10 @@ export const metadata = {
         "devfest": {
             "title": "DevFest | Google Developer Groups Taiwan",
             "description": "DevFest는 전 세계 Google Developer Groups(GDG)가 주최하는 지역 기술 컨퍼런스입니다. 현지 주최자는 커뮤니티의 요구에 따라 행사를 기획하며, 실습 경험부터 전문가 기술 강연까지, Google 오픈소스 기술과 개발 도구를 사용해 참가자들이 협력하고 혁신할 수 있도록 이끕니다."
+        },
+        "build_with_ai": {
+            "title": "Build with AI | Google Developer Groups Taiwan",
+            "description": "모든 기술 수준의 개발자들이 Google의 최신 AI 기술을 배우고 구축할 수 있는 이벤트입니다. 핸즈온 워크숍과 Google 전문가의 강연을 통해 생성형 AI를 탐색해 보세요."
         }
     },
     "chapters": {
