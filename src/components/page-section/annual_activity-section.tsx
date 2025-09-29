@@ -17,18 +17,26 @@ import Link from "next/link";
 import { AnnualActivitySectionProps, activityMeta } from "@/entities/anaual_activity/index";
 import { useActivityContent } from "@/entities/anaual_activity/useActivityContent";
 import Image from "next/image";
-import { IconSchool, IconX, IconEye, IconCalendar, IconMapPin, IconTag } from "@tabler/icons-react";
+import { IconSchool, IconX, IconEye, IconCalendar, IconMapPin, IconTag, IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
 import { useClientOnly } from "@/components/use-client-only";
 import { ModernEventCard } from "../modern-event-card";
 import { isCampusChapter, getCountyFromChapterName, sortCountryList } from "@/helper/index";
 import { Separator } from "@/components/ui/separator"
+import { Checkbox } from "@/components/ui/checkbox"
 interface FilterState {
   year: string | null; // 'all' | specific year string
   cities: string[];
   eventTypes: string[];
   audienceTypes: string[];
   showCampusOnly: boolean;
+}
+
+interface MobileFilterExpanded {
+  year: boolean;
+  cities: boolean;
+  eventTypes: boolean;
+  audienceTypes: boolean;
 }
 
 
@@ -87,6 +95,12 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
     eventTypes: [],
     audienceTypes: [],
     showCampusOnly: false,
+  });
+  const [mobileExpanded, setMobileExpanded] = useState<MobileFilterExpanded>({
+    year: false,
+    cities: false,
+    eventTypes: false,
+    audienceTypes: false,
   });
   const { t } = useTranslation();
   const content = useActivityContent();
@@ -223,80 +237,213 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
       {/* 篩選區域 */}
       <section className="container mx-auto py-6">
         {/* Mobile Filter Interface */}
-        <div className="md:hidden">
-          <div className="bg-white rounded-lg border p-4 mb-4">
-            <div className="flex flex-wrap gap-2 items-center">
-              {/* Year Filter Chip */}
-              <div className="flex items-center gap-1 bg-gray-100 rounded-full px-3 py-2 text-sm">
-                <IconCalendar className="w-4 h-4 text-gray-600" />
-                <span className="text-gray-700">
-                  {filters.year === 'all' ? t('annualActivitySection.allYears') : filters.year}
-                </span>
-              </div>
-
-              {/* Cities Filter Chip */}
-              <div className="flex items-center gap-1 bg-gray-100 rounded-full px-3 py-2 text-sm">
-                <IconMapPin className="w-4 h-4 text-gray-600" />
-                <span className="text-gray-700">
-                  {filters.cities.length === 0
-                    ? t('annualActivitySection.allCities')
-                    : filters.cities.length === 1
-                      ? t('selectedCountryMap.' + filters.cities[0])
-                      : `${filters.cities.length} 個城市`
-                  }
-                </span>
-              </div>
-
-              {/* Event Types Filter Chip */}
-              <div className="flex items-center gap-1 bg-gray-100 rounded-full px-3 py-2 text-sm">
-                <IconTag className="w-4 h-4 text-gray-600" />
-                <span className="text-gray-700">
-                  {filters.eventTypes.length === 0
-                    ? t('annualActivitySection.allEventTypes')
-                    : filters.eventTypes.length === 1
-                      ? (eventTypeMap[filters.eventTypes[0] as keyof typeof eventTypeMap] || filters.eventTypes[0])
-                      : `${filters.eventTypes.length} 個類型`
-                  }
-                </span>
-              </div>
-
-              {/* Audience Types Filter Chip */}
-              {filters.audienceTypes.length > 0 && (
-                <div className="flex items-center gap-1 bg-gray-100 rounded-full px-3 py-2 text-sm">
+        <div className="md:hidden  px-4">
+          <div className="bg-white rounded-lg border p-4 mb-4 space-y-3">
+            {/* Year Filter */}
+            <div>
+              <button
+                onClick={() => setMobileExpanded(prev => ({ ...prev, year: !prev.year }))}
+                className="w-full flex items-center justify-between bg-gray-100 rounded-lg px-3 py-2 text-sm"
+              >
+                <div className="flex items-center gap-2">
+                  <IconCalendar className="w-4 h-4 text-gray-600" />
                   <span className="text-gray-700">
-                    {filters.audienceTypes.length === 1
-                      ? (audienceTypeMap[filters.audienceTypes[0] as keyof typeof audienceTypeMap] || filters.audienceTypes[0])
-                      : `${filters.audienceTypes.length} 個參與方式`
-                    }
+                    {filters.year === 'all' ? t('annualActivitySection.allYears') : filters.year}
                   </span>
                 </div>
-              )}
-
-              {/* Campus Toggle */}
-              <div className="flex items-center gap-2 bg-gray-100 rounded-full px-3 py-2 text-sm">
-                <IconSchool className="w-4 h-4 text-gray-600" />
-                <span className="text-gray-700">校園活動</span>
-                <Switch
-                  checked={filters.showCampusOnly}
-                  onCheckedChange={(checked: boolean) => setFilters(prev => ({ ...prev, showCampusOnly: checked }))}
-                  className={`scale-75 ${filters.showCampusOnly ? "bg-google-green" : "bg-gray-400"}`}
-                />
-              </div>
-
-              {/* Clear All Button */}
-              {(filters.year !== 'all' || filters.cities.length > 0 || filters.eventTypes.length > 0 || filters.audienceTypes.length > 0 || filters.showCampusOnly) && (
-                <button
-                  onClick={() => setFilters({ year: 'all', cities: [], eventTypes: [], audienceTypes: [], showCampusOnly: false })}
-                  className="flex items-center gap-1 text-red-600 bg-red-50 rounded-full px-3 py-2 text-sm hover:bg-red-100 transition-colors"
-                >
-                  <IconX className="w-4 h-4" />
-                  <span>清除全部</span>
-                </button>
+                {mobileExpanded.year ? <IconChevronUp className="w-4 h-4" /> : <IconChevronDown className="w-4 h-4" />}
+              </button>
+              {mobileExpanded.year && (
+                <div className="mt-2 space-y-2 pl-4">
+                  <label className="flex items-center space-x-2">
+                    <Checkbox
+                      checked={filters.year === 'all'}
+                      onCheckedChange={() => setFilters(prev => ({ ...prev, year: 'all' }))}
+                    />
+                    <span className="text-sm">{t('annualActivitySection.allYears')}</span>
+                  </label>
+                  {availableOptions.years.map((year) => (
+                    <label key={year} className="flex items-center space-x-2">
+                      <Checkbox
+                        checked={filters.year === year}
+                        onCheckedChange={() => setFilters(prev => ({ ...prev, year }))}
+                      />
+                      <span className="text-sm">{year}</span>
+                    </label>
+                  ))}
+                </div>
               )}
             </div>
 
+            {/* Cities Filter */}
+            <div>
+              <button
+                onClick={() => setMobileExpanded(prev => ({ ...prev, cities: !prev.cities }))}
+                className="w-full flex items-center justify-between bg-gray-100 rounded-lg px-3 py-2 text-sm"
+              >
+                <div className="flex items-center gap-2">
+                  <IconMapPin className="w-4 h-4 text-gray-600" />
+                  <span className="text-gray-700">
+                    {filters.cities.length === 0
+                      ? t('annualActivitySection.allCities')
+                      : filters.cities.length === 1
+                        ? t('selectedCountryMap.' + filters.cities[0])
+                        : `${filters.cities.length} 個城市`
+                    }
+                  </span>
+                </div>
+                {mobileExpanded.cities ? <IconChevronUp className="w-4 h-4" /> : <IconChevronDown className="w-4 h-4" />}
+              </button>
+              {mobileExpanded.cities && (
+                <div className="mt-2 space-y-2 pl-4">
+                  <label className="flex items-center space-x-2">
+                    <Checkbox
+                      checked={filters.cities.length === 0}
+                      onCheckedChange={() => setFilters(prev => ({ ...prev, cities: [] }))}
+                    />
+                    <span className="text-sm">{t('annualActivitySection.allCities')}</span>
+                  </label>
+                  {availableOptions.cities.map((city) => (
+                    <label key={city} className="flex items-center space-x-2">
+                      <Checkbox
+                        checked={filters.cities.includes(city)}
+                        onCheckedChange={(checked) => {
+                          if (checked) {
+                            setFilters(prev => ({ ...prev, cities: [...prev.cities, city] }));
+                          } else {
+                            setFilters(prev => ({ ...prev, cities: prev.cities.filter(c => c !== city) }));
+                          }
+                        }}
+                      />
+                      <span className="text-sm">{t('selectedCountryMap.' + city)}</span>
+                    </label>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Event Types Filter */}
+            <div>
+              <button
+                onClick={() => setMobileExpanded(prev => ({ ...prev, eventTypes: !prev.eventTypes }))}
+                className="w-full flex items-center justify-between bg-gray-100 rounded-lg px-3 py-2 text-sm"
+              >
+                <div className="flex items-center gap-2">
+                  <IconTag className="w-4 h-4 text-gray-600" />
+                  <span className="text-gray-700">
+                    {filters.eventTypes.length === 0
+                      ? t('annualActivitySection.allEventTypes')
+                      : filters.eventTypes.length === 1
+                        ? (eventTypeMap[filters.eventTypes[0] as keyof typeof eventTypeMap] || filters.eventTypes[0])
+                        : `${filters.eventTypes.length} 個類型`
+                    }
+                  </span>
+                </div>
+                {mobileExpanded.eventTypes ? <IconChevronUp className="w-4 h-4" /> : <IconChevronDown className="w-4 h-4" />}
+              </button>
+              {mobileExpanded.eventTypes && (
+                <div className="mt-2 space-y-2 pl-4">
+                  <label className="flex items-center space-x-2">
+                    <Checkbox
+                      checked={filters.eventTypes.length === 0}
+                      onCheckedChange={() => setFilters(prev => ({ ...prev, eventTypes: [] }))}
+                    />
+                    <span className="text-sm">{t('annualActivitySection.allEventTypes')}</span>
+                  </label>
+                  {availableOptions.eventTypes.map((type) => (
+                    <label key={type} className="flex items-center space-x-2">
+                      <Checkbox
+                        checked={filters.eventTypes.includes(type)}
+                        onCheckedChange={(checked) => {
+                          if (checked) {
+                            setFilters(prev => ({ ...prev, eventTypes: [...prev.eventTypes, type] }));
+                          } else {
+                            setFilters(prev => ({ ...prev, eventTypes: prev.eventTypes.filter(t => t !== type) }));
+                          }
+                        }}
+                      />
+                      <span className="text-sm">{eventTypeMap[type as keyof typeof eventTypeMap] || type}</span>
+                    </label>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Audience Types Filter */}
+            <div>
+              <button
+                onClick={() => setMobileExpanded(prev => ({ ...prev, audienceTypes: !prev.audienceTypes }))}
+                className="w-full flex items-center justify-between bg-gray-100 rounded-lg px-3 py-2 text-sm"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-700">
+                    {filters.audienceTypes.length === 0
+                      ? t('annualActivitySection.allAudienceTypes')
+                      : filters.audienceTypes.length === 1
+                        ? (audienceTypeMap[filters.audienceTypes[0] as keyof typeof audienceTypeMap] || filters.audienceTypes[0])
+                        : `${filters.audienceTypes.length} 個參與方式`
+                    }
+                  </span>
+                </div>
+                {mobileExpanded.audienceTypes ? <IconChevronUp className="w-4 h-4" /> : <IconChevronDown className="w-4 h-4" />}
+              </button>
+              {mobileExpanded.audienceTypes && (
+                <div className="mt-2 space-y-2 pl-4">
+                  <label className="flex items-center space-x-2">
+                    <Checkbox
+                      checked={filters.audienceTypes.length === 0}
+                      onCheckedChange={() => setFilters(prev => ({ ...prev, audienceTypes: [] }))}
+                    />
+                    <span className="text-sm">{t('annualActivitySection.allAudienceTypes')}</span>
+                  </label>
+                  {availableOptions.audienceTypes.map((type) => (
+                    <label key={type} className="flex items-center space-x-2">
+                      <Checkbox
+                        checked={filters.audienceTypes.includes(type)}
+                        onCheckedChange={(checked) => {
+                          if (checked) {
+                            setFilters(prev => ({ ...prev, audienceTypes: [...prev.audienceTypes, type] }));
+                          } else {
+                            setFilters(prev => ({ ...prev, audienceTypes: prev.audienceTypes.filter(t => t !== type) }));
+                          }
+                        }}
+                      />
+                      <span className="text-sm">{audienceTypeMap[type as keyof typeof audienceTypeMap] || type}</span>
+                    </label>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Campus Toggle */}
+            <div className="flex items-center justify-between bg-gray-100 rounded-lg px-3 py-2">
+              <div className="flex items-center gap-2">
+                <IconSchool className="w-4 h-4 text-gray-600" />
+                <span className="text-sm text-gray-700">校園活動</span>
+              </div>
+              <Switch
+                checked={filters.showCampusOnly}
+                onCheckedChange={(checked: boolean) => setFilters(prev => ({ ...prev, showCampusOnly: checked }))}
+                className={`${filters.showCampusOnly ? "bg-google-green" : "bg-gray-400"}`}
+              />
+            </div>
+
+            {/* Clear All Button */}
+            {(filters.year !== 'all' || filters.cities.length > 0 || filters.eventTypes.length > 0 || filters.audienceTypes.length > 0 || filters.showCampusOnly) && (
+              <button
+                onClick={() => {
+                  setFilters({ year: 'all', cities: [], eventTypes: [], audienceTypes: [], showCampusOnly: false });
+                  setMobileExpanded({ year: false, cities: false, eventTypes: false, audienceTypes: false });
+                }}
+                className="w-full flex items-center justify-center gap-2 text-red-600 bg-red-50 rounded-lg px-3 py-2 text-sm hover:bg-red-100 transition-colors"
+              >
+                <IconX className="w-4 h-4" />
+                <span>清除全部</span>
+              </button>
+            )}
+
             {/* Results Count */}
-            <div className="flex items-center gap-2 text-sm text-gray-600 mt-3 pt-3 border-t">
+            <div className="flex items-center gap-2 text-sm text-gray-600 pt-3 border-t">
               <IconEye className="w-4 h-4" />
               <span>{t('annualActivitySection.showingResults', { count: displayEvents.length })}</span>
             </div>
