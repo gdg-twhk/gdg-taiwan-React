@@ -28,7 +28,11 @@ export function EventCard( {eventObject}: {eventObject: Event}) {
     "Speaker Session / Tech Talk": t('eventTypeMap.SpeakerSessionTechTalk'),
     "Test Event - use to test creating an event page": t('eventTypeMap.TestEvent'),
     "Women's Online Safety Program": t('eventTypeMap.WomenOnlineSafetyProgram'),
-    "Google Hosted Summit": t('eventTypeMap.GoogleHostedSummit')
+    "Google Hosted Summit": t('eventTypeMap.GoogleHostedSummit'),
+    "Hands on workshop - Virtual": t('eventTypeMap.HandsOnWorkshopVirtual'),
+    "International Women's Day": t('eventTypeMap.InternationalWomensDay'),
+    "Speaker Session/ Tech Talk - Virtual": t('eventTypeMap.SpeakerSessionTechTalkVirtual'),
+    "DevFest Co-Host": t('eventTypeMap.DevFestCoHost')
   }
 
   const audienceTypeMap = {

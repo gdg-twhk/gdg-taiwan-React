@@ -105,7 +105,11 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
     "Speaker Session / Tech Talk": t('eventTypeMap.SpeakerSessionTechTalk'),
     "Test Event - use to test creating an event page": t('eventTypeMap.TestEvent'),
     "Women's Online Safety Program": t('eventTypeMap.WomenOnlineSafetyProgram'),
-    "Google Hosted Summit": t('eventTypeMap.GoogleHostedSummit')
+    "Google Hosted Summit": t('eventTypeMap.GoogleHostedSummit'),
+    "Hands on workshop - Virtual": t('eventTypeMap.HandsOnWorkshopVirtual'),
+    "International Women's Day": t('eventTypeMap.InternationalWomensDay'),
+    "Speaker Session/ Tech Talk - Virtual": t('eventTypeMap.SpeakerSessionTechTalkVirtual'),
+    "DevFest Co-Host": t('eventTypeMap.DevFestCoHost')
   }
 
   const audienceTypeMap = {
@@ -306,22 +310,41 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
 
       {/* Sticky Year Header */}
       <div
-        className={`fixed top-14 left-0 right-0 z-40 bg-background border-b-3 shadow-sm transition-all duration-300 ease-in-out ${
+        className={`fixed top-16 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
           stickyYear
             ? 'translate-y-0 opacity-100'
             : '-translate-y-full opacity-0'
         }`}
       >
-        <div className="container mx-auto px-4">
-          {(displayEvents.sortedYears.length > 1 || filters.year !== 'all') && (
-            <div className="flex items-center justify-center mb-4 mt-4">
-              <div className="flex-1 border-t border-primary"></div>
-              <div className="mx-4 text-xl font-semibold px-4 transition-all duration-200">
-                {stickyYear || ''}{t('annualActivitySection.yearSuffix')}
+        {/* Background with blur effect and gradient border */}
+        <div className="bg-background/95 backdrop-blur-sm border-b border-border/50 shadow-lg">
+          {/* Inner container with responsive styling */}
+          <div className="container mx-auto px-4">
+            {(displayEvents.sortedYears.length > 1 || filters.year !== 'all') && (
+              <div className="relative py-2 md:py-4">
+                {/* Mobile-first responsive design */}
+                <div className="flex items-center justify-center">
+                  {/* Mobile: Simple divider lines, Desktop: Gradient lines */}
+                  <div className="flex-1 h-px bg-border md:bg-gradient-to-r md:from-transparent md:via-primary/60 md:to-primary"></div>
+
+                  {/* Year text with responsive styling */}
+                  <div className="relative mx-3 md:mx-6 px-3 md:px-6 py-1 md:py-2 bg-background rounded-full border border-border/50 shadow-sm">
+                    <div className="text-lg md:text-xl font-semibold text-foreground transition-all duration-300 hover:text-primary">
+                      {stickyYear || ''}{t('annualActivitySection.yearSuffix')}
+                    </div>
+                    {/* Subtle glow effect - only on desktop */}
+                    <div className="absolute inset-0 bg-primary/5 rounded-full opacity-0 hover:opacity-100 transition-opacity duration-300 hidden md:block"></div>
+                  </div>
+
+                  {/* Mobile: Simple divider lines, Desktop: Gradient lines */}
+                  <div className="flex-1 h-px bg-border md:bg-gradient-to-l md:from-transparent md:via-primary/60 md:to-primary"></div>
+                </div>
+
+                {/* Bottom accent line - only on desktop */}
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 md:w-24 h-0.5 bg-primary/30 md:bg-gradient-to-r md:from-primary/40 md:via-primary md:to-primary/40 rounded-full hidden md:block md:animate-pulse"></div>
               </div>
-              <div className="flex-1 border-t border-primary"></div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
 
@@ -331,24 +354,45 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
             displayEvents.sortedYears.map((year) => (
               <div
                 key={year}
-                className="w-full"
+                className="w-full scroll-mt-32"
                 ref={(el) => {
                   yearRefs.current[year] = el;
                 }}
               >
-                {/* Year separator - only show if multiple years or not showing all years */}
+                {/* Year separator with responsive design - only show if multiple years or not showing all years */}
                 {(displayEvents.sortedYears.length > 1 || filters.year !== 'all') && (
-                  <div className="flex items-center justify-center mb-8 mt-8">
-                    <div className="flex-1 border-t border-primary"></div>
-                    <div className="mx-4 text-xl font-semibold px-4">
-                      {year}{t('annualActivitySection.yearSuffix')}
+                  <div className="relative my-8 md:my-12">
+                    {/* Mobile: Simple card, Desktop: Enhanced card */}
+                    <div className="bg-background/30 md:bg-background/50 backdrop-blur-sm rounded-lg border border-border/30 p-4 md:p-6 shadow-sm md:shadow-md">
+                      <div className="flex items-center justify-center">
+                        {/* Mobile: Simple lines, Desktop: Gradient lines */}
+                        <div className="flex-1 h-px bg-border md:bg-gradient-to-r md:from-transparent md:via-primary/40 md:to-primary/70"></div>
+
+                        {/* Year text with responsive styling */}
+                        <div className="relative mx-4 md:mx-8 px-4 md:px-6 py-2 md:py-3 bg-primary/10 rounded-full border border-primary/20">
+                          <div className="text-xl md:text-2xl font-bold text-primary transition-all duration-300 hover:text-primary/80">
+                            {year}{t('annualActivitySection.yearSuffix')}
+                          </div>
+                          {/* Subtle shine effect - only on desktop */}
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent rounded-full opacity-0 hover:opacity-100 transition-opacity duration-300 hidden md:block"></div>
+                        </div>
+
+                        {/* Mobile: Simple lines, Desktop: Gradient lines */}
+                        <div className="flex-1 h-px bg-border md:bg-gradient-to-l md:from-transparent md:via-primary/40 md:to-primary/70"></div>
+                      </div>
+
+                      {/* Bottom decorative elements - only on desktop */}
+                      <div className="justify-center mt-3 space-x-2 hidden md:flex">
+                        <div className="w-2 h-2 bg-primary/30 rounded-full animate-pulse"></div>
+                        <div className="w-1 h-1 bg-primary/50 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                        <div className="w-2 h-2 bg-primary/30 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                      </div>
                     </div>
-                    <div className="flex-1 border-t border-primary"></div>
                   </div>
                 )}
 
-                {/* Events grid for this year */}
-                <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 w-full mb-12`}>
+                {/* Events grid for this year with responsive spacing */}
+                <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 w-full mb-12 md:mb-16`}>
                   {Object.values(displayEvents.eventsByYear[year])
                     .sort((a, b) => new Date(b.start_date_iso).getTime() - new Date(a.start_date_iso).getTime())
                     .map((event: Event) => (
