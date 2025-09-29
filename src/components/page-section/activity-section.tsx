@@ -2,7 +2,7 @@
 
 import { AddToCalendarButton } from 'add-to-calendar-button-react';
 import React, { useState, useEffect } from "react";
-import {getUpcomingEvents} from "@/api/bevy";
+import {getEvents} from "@/api/bevy";
 import { Event } from "@/interfaces";
 import { SidebarHeader, SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { CardDescription } from "@/components/ui/card";
@@ -37,8 +37,8 @@ export default function ActivitySection() {
   // 取得所有活動
   useEffect(() => {
     async function fetchEvents() {
-      const events = await getUpcomingEvents();
-      setEvents(events || []);
+      const events = await getEvents();
+      setEvents(events);
       const eventsByDate = collectEventsByDate(events);
       setEventsByDate(eventsByDate);
       const dates = sortEventsByDate(Object.keys(eventsByDate));
