@@ -28,4 +28,5 @@ export const annualActivitySection = {
     selectDateRange: "Select Date Range",
     selectedCities: "{{count}} cities selected",
     selectedEventTypes: "{{count}} types selected",
+    allAudienceTypes: "All Audience Types",
 }

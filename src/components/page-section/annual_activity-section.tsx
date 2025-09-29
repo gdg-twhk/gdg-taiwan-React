@@ -27,6 +27,7 @@ interface FilterState {
   year: string | null; // 'all' | specific year string
   cities: string[];
   eventTypes: string[];
+  audienceTypes: string[];
   showCampusOnly: boolean;
 }
 
@@ -59,6 +60,13 @@ function filterEvents(events: Event[], filters: FilterState): Event[] {
       }
     }
 
+    // Audience types filter (multi-select)
+    if (filters.audienceTypes.length > 0) {
+      if (!event.audience_type || !filters.audienceTypes.includes(event.audience_type)) {
+        return false;
+      }
+    }
+
     // Campus filter
     if (filters.showCampusOnly) {
       if (!isCampusChapter(event.chapter_title)) {
@@ -77,6 +85,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
     year: 'all',
     cities: [],
     eventTypes: [],
+    audienceTypes: [],
     showCampusOnly: false,
   });
   const { t } = useTranslation();
@@ -96,6 +105,12 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
     "Google Hosted Summit": t('eventTypeMap.GoogleHostedSummit')
   }
 
+  const audienceTypeMap = {
+    "Virtual": t('audienceTypeMap.Virtual'),
+    "In-person": t('audienceTypeMap.In-person'),
+    "Hybrid": t('audienceTypeMap.Hybrid')
+  }
+
 
   // 取得所有活動
   useEffect(() => {
@@ -113,13 +128,14 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
     const citySet = new Set(activities.map(event => getCountyFromChapterName(event.chapter_title)).filter(Boolean));
     const cities = sortCountryList([...citySet]);
     const eventTypes = [...new Set(activities.map(event => event.event_type_title).filter(Boolean))].sort();
+    const audienceTypes = [...new Set(activities.map(event => event.audience_type).filter(Boolean))].sort();
     const years = [...new Set(activities.map(event => {
       return event.start_date_iso
         ? new Date(event.start_date_iso).getFullYear().toString()
         : "未知";
     }))].sort((a, b) => b.localeCompare(a)); // Sort in descending order (newest first)
 
-    return { cities, eventTypes, years };
+    return { cities, eventTypes, audienceTypes, years };
   }, [activities]);
 
   // 篩選後的活動
@@ -208,7 +224,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
       <section className="container mx-auto px-4 py-6">
         <div className="flex flex-col space-y-4">
           {/* 年份篩選列 */}
-          <div className="md:flex md:flex-wrap gap-3 items-left card border-2 bg-card rounded-lg p-4 md:justify-center overflow-x-auto">
+          <div className="md:flex md:flex-wrap gap-3 items-left card border-2 bg-card rounded-lg p-4 md:justify-start overflow-x-auto">
             {/* 年份快速篩選 */}
             <div className="flex gap-2 flex-wrap">
               <Button
@@ -219,6 +235,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
               >
                 {t('annualActivitySection.allYears')}
               </Button>
+              <Separator orientation="vertical" />
               {availableOptions.years.map((year) => (
                 <Button
                   key={year}
@@ -241,6 +258,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
               >
                 {t('annualActivitySection.allCities')}
               </Button>
+              <Separator orientation="vertical" />
               {availableOptions.cities.map((city) => (
                 <Button
                   key={city}
@@ -269,6 +287,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
               >
                 {t('annualActivitySection.allEventTypes')}
               </Button>
+              <Separator orientation="vertical" />
               {availableOptions.eventTypes.map((type) => (
                 <Button
                   key={type}
@@ -284,6 +303,35 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
                   className="h-10 px-4 rounded-full"
                 >
                   {eventTypeMap[type as keyof typeof eventTypeMap] || type}
+                </Button>
+              ))}
+            </div>
+            <Separator />
+            <div className="flex gap-2 flex-wrap">
+              <Button
+                variant={filters.audienceTypes.length === 0 ? "default" : "outline"}
+                size="sm"
+                onClick={() => setFilters(prev => ({ ...prev, audienceTypes: [] }))}
+                className="h-10 px-4 rounded-full"
+              >
+                {t('annualActivitySection.allAudienceTypes')}
+              </Button>
+              <Separator orientation="vertical" />
+              {availableOptions.audienceTypes.map((type) => (
+                <Button
+                  key={type}
+                  variant={filters.audienceTypes.includes(type) ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => {
+                    if (filters.audienceTypes.includes(type)) {
+                      setFilters(prev => ({ ...prev, audienceTypes: prev.audienceTypes.filter(t => t !== type) }));
+                    } else {
+                      setFilters(prev => ({ ...prev, audienceTypes: [...prev.audienceTypes, type] }));
+                    }
+                  }}
+                  className="h-10 px-4 rounded-full"
+                >
+                  {audienceTypeMap[type as keyof typeof audienceTypeMap] || type}
                 </Button>
               ))}
             </div>
@@ -308,11 +356,11 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
             <span>{t('annualActivitySection.showingResults', { count: displayEvents.length })}</span>
           </div>
             
-            {(filters.year !== 'all' || filters.cities.length > 0 || filters.eventTypes.length > 0 || filters.showCampusOnly) && (
+            {(filters.year !== 'all' || filters.cities.length > 0 || filters.eventTypes.length > 0 || filters.audienceTypes.length > 0 || filters.showCampusOnly) && (
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setFilters({ year: 'all', cities: [], eventTypes: [], showCampusOnly: false })}
+                onClick={() => setFilters({ year: 'all', cities: [], eventTypes: [], audienceTypes: [], showCampusOnly: false })}
                 className="h-8 px-3 text-google-red hover:text-google-red-500"
               >
                 <IconX className="w-4 h-4 mr-1 text-google-red" />

@@ -28,4 +28,5 @@ export const annualActivitySection = {
     selectDateRange: "날짜 범위 선택",
     selectedCities: "{{count}}개 도시 선택",
     selectedEventTypes: "{{count}}개 유형 선택",
+    allAudienceTypes: "모든 참여자 유형",
 }
