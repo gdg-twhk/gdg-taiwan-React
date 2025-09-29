@@ -22,6 +22,7 @@ import { useTranslation } from "react-i18next";
 import { useClientOnly } from "@/components/use-client-only";
 import { ModernEventCard } from "../modern-event-card";
 import { isCampusChapter, getCountyFromChapterName, sortCountryList } from "@/helper/index";
+import { Separator } from "@/components/ui/separator";
 interface FilterState {
   year: string | null; // 'all' | specific year string
   cities: string[];
@@ -224,7 +225,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
         <div className="flex flex-col space-y-4">
           {/* 年份篩選列 */}
           <div className="card border-2 bg-card rounded-lg p-4 overflow-x-auto">
-            <div className="flex gap-2 flex-wrap min-w-max">
+            <div className="flex gap-2 items-center min-w-max">
               <Button
                 variant={filters.year === 'all' ? "default" : "outline"}
                 size="sm"
@@ -233,6 +234,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
               >
                 {t('annualActivitySection.allYears')}
               </Button>
+              <Separator orientation="vertical" className="h-6 mx-2 flex-shrink-0" />
               {availableOptions.years.map((year) => (
                 <Button
                   key={year}
@@ -249,7 +251,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
 
           {/* 分會城市篩選列 */}
           <div className="card border-2 bg-card rounded-lg p-4 overflow-x-auto">
-            <div className="flex gap-2 flex-wrap min-w-max">
+            <div className="flex gap-2 items-center min-w-max">
               <Button
                 variant={filters.cities.length === 0 ? "default" : "outline"}
                 size="sm"
@@ -258,6 +260,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
               >
                 {t('annualActivitySection.allCities')}
               </Button>
+              <Separator orientation="vertical" className="h-6 mx-2 flex-shrink-0" />
               {availableOptions.cities.map((city) => (
                 <Button
                   key={city}
@@ -280,7 +283,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
 
           {/* 活動類型篩選列 */}
           <div className="card border-2 bg-card rounded-lg p-4 overflow-x-auto">
-            <div className="flex gap-2 flex-wrap min-w-max">
+            <div className="flex gap-2 items-center min-w-max">
               <Button
                 variant={filters.eventTypes.length === 0 ? "default" : "outline"}
                 size="sm"
@@ -289,6 +292,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
               >
                 {t('annualActivitySection.allEventTypes')}
               </Button>
+              <Separator orientation="vertical" className="h-6 mx-2 flex-shrink-0" />
               {availableOptions.eventTypes.map((type) => (
                 <Button
                   key={type}
@@ -311,7 +315,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
 
           {/* 參與者類型篩選列 */}
           <div className="card border-2 bg-card rounded-lg p-4 overflow-x-auto">
-            <div className="flex gap-2 flex-wrap min-w-max">
+            <div className="flex gap-2 items-center min-w-max">
               <Button
                 variant={filters.audienceTypes.length === 0 ? "default" : "outline"}
                 size="sm"
@@ -320,6 +324,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
               >
                 {t('annualActivitySection.allAudienceTypes')}
               </Button>
+              <Separator orientation="vertical" className="h-6 mx-2 flex-shrink-0" />
               {availableOptions.audienceTypes.map((type) => (
                 <Button
                   key={type}
