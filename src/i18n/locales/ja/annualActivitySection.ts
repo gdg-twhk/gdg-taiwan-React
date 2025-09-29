@@ -17,7 +17,6 @@ export const annualActivitySection = {
     clearFilters: "すべてクリア",
     noEvents: "条件に一致するイベントが見つかりません",
     showingResults: "{{count}}件のイベントを表示中",
-    // New time-based filter translations
     timeRange: "期間",
     allTime: "全期間",
     thisWeek: "今週",
@@ -29,4 +28,6 @@ export const annualActivitySection = {
     selectedCities: "{{count}}都市選択中",
     selectedEventTypes: "{{count}}種類選択中",
     allAudienceTypes: "全対象者タイプ",
+    selectedAudienceTypes: "{{count}}の参加方法選択中",
+    audienceType: "参加方法",
 }

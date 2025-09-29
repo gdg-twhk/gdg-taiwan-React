@@ -29,4 +29,6 @@ export const annualActivitySection = {
     selectedCities: "已選擇 {{count}} 個城市",
     selectedEventTypes: "已選擇 {{count}} 個類型",
     allAudienceTypes: "所有參與者類型",
+    selectedAudienceTypes: "已選擇 {{count}} 個參與方式",
+    audienceType: "參與方式",
 }

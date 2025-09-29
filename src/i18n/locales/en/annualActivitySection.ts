@@ -29,4 +29,6 @@ export const annualActivitySection = {
     selectedCities: "{{count}} cities selected",
     selectedEventTypes: "{{count}} types selected",
     allAudienceTypes: "All Audience Types",
+    selectedAudienceTypes: "{{count}} audience types selected",
+    audienceType: "Audience Type",
 }
