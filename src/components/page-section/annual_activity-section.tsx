@@ -105,7 +105,11 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
     "Speaker Session / Tech Talk": t('eventTypeMap.SpeakerSessionTechTalk'),
     "Test Event - use to test creating an event page": t('eventTypeMap.TestEvent'),
     "Women's Online Safety Program": t('eventTypeMap.WomenOnlineSafetyProgram'),
-    "Google Hosted Summit": t('eventTypeMap.GoogleHostedSummit')
+    "Google Hosted Summit": t('eventTypeMap.GoogleHostedSummit'),
+    "Hands on workshop - Virtual": t('eventTypeMap.HandsOnWorkshopVirtual'),
+    "International Women's Day": t('eventTypeMap.InternationalWomensDay'),
+    "Speaker Session/ Tech Talk - Virtual": t('eventTypeMap.SpeakerSessionTechTalkVirtual'),
+    "DevFest Co-Host": t('eventTypeMap.DevFestCoHost')
   }
 
   const audienceTypeMap = {
@@ -306,7 +310,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
 
       {/* Sticky Year Header */}
       <div
-        className={`fixed top-14 left-0 right-0 z-40 bg-background border-b-3 shadow-sm transition-all duration-300 ease-in-out ${
+        className={`fixed sticky top-16 left-0 right-0 z-9 bg-background border-b-3 shadow-sm transition-all duration-300 ease-in-out ${
           stickyYear
             ? 'translate-y-0 opacity-100'
             : '-translate-y-full opacity-0'
