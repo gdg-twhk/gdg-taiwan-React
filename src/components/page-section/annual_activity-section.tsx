@@ -110,6 +110,11 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
     "International Women's Day": t('eventTypeMap.InternationalWomensDay'),
     "Speaker Session/ Tech Talk - Virtual": t('eventTypeMap.SpeakerSessionTechTalkVirtual'),
     "DevFest Co-Host": t('eventTypeMap.DevFestCoHost')
+    "Google Hosted Summit": t('eventTypeMap.GoogleHostedSummit'),
+    "Hands on workshop - Virtual": t('eventTypeMap.HandsOnWorkshopVirtual'),
+    "International Women's Day": t('eventTypeMap.InternationalWomensDay'),
+    "Speaker Session/ Tech Talk - Virtual": t('eventTypeMap.SpeakerSessionTechTalkVirtual'),
+    "DevFest Co-Host": t('eventTypeMap.DevFestCoHost')
   }
 
   const audienceTypeMap = {
