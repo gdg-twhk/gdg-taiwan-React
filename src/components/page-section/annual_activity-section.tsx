@@ -246,7 +246,8 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
       <section className="container mx-auto px-4 py-6">
         <div className="flex flex-col space-y-4">
           {/* 水平篩選器列 */}
-          <div className="flex flex-wrap gap-3 items-center card border-2 bg-card rounded-lg p-4 justify-center">
+          <div className="md:flex md:flex-wrap gap-3 items-center card border-2 bg-card rounded-lg p-4 md:justify-center overflow-x-auto">
+            <div className="flex gap-3 items-center md:flex-wrap md:justify-center w-max md:w-auto">
             {/* 分會城市篩選 */}
             <Select value={filters.city || "all"} onValueChange={(value) => setFilters(prev => ({ ...prev, city: value === "all" ? null : value }))}>
               <SelectTrigger className="w-auto min-w-[140px] h-10 bg-white border border-gray-300 rounded-full shadow-sm hover:shadow-md transition-shadow">
@@ -320,6 +321,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
                 {t('annualActivitySection.clearFilters')}
               </Button>
             )}
+            </div>
           </div>
 
           {/* 瀏覽統計 */}
@@ -332,15 +334,33 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
 
       <section className="container mx-auto px-4 py-16 md:py-16 w-full justify-center items-center">
 
-        <div className="gap-4 px-4 py-4 overflow-auto w-full justify-center items-center">
-          <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 w-full`}>
-            {displayEvents.length > 0 ? displayEvents.sort((a, b) => new Date(b.start_date_iso).getTime() - new Date(a.start_date_iso).getTime()).map((event:Event) => (
-              <ModernEventCard key={event.id} eventObject={event} />
-            )) : (
-              <div className="col-span-full text-center text-lg text-muted-foreground py-16">
-                {t('annualActivitySection.noEvents')}
-              </div>
-            )}
+        <div className="gap-4 px-4 py-4 w-full justify-center items-center">
+          {/* Mobile: 水平滾動 */}
+          <div className="md:hidden overflow-x-auto pb-4">
+            <div className="flex gap-6 w-max">
+              {displayEvents.length > 0 ? displayEvents.sort((a, b) => new Date(b.start_date_iso).getTime() - new Date(a.start_date_iso).getTime()).map((event:Event) => (
+                <div key={event.id} className="w-80 flex-shrink-0">
+                  <ModernEventCard eventObject={event} />
+                </div>
+              )) : (
+                <div className="w-full text-center text-lg text-muted-foreground py-16">
+                  {t('annualActivitySection.noEvents')}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Desktop: 網格布局 */}
+          <div className="hidden md:block">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
+              {displayEvents.length > 0 ? displayEvents.sort((a, b) => new Date(b.start_date_iso).getTime() - new Date(a.start_date_iso).getTime()).map((event:Event) => (
+                <ModernEventCard key={event.id} eventObject={event} />
+              )) : (
+                <div className="col-span-full text-center text-lg text-muted-foreground py-16">
+                  {t('annualActivitySection.noEvents')}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </section>
