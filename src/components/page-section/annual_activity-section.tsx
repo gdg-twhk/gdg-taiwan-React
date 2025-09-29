@@ -22,7 +22,6 @@ import { useTranslation } from "react-i18next";
 import { useClientOnly } from "@/components/use-client-only";
 import { ModernEventCard } from "../modern-event-card";
 import { isCampusChapter, getCountyFromChapterName, sortCountryList } from "@/helper/index";
-import { Separator } from "@/components/ui/separator"
 interface FilterState {
   year: string | null; // 'all' | specific year string
   cities: string[];
@@ -224,41 +223,41 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
       <section className="container mx-auto px-4 py-6">
         <div className="flex flex-col space-y-4">
           {/* 年份篩選列 */}
-          <div className="md:flex md:flex-wrap gap-3 items-left card border-2 bg-card rounded-lg p-4 md:justify-start overflow-x-auto">
-            {/* 年份快速篩選 */}
-            <div className="flex gap-2 flex-wrap">
+          <div className="card border-2 bg-card rounded-lg p-4 overflow-x-auto">
+            <div className="flex gap-2 flex-wrap min-w-max">
               <Button
                 variant={filters.year === 'all' ? "default" : "outline"}
                 size="sm"
                 onClick={() => setFilters(prev => ({ ...prev, year: 'all' }))}
-                className="h-10 px-4 rounded-full"
+                className="h-10 px-4 rounded-full flex-shrink-0"
               >
                 {t('annualActivitySection.allYears')}
               </Button>
-              <Separator orientation="vertical" />
               {availableOptions.years.map((year) => (
                 <Button
                   key={year}
                   variant={filters.year === year ? "default" : "outline"}
                   size="sm"
                   onClick={() => setFilters(prev => ({ ...prev, year }))}
-                  className="h-10 px-4 rounded-full"
+                  className="h-10 px-4 rounded-full flex-shrink-0"
                 >
                   {year}
                 </Button>
               ))}
             </div>
-            <Separator />
-            <div className="flex gap-2 flex-wrap">
+          </div>
+
+          {/* 分會城市篩選列 */}
+          <div className="card border-2 bg-card rounded-lg p-4 overflow-x-auto">
+            <div className="flex gap-2 flex-wrap min-w-max">
               <Button
                 variant={filters.cities.length === 0 ? "default" : "outline"}
                 size="sm"
                 onClick={() => setFilters(prev => ({ ...prev, cities: [] }))}
-                className="h-10 px-4 rounded-full"
+                className="h-10 px-4 rounded-full flex-shrink-0"
               >
                 {t('annualActivitySection.allCities')}
               </Button>
-              <Separator orientation="vertical" />
               {availableOptions.cities.map((city) => (
                 <Button
                   key={city}
@@ -271,23 +270,25 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
                       setFilters(prev => ({ ...prev, cities: [...prev.cities, city] }));
                     }
                   }}
-                  className="h-10 px-4 rounded-full"
+                  className="h-10 px-4 rounded-full flex-shrink-0"
                 >
                   {t('selectedCountryMap.' + city)}
                 </Button>
               ))}
             </div>
-            <Separator />
-            <div className="flex gap-2 flex-wrap">
+          </div>
+
+          {/* 活動類型篩選列 */}
+          <div className="card border-2 bg-card rounded-lg p-4 overflow-x-auto">
+            <div className="flex gap-2 flex-wrap min-w-max">
               <Button
                 variant={filters.eventTypes.length === 0 ? "default" : "outline"}
                 size="sm"
                 onClick={() => setFilters(prev => ({ ...prev, eventTypes: [] }))}
-                className="h-10 px-4 rounded-full"
+                className="h-10 px-4 rounded-full flex-shrink-0"
               >
                 {t('annualActivitySection.allEventTypes')}
               </Button>
-              <Separator orientation="vertical" />
               {availableOptions.eventTypes.map((type) => (
                 <Button
                   key={type}
@@ -300,23 +301,25 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
                       setFilters(prev => ({ ...prev, eventTypes: [...prev.eventTypes, type] }));
                     }
                   }}
-                  className="h-10 px-4 rounded-full"
+                  className="h-10 px-4 rounded-full flex-shrink-0"
                 >
                   {eventTypeMap[type as keyof typeof eventTypeMap] || type}
                 </Button>
               ))}
             </div>
-            <Separator />
-            <div className="flex gap-2 flex-wrap">
+          </div>
+
+          {/* 參與者類型篩選列 */}
+          <div className="card border-2 bg-card rounded-lg p-4 overflow-x-auto">
+            <div className="flex gap-2 flex-wrap min-w-max">
               <Button
                 variant={filters.audienceTypes.length === 0 ? "default" : "outline"}
                 size="sm"
                 onClick={() => setFilters(prev => ({ ...prev, audienceTypes: [] }))}
-                className="h-10 px-4 rounded-full"
+                className="h-10 px-4 rounded-full flex-shrink-0"
               >
                 {t('annualActivitySection.allAudienceTypes')}
               </Button>
-              <Separator orientation="vertical" />
               {availableOptions.audienceTypes.map((type) => (
                 <Button
                   key={type}
@@ -329,14 +332,17 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
                       setFilters(prev => ({ ...prev, audienceTypes: [...prev.audienceTypes, type] }));
                     }
                   }}
-                  className="h-10 px-4 rounded-full"
+                  className="h-10 px-4 rounded-full flex-shrink-0"
                 >
                   {audienceTypeMap[type as keyof typeof audienceTypeMap] || type}
                 </Button>
               ))}
             </div>
-            <Separator />
-            <div className="flex items-center gap-3 px-4 py-2 h-10 bg-white border border-gray-300 rounded-full shadow-sm hover:shadow-md transition-shadow">
+          </div>
+
+          {/* 其他篩選器列 */}
+          <div className="card border-2 bg-card rounded-lg p-4 overflow-x-auto">
+            <div className="flex items-center gap-3 px-4 py-2 h-10 bg-white border border-gray-300 rounded-full shadow-sm hover:shadow-md transition-shadow w-fit">
               <IconSchool className="w-4 h-4 text-gray-500" />
               <span className="text-sm font-medium text-gray-700">
                 {filters.showCampusOnly ? t('annualActivitySection.campusOnly') : t('annualActivitySection.allEvents')}
