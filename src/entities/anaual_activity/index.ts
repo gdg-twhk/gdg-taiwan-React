@@ -17,7 +17,7 @@ export const activityMeta = {
       bevytagId: "73",
       backgroundUrl: "/event/build-with-ai/banner.jpg",
       iconUrl: "/event/build-with-ai/logo.png",
-      animationUrl: "/event/build-with-ai/logo.png",
+      animationUrl: "/event/build-with-ai/minilogo.png",
       url: "https://ai.google/build/",
     },
     cloud_study_jam: {
