@@ -316,7 +316,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
               >
                 {t('annualActivitySection.allYears')}
               </Button>
-              <Separator orientation="vertical" />
+              <Separator orientation="vertical" className="!h-6 bg-gray-300" />
               {availableOptions.years.map((year) => (
                 <Button
                   key={year}
@@ -342,7 +342,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
               >
                 {t('annualActivitySection.allCities')}
               </Button>
-              <Separator orientation="vertical" />
+              <Separator orientation="vertical" className="!h-6 bg-border" />
               {availableOptions.cities.map((city) => (
                 <Button
                   key={city}
@@ -374,7 +374,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
               >
                 {t('annualActivitySection.allEventTypes')}
               </Button>
-              <Separator orientation="vertical" />
+              <Separator orientation="vertical" className="!h-6" />
               {availableOptions.eventTypes.map((type) => (
                 <Button
                   key={type}
@@ -406,7 +406,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
               >
                 {t('annualActivitySection.allAudienceTypes')}
               </Button>
-              <Separator orientation="vertical" />
+              <Separator orientation="vertical" className="!h-6" />
               {availableOptions.audienceTypes.map((type) => (
                 <Button
                   key={type}
@@ -424,7 +424,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
                   {audienceTypeMap[type as keyof typeof audienceTypeMap] || type}
                 </Button>
               ))}
-              <Separator orientation="vertical"/>
+              <Separator orientation="vertical" className="!h-6"/>
               <div className="flex items-center gap-3 px-4 py-2 h-10 bg-white border border-gray-300 rounded-full shadow-sm hover:shadow-md transition-shadow w-fit">
                 <IconSchool className="w-4 h-4 text-gray-500" />
                 <span className="text-sm font-medium text-gray-700">
