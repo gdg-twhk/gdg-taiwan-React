@@ -17,12 +17,12 @@ import Link from "next/link";
 import { AnnualActivitySectionProps, activityMeta } from "@/entities/anaual_activity/index";
 import { useActivityContent } from "@/entities/anaual_activity/useActivityContent";
 import Image from "next/image";
-import { IconSchool, IconTag, IconX, IconEye } from "@tabler/icons-react";
-import { Badge } from "@/components/ui/badge";
+import { IconSchool, IconX, IconEye } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
 import { useClientOnly } from "@/components/use-client-only";
 import { ModernEventCard } from "../modern-event-card";
 import { isCampusChapter, getCountyFromChapterName, sortCountryList } from "@/helper/index";
+import { Separator } from "@/components/ui/separator"
 interface FilterState {
   timeRange: string | null; // 'all' | 'thisWeek' | 'weekend' | 'thisMonth' | 'custom'
   customDateRange: { start: Date | null; end: Date | null } | null;
@@ -266,13 +266,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
                 {t('annualActivitySection.customRange')}
               </Button>
             </div>
-            </div>
-          </div>
-
-          {/* 分會城市篩選列 */}
-          <div className="md:flex md:flex-wrap gap-3 items-center card border-2 bg-card rounded-lg p-4 md:justify-center overflow-x-auto">
-            <div className="flex gap-3 items-center md:flex-wrap md:justify-center w-max md:w-auto">
-            {/* 分會城市快速篩選 */}
+            <Separator />
             <div className="flex gap-2 flex-wrap">
               <Button
                 variant={filters.cities.length === 0 ? "default" : "outline"}
@@ -303,36 +297,43 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
             </div>
           </div>
 
+          {/* 活動類型篩選列 */}
+          <div className="md:flex md:flex-wrap gap-3 items-center card border-2 bg-card rounded-lg p-4 md:justify-center overflow-x-auto">
+            <div className="flex gap-3 items-center md:flex-wrap md:justify-center w-max md:w-auto">
+            {/* 活動類型快速篩選 */}
+            <div className="flex gap-2 flex-wrap">
+              <Button
+                variant={filters.eventTypes.length === 0 ? "default" : "outline"}
+                size="sm"
+                onClick={() => setFilters(prev => ({ ...prev, eventTypes: [] }))}
+                className="h-10 px-4 rounded-full"
+              >
+                {t('annualActivitySection.allEventTypes')}
+              </Button>
+              {availableOptions.eventTypes.map((type) => (
+                <Button
+                  key={type}
+                  variant={filters.eventTypes.includes(type) ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => {
+                    if (filters.eventTypes.includes(type)) {
+                      setFilters(prev => ({ ...prev, eventTypes: prev.eventTypes.filter(t => t !== type) }));
+                    } else {
+                      setFilters(prev => ({ ...prev, eventTypes: [...prev.eventTypes, type] }));
+                    }
+                  }}
+                  className="h-10 px-4 rounded-full"
+                >
+                  {eventTypeMap[type as keyof typeof eventTypeMap] || type}
+                </Button>
+              ))}
+            </div>
+            </div>
+          </div>
+
           {/* 其他篩選器列 */}
           <div className="md:flex md:flex-wrap gap-3 items-center card border-2 bg-card rounded-lg p-4 md:justify-center overflow-x-auto">
             <div className="flex gap-3 items-center md:flex-wrap md:justify-center w-max md:w-auto">
-
-            {/* 活動類型篩選 (Chips) */}
-            <div className="flex flex-wrap gap-2 items-center">
-              <div className="flex items-center gap-2">
-                <IconTag className="w-4 h-4 text-gray-500" />
-                <span className="text-sm font-medium text-gray-700">{t('annualActivitySection.eventType')}:</span>
-              </div>
-              {availableOptions.eventTypes.map((type) => {
-                const isSelected = filters.eventTypes.includes(type);
-                return (
-                  <Badge
-                    key={type}
-                    variant={isSelected ? "default" : "outline"}
-                    className="cursor-pointer hover:bg-gray-100 transition-colors px-3 py-1"
-                    onClick={() => {
-                      if (isSelected) {
-                        setFilters(prev => ({ ...prev, eventTypes: prev.eventTypes.filter(t => t !== type) }));
-                      } else {
-                        setFilters(prev => ({ ...prev, eventTypes: [...prev.eventTypes, type] }));
-                      }
-                    }}
-                  >
-                    {eventTypeMap[type as keyof typeof eventTypeMap] || type}
-                  </Badge>
-                );
-              })}
-            </div>
 
             {/* 校園活動開關 */}
             <div className="flex items-center gap-3 px-4 py-2 h-10 bg-white border border-gray-300 rounded-full shadow-sm hover:shadow-md transition-shadow">
