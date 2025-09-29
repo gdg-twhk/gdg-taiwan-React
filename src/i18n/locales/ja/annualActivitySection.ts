@@ -30,4 +30,6 @@ export const annualActivitySection = {
     allAudienceTypes: "全対象者タイプ",
     selectedAudienceTypes: "{{count}}の参加方法選択中",
     audienceType: "参加方法",
+    yearSuffix: "年",
+    unknownYear: "不明",
 }

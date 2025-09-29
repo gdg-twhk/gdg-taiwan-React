@@ -1,7 +1,7 @@
 "use client";
 
 import { getEventByTag } from "@/api/bevy";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { Event } from "@/interfaces";
 import React from "react";
 import {
@@ -22,6 +22,7 @@ import { ModernEventCard } from "../modern-event-card";
 import { isCampusChapter, getCountyFromChapterName, sortCountryList } from "@/helper/index";
 import { MobileFilterInterface } from "../mobile-filter-interface";
 import { DesktopFilterInterface } from "../desktop-filter-interface";
+import { TFunction } from "i18next";
 interface FilterState {
   year: string | null; // 'all' | specific year string
   cities: string[];
@@ -33,13 +34,13 @@ interface FilterState {
 
 
 
-function filterEvents(events: Event[], filters: FilterState): Event[] {
+function filterEvents(events: Event[], filters: FilterState, t: TFunction): Event[] {
   return events.filter(event => {
     // Year filter
     if (filters.year && filters.year !== 'all') {
       const eventYear = event.start_date_iso
         ? new Date(event.start_date_iso).getFullYear().toString()
-        : "未知";
+        : t('annualActivitySection.unknownYear');
       if (eventYear !== filters.year) {
         return false;
       }
@@ -88,6 +89,8 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
     audienceTypes: [],
     showCampusOnly: false,
   });
+  const [stickyYear, setStickyYear] = useState<string | null>(null);
+  const yearRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const { t } = useTranslation();
   const content = useActivityContent();
 
@@ -132,7 +135,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
     const years = [...new Set(activities.map(event => {
       return event.start_date_iso
         ? new Date(event.start_date_iso).getFullYear().toString()
-        : "未知";
+        : t('annualActivitySection.unknownYear');
     }))].sort((a, b) => b.localeCompare(a)); // Sort in descending order (newest first)
 
     return { cities, eventTypes, audienceTypes, years };
@@ -140,17 +143,77 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
 
   // 篩選後的活動
   const filteredEvents = useMemo(() => {
-    return filterEvents(activities, filters);
+    return filterEvents(activities, filters, t);
   }, [activities, filters]);
 
-  // 顯示活動 (直接使用篩選後的結果)
-  const displayEvents = filteredEvents;
+  // 顯示活動 (按年份分組)
+  const displayEvents = useMemo(() => {
+    const eventsByYear = filteredEvents.reduce((acc, event) => {
+      const year = event.start_date_iso
+        ? new Date(event.start_date_iso).getFullYear().toString()
+        : t('annualActivitySection.unknownYear');
 
+      if (!acc[year]) {
+        acc[year] = [];
+      }
+      acc[year].push(event);
+      return acc;
+    }, {} as Record<string, Event[]>);
+
+    // Sort years in descending order (newest first)
+    const sortedYears = Object.keys(eventsByYear).sort((a, b) => {
+      const unknownYear = t('annualActivitySection.unknownYear');
+      if (a === unknownYear) return 1;
+      if (b === unknownYear) return -1;
+      return b.localeCompare(a);
+    });
+
+    return { eventsByYear, sortedYears };
+  }, [filteredEvents]);
+
+  // Scroll detection for sticky year header
+  const handleScroll = useCallback(() => {
+    if (displayEvents.sortedYears.length <= 1) {
+      setStickyYear(null);
+      return;
+    }
+
+    let currentStickyYear = null;
+    const scrollY = window.scrollY;
+    const offsetThreshold = 100; // Offset from top of viewport
+
+    for (const year of displayEvents.sortedYears) {
+      const yearElement = yearRefs.current[year];
+      if (yearElement) {
+        const rect = yearElement.getBoundingClientRect();
+        const absoluteTop = scrollY + rect.top;
+
+        if (scrollY + offsetThreshold >= absoluteTop) {
+          currentStickyYear = year;
+        } else {
+          break;
+        }
+      }
+    }
+
+    setStickyYear(currentStickyYear);
+  }, [displayEvents.sortedYears]);
+
+  useEffect(() => {
+    if (!mounted || displayEvents.sortedYears.length <= 1) return;
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial state
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [mounted, handleScroll, displayEvents.sortedYears.length]);
 
   if (!mounted) return null;
 
   return (
-    <div>
+    <div className="relative">
       <section
         className="w-full px-0 flex flex-col justify-center items-center relative py-16 md:py-24 h-[400px]"
         style={{
@@ -226,7 +289,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
           filters={filters}
           setFilters={setFilters}
           availableOptions={availableOptions}
-          displayEvents={displayEvents}
+          displayEvents={Object.values(displayEvents.eventsByYear).flat()}
           eventTypeMap={eventTypeMap}
           audienceTypeMap={audienceTypeMap}
         />
@@ -235,23 +298,66 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
           filters={filters}
           setFilters={setFilters}
           availableOptions={availableOptions}
-          displayEvents={displayEvents}
+          displayEvents={Object.values(displayEvents.eventsByYear).flat()}
           eventTypeMap={eventTypeMap}
           audienceTypeMap={audienceTypeMap}
         />
       </section>
 
+      {/* Sticky Year Header */}
+      {stickyYear && (
+        <div className="fixed top-14 left-0 right-0 z-40 bg-background border-b-3 shadow-sm">
+          <div className="container mx-auto px-4">
+          {(displayEvents.sortedYears.length > 1 || filters.year !== 'all') && (
+                  <div className="flex items-center justify-center mb-4 mt-4">
+                    <div className="flex-1 border-t border-primary"></div>
+                    <div className="mx-4 text-xl font-semibold  px-4">
+                      {stickyYear}{t('annualActivitySection.yearSuffix')}
+                    </div>
+                    <div className="flex-1 border-t border-primary"></div>
+                  </div>
+                )}
+          </div>
+        </div>
+      )}
+
       <section className="container mx-auto px-4 py-16 md:py-16 w-full justify-center items-center">
         <div className="gap-4 px-4 py-4 overflow-auto w-full justify-center items-center flex flex-col">
-          <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 w-full`}>
-            {displayEvents.length > 0 ? displayEvents.sort((a, b) => new Date(b.start_date_iso).getTime() - new Date(a.start_date_iso).getTime()).map((event:Event) => (
-              <ModernEventCard key={event.id} eventObject={event} />
-            )) : (
-              <div className="col-span-full text-center text-lg text-muted-foreground py-16">
-                {t('annualActivitySection.noEvents')}
+          {displayEvents.sortedYears.length > 0 ? (
+            displayEvents.sortedYears.map((year) => (
+              <div
+                key={year}
+                className="w-full"
+                ref={(el) => {
+                  yearRefs.current[year] = el;
+                }}
+              >
+                {/* Year separator - only show if multiple years or not showing all years */}
+                {(displayEvents.sortedYears.length > 1 || filters.year !== 'all') && (
+                  <div className="flex items-center justify-center mb-8 mt-8">
+                    <div className="flex-1 border-t border-primary"></div>
+                    <div className="mx-4 text-xl font-semibold px-4">
+                      {year}{t('annualActivitySection.yearSuffix')}
+                    </div>
+                    <div className="flex-1 border-t border-primary"></div>
+                  </div>
+                )}
+
+                {/* Events grid for this year */}
+                <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 w-full mb-12`}>
+                  {Object.values(displayEvents.eventsByYear[year])
+                    .sort((a, b) => new Date(b.start_date_iso).getTime() - new Date(a.start_date_iso).getTime())
+                    .map((event: Event) => (
+                      <ModernEventCard key={event.id} eventObject={event} />
+                    ))}
+                </div>
               </div>
-            )}
-        </div>
+            ))
+          ) : (
+            <div className="col-span-full text-center text-lg text-muted-foreground py-16">
+              {t('annualActivitySection.noEvents')}
+            </div>
+          )}
         </div>
       </section>
     </div>

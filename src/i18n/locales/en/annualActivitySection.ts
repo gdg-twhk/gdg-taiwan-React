@@ -31,4 +31,6 @@ export const annualActivitySection = {
     allAudienceTypes: "All Audience Types",
     selectedAudienceTypes: "{{count}} audience types selected",
     audienceType: "Audience Type",
+    yearSuffix: "",
+    unknownYear: "Unknown",
 }

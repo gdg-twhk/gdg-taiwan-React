@@ -31,4 +31,6 @@ export const annualActivitySection = {
     allAudienceTypes: "所有參與者類型",
     selectedAudienceTypes: "已選擇 {{count}} 個參與方式",
     audienceType: "參與方式",
+    yearSuffix: "年",
+    unknownYear: "未知",
 }

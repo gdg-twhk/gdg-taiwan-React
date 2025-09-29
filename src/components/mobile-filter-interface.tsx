@@ -38,7 +38,7 @@ interface MobileFilterInterfaceProps {
   filters: FilterState;
   setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
   availableOptions: AvailableOptions;
-  displayEvents: Event[];
+  displayEvents: Event[] | Event[][];
   eventTypeMap: Record<string, string>;
   audienceTypeMap: Record<string, string>;
 }
@@ -282,7 +282,7 @@ export function MobileFilterInterface({
 
       {/* Results and Clear Button */}
       <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2 text-sm text-gray-600">
+        <div className="flex items-center gap-2 text-sm ">
           <IconEye className="w-4 h-4" />
           <span>{t('annualActivitySection.showingResults', { count: displayEvents.length })}</span>
         </div>

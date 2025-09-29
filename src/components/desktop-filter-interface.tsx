@@ -179,7 +179,7 @@ export function DesktopFilterInterface({
 
       {/* Desktop Results Display */}
       <div className="flex flex-wrap gap-3 items-center justify-between pt-4 border-t">
-        <div className="flex items-center gap-2 text-sm text-gray">
+        <div className="flex items-center gap-2 text-sm text-gray-600">
           <IconEye className="w-4 h-4" />
           <span>{t('annualActivitySection.showingResults', { count: displayEvents.length })}</span>
         </div>
