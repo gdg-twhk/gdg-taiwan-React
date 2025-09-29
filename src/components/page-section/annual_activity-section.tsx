@@ -305,21 +305,25 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
       </section>
 
       {/* Sticky Year Header */}
-      {stickyYear && (
-        <div className="fixed top-14 left-0 right-0 z-40 bg-background border-b-3 shadow-sm">
-          <div className="container mx-auto px-4">
+      <div
+        className={`fixed top-14 left-0 right-0 z-40 bg-background border-b-3 shadow-sm transition-all duration-300 ease-in-out ${
+          stickyYear
+            ? 'translate-y-0 opacity-100'
+            : '-translate-y-full opacity-0'
+        }`}
+      >
+        <div className="container mx-auto px-4">
           {(displayEvents.sortedYears.length > 1 || filters.year !== 'all') && (
-                  <div className="flex items-center justify-center mb-4 mt-4">
-                    <div className="flex-1 border-t border-primary"></div>
-                    <div className="mx-4 text-xl font-semibold  px-4">
-                      {stickyYear}{t('annualActivitySection.yearSuffix')}
-                    </div>
-                    <div className="flex-1 border-t border-primary"></div>
-                  </div>
-                )}
-          </div>
+            <div className="flex items-center justify-center mb-4 mt-4">
+              <div className="flex-1 border-t border-primary"></div>
+              <div className="mx-4 text-xl font-semibold px-4 transition-all duration-200">
+                {stickyYear || ''}{t('annualActivitySection.yearSuffix')}
+              </div>
+              <div className="flex-1 border-t border-primary"></div>
+            </div>
+          )}
         </div>
-      )}
+      </div>
 
       <section className="container mx-auto px-4 py-16 md:py-16 w-full justify-center items-center">
         <div className="gap-4 px-4 py-4 overflow-auto w-full justify-center items-center flex flex-col">
