@@ -92,3 +92,8 @@ export const sortCountryList = (countries: string[]) => {
   }
   return output;
 }
+
+export const getCountyFromChapterName = (chapterTitle: string): string => {
+  const mappedName = chapterNameMap[stripCampusChapterName(chapterTitle) as keyof typeof chapterNameMap];
+  return chapterCountyMapping[mappedName as keyof typeof chapterCountyMapping] || '';
+}
