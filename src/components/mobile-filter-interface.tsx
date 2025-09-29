@@ -58,7 +58,7 @@ export function MobileFilterInterface({
   });
 
   return (
-    <div className="md:hidden px-4 bg-card rounded-lg border-2 p-4">
+    <div className="md:hidden mx-4 px-4 bg-card rounded-xl border shadow-sm p-4">
       {/* Horizontal Scrollable Filter Chips */}
       <div className="mb-4 ">
         <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
@@ -217,7 +217,7 @@ export function MobileFilterInterface({
           <Sheet open={mobileDrawer.open && mobileDrawer.activeFilter === 'audienceTypes'} onOpenChange={(open) => setMobileDrawer({ open, activeFilter: open ? 'audienceTypes' : null })}>
             <SheetTrigger asChild>
               <button className="flex items-center gap-1 rounded-full px-3 py-2 text-sm whitespace-nowrap flex-shrink-0 border border-gray-300 bg-gray-100 hover:bg-gray-200">
-                <UsersIcon className="w-3 h-3" />
+                <UsersIcon className="w-4 h-4 text-gray-600" />
                 <span className="text-gray-700">
                   {filters.audienceTypes.length === 0
                     ? t('annualActivitySection.allAudienceTypes')
