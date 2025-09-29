@@ -17,4 +17,15 @@ export const annualActivitySection = {
     clearFilters: "清除全部",
     noEvents: "未找到符合条件的活动",
     showingResults: "显示 {{count}} 个活动",
+    // New time-based filter translations
+    timeRange: "时间范围",
+    allTime: "全部时间",
+    thisWeek: "本周",
+    weekend: "周末",
+    thisWeekend: "本周末",
+    thisMonth: "本月",
+    customRange: "自定义范围",
+    selectDateRange: "选择日期范围",
+    selectedCities: "已选择 {{count}} 个城市",
+    selectedEventTypes: "已选择 {{count}} 个类型",
 }

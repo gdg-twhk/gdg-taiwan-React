@@ -17,4 +17,15 @@ export const annualActivitySection = {
     clearFilters: "すべてクリア",
     noEvents: "条件に一致するイベントが見つかりません",
     showingResults: "{{count}}件のイベントを表示中",
+    // New time-based filter translations
+    timeRange: "期間",
+    allTime: "全期間",
+    thisWeek: "今週",
+    weekend: "週末",
+    thisWeekend: "今週末",
+    thisMonth: "今月",
+    customRange: "期間指定",
+    selectDateRange: "日付範囲を選択",
+    selectedCities: "{{count}}都市選択中",
+    selectedEventTypes: "{{count}}種類選択中",
 }

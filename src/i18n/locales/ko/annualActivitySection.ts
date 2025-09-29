@@ -17,4 +17,15 @@ export const annualActivitySection = {
     clearFilters: "모두 지우기",
     noEvents: "조건에 맞는 이벤트가 없습니다",
     showingResults: "{{count}}개의 이벤트 표시 중",
+    // New time-based filter translations
+    timeRange: "기간",
+    allTime: "전체 기간",
+    thisWeek: "이번 주",
+    weekend: "주말",
+    thisWeekend: "이번 주말",
+    thisMonth: "이번 달",
+    customRange: "사용자 지정",
+    selectDateRange: "날짜 범위 선택",
+    selectedCities: "{{count}}개 도시 선택",
+    selectedEventTypes: "{{count}}개 유형 선택",
 }

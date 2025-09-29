@@ -12,52 +12,92 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import Link from "next/link";
 import { AnnualActivitySectionProps, activityMeta } from "@/entities/anaual_activity/index";
 import { useActivityContent } from "@/entities/anaual_activity/useActivityContent";
 import Image from "next/image";
-import { IconCalendar, IconMapPin, IconSchool, IconTag, IconX, IconEye } from "@tabler/icons-react";
+import { IconSchool, IconTag, IconX, IconEye } from "@tabler/icons-react";
+import { Badge } from "@/components/ui/badge";
 import { useTranslation } from "react-i18next";
 import { useClientOnly } from "@/components/use-client-only";
 import { ModernEventCard } from "../modern-event-card";
 import { isCampusChapter, getCountyFromChapterName, sortCountryList } from "@/helper/index";
 interface FilterState {
-  year: string | null;
-  city: string | null;
-  eventType: string | null;
+  timeRange: string | null; // 'all' | 'thisWeek' | 'weekend' | 'thisMonth' | 'custom'
+  customDateRange: { start: Date | null; end: Date | null } | null;
+  cities: string[];
+  eventTypes: string[];
   showCampusOnly: boolean;
 }
 
 
 
+function getTimeRangeFilter(timeRange: string | null, customDateRange: { start: Date | null; end: Date | null } | null) {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  switch (timeRange) {
+    case 'thisWeek': {
+      const startOfWeek = new Date(today);
+      startOfWeek.setDate(today.getDate() - today.getDay());
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(startOfWeek.getDate() + 6);
+      endOfWeek.setHours(23, 59, 59, 999);
+      return { start: startOfWeek, end: endOfWeek };
+    }
+    case 'weekend': {
+      const saturday = new Date(today);
+      saturday.setDate(today.getDate() + (6 - today.getDay()));
+      const sunday = new Date(saturday);
+      sunday.setDate(saturday.getDate() + 1);
+      sunday.setHours(23, 59, 59, 999);
+      return { start: saturday, end: sunday };
+    }
+    case 'thisMonth': {
+      const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+      const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+      endOfMonth.setHours(23, 59, 59, 999);
+      return { start: startOfMonth, end: endOfMonth };
+    }
+    case 'custom':
+      return customDateRange && customDateRange.start && customDateRange.end
+        ? { start: customDateRange.start, end: customDateRange.end }
+        : null;
+    default:
+      return null;
+  }
+}
+
 function filterEvents(events: Event[], filters: FilterState): Event[] {
   return events.filter(event => {
-    if (filters.year) {
-      const eventYear = event.start_date_iso
-        ? new Date(event.start_date_iso).getFullYear().toString()
-        : "未知";
-      if (eventYear !== filters.year) return false;
+    // Time range filter
+    if (filters.timeRange && filters.timeRange !== 'all') {
+      const timeFilter = getTimeRangeFilter(filters.timeRange, filters.customDateRange);
+      if (timeFilter) {
+        const eventDate = new Date(event.start_date_iso);
+        if (eventDate < timeFilter.start || eventDate > timeFilter.end) {
+          return false;
+        }
+      }
     }
 
-    if (filters.city) {
+    // Cities filter (multi-select)
+    if (filters.cities.length > 0) {
       const eventCity = getCountyFromChapterName(event.chapter_title);
-      if (eventCity !== filters.city) {
+      if (!eventCity || !filters.cities.includes(eventCity)) {
         return false;
       }
     }
 
-    if (filters.eventType && event.event_type_title !== filters.eventType) {
-      return false;
+    // Event types filter (multi-select)
+    if (filters.eventTypes.length > 0) {
+      if (!event.event_type_title || !filters.eventTypes.includes(event.event_type_title)) {
+        return false;
+      }
     }
 
+    // Campus filter
     if (filters.showCampusOnly) {
       if (!isCampusChapter(event.chapter_title)) {
         return false;
@@ -68,35 +108,16 @@ function filterEvents(events: Event[], filters: FilterState): Event[] {
   });
 }
 
-function groupEventsByYear(events: Event[]) {
-  const result: Record<string, Event[]> = {};
-  events.forEach((event) => {
-    const year = event.start_date_iso
-      ? new Date(event.start_date_iso).getFullYear().toString()
-      : "未知";
-    if (!result[year]) result[year] = [];
-    result[year].push(event);
-  });
-  Object.keys(result).forEach((year) => {
-    result[year].sort(
-      (a, b) =>
-        new Date(b.start_date_iso).getTime() -
-        new Date(a.start_date_iso).getTime()
-    );
-  });
-  return result;
-}
-
 export default function AnnualActivitySection({ activity }: AnnualActivitySectionProps) {
   const mounted = useClientOnly();
   const [activities, setActivities] = useState<Event[]>([]);
   const [filters, setFilters] = useState<FilterState>({
-    year: null,
-    city: null,
-    eventType: null,
+    timeRange: 'all',
+    customDateRange: null,
+    cities: [],
+    eventTypes: [],
     showCampusOnly: false,
   });
-  const [hasInitializedYear, setHasInitializedYear] = useState(false);
   const { t } = useTranslation();
   const content = useActivityContent();
 
@@ -131,13 +152,8 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
     const citySet = new Set(activities.map(event => getCountyFromChapterName(event.chapter_title)).filter(Boolean));
     const cities = sortCountryList([...citySet]);
     const eventTypes = [...new Set(activities.map(event => event.event_type_title).filter(Boolean))].sort();
-    const years = [...new Set(activities.map(event => {
-      return event.start_date_iso
-        ? new Date(event.start_date_iso).getFullYear().toString()
-        : "未知";
-    }))].sort();
 
-    return { cities, eventTypes, years };
+    return { cities, eventTypes };
   }, [activities]);
 
   // 篩選後的活動
@@ -145,28 +161,8 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
     return filterEvents(activities, filters);
   }, [activities, filters]);
 
-  // 依年份分組
-  const eventsByYear = useMemo(
-    () => groupEventsByYear(filteredEvents),
-    [filteredEvents]
-  );
-
-  // 預設選擇最新年份（僅在初始化時）
-  useEffect(() => {
-    if (availableOptions.years.length > 0 && !hasInitializedYear) {
-      const latestYear = availableOptions.years[availableOptions.years.length - 1];
-      setFilters(prev => ({ ...prev, year: latestYear }));
-      setHasInitializedYear(true);
-    }
-  }, [availableOptions.years, hasInitializedYear]);
-
-  // 顯示活動
-  const displayEvents = useMemo(() => {
-    if (filters.year) {
-      return eventsByYear[filters.year] || [];
-    }
-    return filteredEvents;
-  }, [filteredEvents, eventsByYear, filters.year]);
+  // 顯示活動 (直接使用篩選後的結果)
+  const displayEvents = filteredEvents;
 
 
   if (!mounted) return null;
@@ -245,56 +241,98 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
       {/* 篩選區域 */}
       <section className="container mx-auto px-4 py-6">
         <div className="flex flex-col space-y-4">
-          {/* 水平篩選器列 */}
+          {/* 時間範圍篩選列 */}
           <div className="md:flex md:flex-wrap gap-3 items-center card border-2 bg-card rounded-lg p-4 md:justify-center overflow-x-auto">
             <div className="flex gap-3 items-center md:flex-wrap md:justify-center w-max md:w-auto">
-            {/* 分會城市篩選 */}
-            <Select value={filters.city || "all"} onValueChange={(value) => setFilters(prev => ({ ...prev, city: value === "all" ? null : value }))}>
-              <SelectTrigger className="w-auto min-w-[140px] h-10 bg-white border border-gray-300 rounded-full shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-2">
-                  <IconMapPin className="w-4 h-4 text-gray-500" />
-                  <SelectValue placeholder={filters.city || (t('annualActivitySection.allCities'))} />
-                </div>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">{t('annualActivitySection.allCities')}</SelectItem>
-                {availableOptions.cities.map((city) => (
-                  <SelectItem key={city} value={city}>{t('selectedCountryMap.' + city)}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            {/* 時間範圍快速篩選 */}
+            <div className="flex gap-2">
+              {(['all', 'thisWeek', 'weekend', 'thisMonth'] as const).map((timeRange) => (
+                <Button
+                  key={timeRange}
+                  variant={filters.timeRange === timeRange ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setFilters(prev => ({ ...prev, timeRange, customDateRange: null }))}
+                  className="h-10 px-4 rounded-full"
+                >
+                  {t(`annualActivitySection.${timeRange === 'all' ? 'allTime' : timeRange}`)}
+                </Button>
+              ))}
+              <Button
+                variant={filters.timeRange === 'custom' ? "default" : "outline"}
+                size="sm"
+                onClick={() => setFilters(prev => ({ ...prev, timeRange: 'custom' }))}
+                className="h-10 px-4 rounded-full"
+              >
+                {t('annualActivitySection.customRange')}
+              </Button>
+            </div>
+            </div>
+          </div>
 
-            {/* 年份篩選 */}
-            <Select value={filters.year || "all"} onValueChange={(value) => setFilters(prev => ({ ...prev, year: value === "all" ? null : value }))}>
-              <SelectTrigger className="w-auto min-w-[120px] h-10 bg-white border border-gray-300 rounded-full shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-2">
-                  <IconCalendar className="w-4 h-4 text-gray-500" />
-                  <SelectValue placeholder={filters.year || (t('annualActivitySection.allYears'))} />
-                </div>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">{t('annualActivitySection.allYears')}</SelectItem>
-                {availableOptions.years.map((year) => (
-                  <SelectItem key={year} value={year}>{year}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+          {/* 分會城市篩選列 */}
+          <div className="md:flex md:flex-wrap gap-3 items-center card border-2 bg-card rounded-lg p-4 md:justify-center overflow-x-auto">
+            <div className="flex gap-3 items-center md:flex-wrap md:justify-center w-max md:w-auto">
+            {/* 分會城市快速篩選 */}
+            <div className="flex gap-2 flex-wrap">
+              <Button
+                variant={filters.cities.length === 0 ? "default" : "outline"}
+                size="sm"
+                onClick={() => setFilters(prev => ({ ...prev, cities: [] }))}
+                className="h-10 px-4 rounded-full"
+              >
+                {t('annualActivitySection.allCities')}
+              </Button>
+              {availableOptions.cities.map((city) => (
+                <Button
+                  key={city}
+                  variant={filters.cities.includes(city) ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => {
+                    if (filters.cities.includes(city)) {
+                      setFilters(prev => ({ ...prev, cities: prev.cities.filter(c => c !== city) }));
+                    } else {
+                      setFilters(prev => ({ ...prev, cities: [...prev.cities, city] }));
+                    }
+                  }}
+                  className="h-10 px-4 rounded-full"
+                >
+                  {t('selectedCountryMap.' + city)}
+                </Button>
+              ))}
+            </div>
+            </div>
+          </div>
 
-            {/* 活動類型篩選 */}
-            <Select value={filters.eventType || "all"} onValueChange={(value) => setFilters(prev => ({ ...prev, eventType: value === "all" ? null : value }))}>
-              <SelectTrigger className="w-auto min-w-[140px] h-10 bg-white border border-gray-300 rounded-full shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-2">
-                  <IconTag className="w-4 h-4 text-gray-500" />
-                  <SelectValue placeholder={filters.eventType || (t('annualActivitySection.allEventTypes'))} />
-                </div>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">{t('annualActivitySection.allEventTypes')}</SelectItem>
-                {availableOptions.eventTypes.map((type) => (
-                  <SelectItem key={type} value={type}>{eventTypeMap[type as keyof typeof eventTypeMap] || type}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+          {/* 其他篩選器列 */}
+          <div className="md:flex md:flex-wrap gap-3 items-center card border-2 bg-card rounded-lg p-4 md:justify-center overflow-x-auto">
+            <div className="flex gap-3 items-center md:flex-wrap md:justify-center w-max md:w-auto">
+
+            {/* 活動類型篩選 (Chips) */}
+            <div className="flex flex-wrap gap-2 items-center">
+              <div className="flex items-center gap-2">
+                <IconTag className="w-4 h-4 text-gray-500" />
+                <span className="text-sm font-medium text-gray-700">{t('annualActivitySection.eventType')}:</span>
+              </div>
+              {availableOptions.eventTypes.map((type) => {
+                const isSelected = filters.eventTypes.includes(type);
+                return (
+                  <Badge
+                    key={type}
+                    variant={isSelected ? "default" : "outline"}
+                    className="cursor-pointer hover:bg-gray-100 transition-colors px-3 py-1"
+                    onClick={() => {
+                      if (isSelected) {
+                        setFilters(prev => ({ ...prev, eventTypes: prev.eventTypes.filter(t => t !== type) }));
+                      } else {
+                        setFilters(prev => ({ ...prev, eventTypes: [...prev.eventTypes, type] }));
+                      }
+                    }}
+                  >
+                    {eventTypeMap[type as keyof typeof eventTypeMap] || type}
+                  </Badge>
+                );
+              })}
+            </div>
 
             {/* 校園活動開關 */}
             <div className="flex items-center gap-3 px-4 py-2 h-10 bg-white border border-gray-300 rounded-full shadow-sm hover:shadow-md transition-shadow">
@@ -310,11 +348,11 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
             </div>
 
             {/* 清除全部按鈕 */}
-            {(filters.year || filters.city || filters.eventType || filters.showCampusOnly) && (
+            {(filters.timeRange !== 'all' || filters.cities.length > 0 || filters.eventTypes.length > 0 || filters.showCampusOnly) && (
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setFilters({ year: null, city: null, eventType: null, showCampusOnly: false })}
+                onClick={() => setFilters({ timeRange: 'all', customDateRange: null, cities: [], eventTypes: [], showCampusOnly: false })}
                 className="h-8 px-3 text-gray-600 hover:text-gray-900"
               >
                 <IconX className="w-4 h-4 mr-1" />

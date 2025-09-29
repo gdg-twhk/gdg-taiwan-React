@@ -17,4 +17,15 @@ export const annualActivitySection = {
     clearFilters: "Clear All",
     noEvents: "No events found matching the criteria",
     showingResults: "Showing {{count}} events",
+    // New time-based filter translations
+    timeRange: "Time Range",
+    allTime: "All Time",
+    thisWeek: "This Week",
+    weekend: "Weekend",
+    thisWeekend: "This Weekend",
+    thisMonth: "This Month",
+    customRange: "Custom Range",
+    selectDateRange: "Select Date Range",
+    selectedCities: "{{count}} cities selected",
+    selectedEventTypes: "{{count}} types selected",
 }
