@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { getChapter } from "@/api/bevy";
+import { getChapters } from "@/api/bevy";
 import { Chapter } from "@/interfaces";
 import Taiwan from "@react-map/taiwan";
 import { Sidebar, SidebarInset } from "@/components/ui/sidebar";
@@ -35,7 +35,7 @@ export default function ChaptersSection() {
 
   useEffect(() => {
     const fetchChapters = async () => {
-      const chapters: Chapter[] = await getChapter();
+      const chapters: Chapter[] = await getChapters();
       const chaptersByCountry:{[key: string]: Chapter[]} = collectChaptersByCountry(chapters);
       const sortedCountries = sortCountryList(Object.keys(chaptersByCountry));
 
