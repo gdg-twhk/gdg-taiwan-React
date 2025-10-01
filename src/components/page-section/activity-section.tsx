@@ -43,7 +43,37 @@ export default function ActivitySection() {
       setEventsByDate(eventsByDate);
       const dates = sortEventsByDate(Object.keys(eventsByDate));
       setTotalPages(dates.length);
-      setCurrentPage(0);
+
+      // Find today or nearest upcoming date
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Reset time to start of day for accurate comparison
+
+      let defaultPageIndex = 0;
+
+      // First, try to find today's date
+      const todayIndex = dates.findIndex(date => {
+        const eventDate = new Date(date);
+        eventDate.setHours(0, 0, 0, 0);
+        return eventDate.getTime() === today.getTime();
+      });
+
+      if (todayIndex !== -1) {
+        defaultPageIndex = todayIndex;
+      } else {
+        // If today is not found, find the nearest upcoming date
+        const upcomingIndex = dates.findIndex(date => {
+          const eventDate = new Date(date);
+          eventDate.setHours(0, 0, 0, 0);
+          return eventDate.getTime() >= today.getTime();
+        });
+
+        if (upcomingIndex !== -1) {
+          defaultPageIndex = upcomingIndex;
+        }
+        // If no upcoming dates, defaultPageIndex remains 0 (first event)
+      }
+
+      setCurrentPage(defaultPageIndex);
       setDates(dates);
     }
     fetchEvents();
