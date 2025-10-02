@@ -155,8 +155,8 @@ export function MobileFilterInterface({
           <Sheet open={mobileDrawer.open && mobileDrawer.activeFilter === 'eventTypes'} onOpenChange={(open) => setMobileDrawer({ open, activeFilter: open ? 'eventTypes' : null })}>
             <SheetTrigger asChild>
               <button className="flex items-center gap-1 rounded-full px-3 py-2 text-sm whitespace-nowrap flex-shrink-0 border border-gray-300 bg-gray-100 hover:bg-gray-200">
-                <IconTag className="w-4 h-4 text-primary-600" />
-                <span className="text-primary-700">
+                <IconTag className="w-4 h-4 text-gray-600" />
+                <span className="text-gray-700">
                   {filters.eventTypes.length === 0
                     ? t('annualActivitySection.allEventTypes')
                     : filters.eventTypes.length === 1
@@ -164,7 +164,7 @@ export function MobileFilterInterface({
                       : t('annualActivitySection.selectedEventTypes', { count: filters.eventTypes.length })
                   }
                 </span>
-                <IconChevronDown className="w-4 h-4 text-primary-600" />
+                <IconChevronDown className="w-4 h-4 text-gray-600" />
               </button>
             </SheetTrigger>
             <SheetContent side="bottom" className="h-[400px] px-4">
@@ -219,7 +219,7 @@ export function MobileFilterInterface({
           {/* Audience Types Filter Chip */}
           <Sheet open={mobileDrawer.open && mobileDrawer.activeFilter === 'audienceTypes'} onOpenChange={(open) => setMobileDrawer({ open, activeFilter: open ? 'audienceTypes' : null })}>
             <SheetTrigger asChild>
-              <button className="flex items-center gap-1 rounded-full px-3 py-2 text-sm whitespace-nowrap flex-shrink-0 border border-gray-300 bg-gray-100 hover:bg-gray-200">
+            <button className="flex items-center gap-1 rounded-full px-3 py-2 text-sm whitespace-nowrap flex-shrink-0 border border-gray-300 bg-gray-100 hover:bg-gray-200">
                 <UsersIcon className="w-4 h-4 text-gray-600" />
                 <span className="text-gray-700">
                   {filters.audienceTypes.length === 0
