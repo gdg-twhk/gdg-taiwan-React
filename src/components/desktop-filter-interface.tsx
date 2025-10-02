@@ -50,18 +50,18 @@ export function DesktopFilterInterface({
             variant={filters.year === 'all' ? "default" : "outline"}
             size="sm"
             onClick={() => setFilters(prev => ({ ...prev, year: 'all' }))}
-            className="h-10 px-4 rounded-full flex-shrink-0"
+            className="h-10 px-4 rounded-full flex-shrink-0 border border-primary"
           >
             {t('annualActivitySection.allYears')}
           </Button>
-          <Separator orientation="vertical" className="!h-6 bg-gray-300" />
+          <Separator orientation="vertical" className="!h-6 bg-primary" />
           {availableOptions.years.map((year) => (
             <Button
               key={year}
               variant={filters.year === year ? "default" : "outline"}
               size="sm"
               onClick={() => setFilters(prev => ({ ...prev, year }))}
-              className="h-10 px-4 rounded-full flex-shrink-0"
+              className="h-10 px-4 rounded-full flex-shrink-0 border border-primary"
             >
               {year}
             </Button>
@@ -76,11 +76,11 @@ export function DesktopFilterInterface({
             variant={filters.cities.length === 0 ? "default" : "outline"}
             size="sm"
             onClick={() => setFilters(prev => ({ ...prev, cities: [] }))}
-            className="h-10 px-4 rounded-full flex-shrink-0"
+            className="h-10 px-4 rounded-full flex-shrink-0 border border-primary"
           >
             {t('annualActivitySection.allCities')}
           </Button>
-          <Separator orientation="vertical" className="!h-6 bg-border" />
+          <Separator orientation="vertical" className="!h-6 bg-primary" />
           {availableOptions.cities.map((city) => (
             <Button
               key={city}
@@ -93,7 +93,7 @@ export function DesktopFilterInterface({
                   setFilters(prev => ({ ...prev, cities: [...prev.cities, city] }));
                 }
               }}
-              className="h-10 px-4 rounded-full flex-shrink-0"
+              className="h-10 px-4 rounded-full flex-shrink-0 border border-primary"
             >
               {t('selectedCountryMap.' + city)}
             </Button>
@@ -108,11 +108,11 @@ export function DesktopFilterInterface({
             variant={filters.eventTypes.length === 0 ? "default" : "outline"}
             size="sm"
             onClick={() => setFilters(prev => ({ ...prev, eventTypes: [] }))}
-            className="h-10 px-4 rounded-full flex-shrink-0"
+            className="h-10 px-4 rounded-full flex-shrink-0 border border-primary"
           >
             {t('annualActivitySection.allEventTypes')}
           </Button>
-          <Separator orientation="vertical" className="!h-6" />
+          <Separator orientation="vertical" className="!h-6 bg-primary" />
           {availableOptions.eventTypes.map((type) => (
             <Button
               key={type}
@@ -125,7 +125,7 @@ export function DesktopFilterInterface({
                   setFilters(prev => ({ ...prev, eventTypes: [...prev.eventTypes, type] }));
                 }
               }}
-              className="h-10 px-4 rounded-full flex-shrink-0"
+              className="h-10 px-4 rounded-full flex-shrink-0 border border-primary"
             >
               {eventTypeMap[type as keyof typeof eventTypeMap] || type}
             </Button>
@@ -140,11 +140,11 @@ export function DesktopFilterInterface({
             variant={filters.audienceTypes.length === 0 ? "default" : "outline"}
             size="sm"
             onClick={() => setFilters(prev => ({ ...prev, audienceTypes: [] }))}
-            className="h-10 px-4 rounded-full flex-shrink-0"
+            className="h-10 px-4 rounded-full flex-shrink-0 border border-primary"
           >
             {t('annualActivitySection.allAudienceTypes')}
           </Button>
-          <Separator orientation="vertical" className="!h-6" />
+          <Separator orientation="vertical" className="!h-6 bg-primary" />
           {availableOptions.audienceTypes.map((type) => (
             <Button
               key={type}
@@ -157,15 +157,15 @@ export function DesktopFilterInterface({
                   setFilters(prev => ({ ...prev, audienceTypes: [...prev.audienceTypes, type] }));
                 }
               }}
-              className="h-10 px-4 rounded-full flex-shrink-0"
+              className="h-10 px-4 rounded-full flex-shrink-0 bg-white border border-primary"
             >
               {audienceTypeMap[type as keyof typeof audienceTypeMap] || type}
             </Button>
           ))}
-          <Separator orientation="vertical" className="!h-6"/>
-          <div className="flex items-center gap-3 px-4 py-2 h-10 bg-white border border-gray-300 rounded-full shadow-sm hover:shadow-md transition-shadow w-fit">
-            <IconSchool className="w-4 h-4 text-gray-500" />
-            <span className="text-sm font-medium text-gray-700">
+          <Separator orientation="vertical" className="!h-6 bg-primary"/>
+          <div className="flex items-center gap-3 px-4 py-2 h-10 border border-primary rounded-full shadow-sm hover:shadow-md transition-shadow w-fit">
+            <IconSchool className="w-4 h-4 text-primary" />
+            <span className="text-sm font-medium text-primary">
               {filters.showCampusOnly ? t('annualActivitySection.campusOnly') : t('annualActivitySection.allEvents')}
             </span>
             <Switch
@@ -178,8 +178,8 @@ export function DesktopFilterInterface({
       </div>
 
       {/* Desktop Results Display */}
-      <div className="flex flex-wrap gap-3 items-center justify-between pt-4 border-t">
-        <div className="flex items-center gap-2 text-sm text-gray-600">
+      <div className="flex flex-wrap gap-3 items-center justify-between pt-4 border-t border-primary">
+        <div className="flex items-center gap-2 text-sm text-primary">
           <IconEye className="w-4 h-4" />
           <span>{t('annualActivitySection.showingResults', { count: displayEvents.length })}</span>
         </div>
@@ -189,10 +189,10 @@ export function DesktopFilterInterface({
             variant="ghost"
             size="sm"
             onClick={() => setFilters({ year: 'all', cities: [], eventTypes: [], audienceTypes: [], showCampusOnly: false })}
-            className="h-8 px-3 text-red-600 hover:text-red-500 hover:bg-red-50"
+            className="h-8 px-3 hover:bg-gray-100 border border-red-600"
           >
-            <IconX className="w-4 h-4 mr-1" />
-            {t('annualActivitySection.clearFilters')}
+            <IconX className="w-4 h-4 mr-1 text-red-600 hover:text-red-500" />
+            <span className="text-red-600 hover:text-red-500">{t('annualActivitySection.clearFilters')}</span>
           </Button>
         )}
       </div>
