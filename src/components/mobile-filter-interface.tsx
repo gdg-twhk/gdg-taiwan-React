@@ -11,6 +11,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Event } from "@/interfaces";
 import { UsersIcon } from "lucide-react";
 
@@ -24,7 +31,7 @@ interface FilterState {
 
 interface MobileDrawerState {
   open: boolean;
-  activeFilter: 'year' | 'cities' | 'eventTypes' | 'audienceTypes' | null;
+  activeFilter: 'cities' | 'eventTypes' | 'audienceTypes' | null;
 }
 
 interface AvailableOptions {
@@ -62,52 +69,24 @@ export function MobileFilterInterface({
       {/* Horizontal Scrollable Filter Chips */}
       <div className="mb-4 ">
         <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-          {/* Year Filter Chip */}
-          <Sheet open={mobileDrawer.open && mobileDrawer.activeFilter === 'year'} onOpenChange={(open) => setMobileDrawer({ open, activeFilter: open ? 'year' : null })}>
-            <SheetTrigger asChild>
-              <button className="flex items-center gap-1 rounded-full px-3 py-2 text-sm whitespace-nowrap flex-shrink-0 border border-gray-300 bg-gray-100 hover:bg-gray-200">
-                <IconCalendar className="w-4 h-4 text-gray-600" />
-                <span className="text-gray-700">
-                  {filters.year === 'all' ? t('annualActivitySection.allYears') : filters.year}
-                </span>
-                <IconChevronDown className="w-4 h-4 text-gray-600" />
-              </button>
-            </SheetTrigger>
-            <SheetContent side="bottom" className="h-[400px] px-4">
-              <SheetHeader className="border-b border-gray-300">
-                <SheetTitle>{t('annualActivitySection.year')}</SheetTitle>
-              </SheetHeader>
-              <div className="mt-4">
-                <div className="flex gap-2 flex-wrap">
-                  <Button
-                    variant={filters.year === 'all' ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => {
-                      setFilters(prev => ({ ...prev, year: 'all' }));
-                      setMobileDrawer({ open: false, activeFilter: null });
-                    }}
-                    className="h-10 px-4 rounded-full flex-shrink-0"
-                  >
-                    {t('annualActivitySection.allYears')}
-                  </Button>
-                  {availableOptions.years.map((year) => (
-                    <Button
-                      key={year}
-                      variant={filters.year === year ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => {
-                        setFilters(prev => ({ ...prev, year }));
-                        setMobileDrawer({ open: false, activeFilter: null });
-                      }}
-                      className="h-10 px-4 rounded-full flex-shrink-0"
-                    >
-                      {year}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
+          {/* Year Filter Select */}
+          <div className="flex items-center gap-1 rounded-full px-3 py-2 text-sm whitespace-nowrap flex-shrink-0 border border-gray-300 bg-gray-100">
+            <IconCalendar className="w-4 h-4 text-gray-600" />
+            <Select
+              value={filters.year === 'all' ? 'all' : filters.year || 'all'}
+              onValueChange={(value) => setFilters(prev => ({ ...prev, year: value }))}
+            >
+              <SelectTrigger className="border-0 bg-transparent shadow-none p-0 h-auto text-gray-700 focus:ring-0">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">{t('annualActivitySection.allYears')}</SelectItem>
+                {availableOptions.years.map((year) => (
+                  <SelectItem key={year} value={year}>{year}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
           {/* Cities Filter Chip */}
           <Sheet open={mobileDrawer.open && mobileDrawer.activeFilter === 'cities'} onOpenChange={(open) => setMobileDrawer({ open, activeFilter: open ? 'cities' : null })}>
