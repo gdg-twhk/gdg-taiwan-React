@@ -42,9 +42,9 @@ export function DesktopFilterInterface({
   const { t } = useTranslation();
 
   return (
-    <div className="hidden md:flex flex-col bg-card rounded-lg border-2 p-4">
+    <div className="hidden md:flex flex-col bg-card rounded-lg border shadow-sm p-4 gap-2">
       {/* 年份篩選列 */}
-      <div className="card bg-card p-4 overflow-x-auto">
+      <div className="card bg-card p-4 overflow-x-auto hover:shadow-md transition-shadow">
         <div className="flex gap-2 items-center min-w-max">
           <Button
             variant={filters.year === 'all' ? "default" : "outline"}
@@ -93,7 +93,9 @@ export function DesktopFilterInterface({
                   setFilters(prev => ({ ...prev, cities: [...prev.cities, city] }));
                 }
               }}
-              className="h-10 px-4 rounded-full flex-shrink-0 border border-primary"
+              className={`h-10 px-4 rounded-full flex-shrink-0 border border-primary ${
+                filters.cities.includes(city) ? "bg-primary text-white hover:bg-primary/90" : "bg-background hover:bg-primary/10"
+              }`}
             >
               {t('selectedCountryMap.' + city)}
             </Button>
@@ -157,7 +159,9 @@ export function DesktopFilterInterface({
                   setFilters(prev => ({ ...prev, audienceTypes: [...prev.audienceTypes, type] }));
                 }
               }}
-              className="h-10 px-4 rounded-full flex-shrink-0 bg-white border border-primary"
+              className={`h-10 px-4 rounded-full flex-shrink-0 border border-primary ${
+                filters.audienceTypes.includes(type) ? "bg-primary text-white hover:bg-primary/90" : "bg-background hover:bg-primary/10"
+              }`}
             >
               {audienceTypeMap[type as keyof typeof audienceTypeMap] || type}
             </Button>
@@ -189,7 +193,7 @@ export function DesktopFilterInterface({
             variant="ghost"
             size="sm"
             onClick={() => setFilters({ year: 'all', cities: [], eventTypes: [], audienceTypes: [], showCampusOnly: false })}
-            className="h-8 px-3 hover:bg-gray-100 border border-red-600"
+            className="h-8 px-3 bg-red-50 hover:bg-red-100 border border-red-600 rounded-full transition-colors"
           >
             <IconX className="w-4 h-4 mr-1 text-red-600 hover:text-red-500" />
             <span className="text-red-600 hover:text-red-500">{t('annualActivitySection.clearFilters')}</span>
