@@ -32,6 +32,7 @@ export default function ActivitySection() {
   const [totalPages, setTotalPages] = useState(0);
   const [eventsByDate, setEventsByDate] = useState<{ [key: string]: Event[] }>({});
   const [dates, setDates] = useState<string[]>([]);
+  const [calendarMonth, setCalendarMonth] = useState(new Date());
   const isMobile = useIsMobile();
   const { t } = useTranslation();
   // 取得所有活動
@@ -81,20 +82,18 @@ export default function ActivitySection() {
     fetchEvents();
   }, []);
 
-  const eventsInThisMonth = useMemo(() => {
-    const today = new Date();
-    const currentMonth = today.getMonth();
-    const currentYear = today.getFullYear();
+  const eventsInSelectedMonth = useMemo(() => {
+    const selectedMonth = calendarMonth.getMonth();
+    const selectedYear = calendarMonth.getFullYear();
     return events.filter(event => {
       const eventDate = new Date(event.start_date_iso);
-      return eventDate.getMonth() === currentMonth && eventDate.getFullYear() === currentYear;
+      return eventDate.getMonth() === selectedMonth && eventDate.getFullYear() === selectedYear;
     });
-  }, [events]);
+  }, [events, calendarMonth]);
 
-  const currentMonthName = useMemo(() => {
-    const today = new Date();
-    return today.toLocaleDateString(i18n.language, { month: 'long' });
-  }, [i18n.language]);
+  const selectedMonthName = useMemo(() => {
+    return calendarMonth.toLocaleDateString(i18n.language, { month: 'long' });
+  }, [calendarMonth, i18n.language]);
 
   useEffect(() => {
     i18n.loadNamespaces(['activitySection']);
@@ -179,6 +178,8 @@ export default function ActivitySection() {
               mode="single"
               onSelect={(day) => handleClickCalendar(day)}
               className="rounded-md"
+              month={calendarMonth}
+              onMonthChange={setCalendarMonth}
               modifiers={{
                 selected: (day) => events.slice(0, -1).some((event) => new Date(event.start_date_iso).toDateString() === day.toDateString()),
               }}
@@ -196,19 +197,9 @@ export default function ActivitySection() {
             <SidebarGroupContent>
             <Card>
               <CardHeader className="flex flex-col justify-between">
-              <CardDescription>{t('activitySection.recentActivities')}</CardDescription>
+              <CardDescription>{t('activitySection.thisMonthActivities', { month: selectedMonthName })}</CardDescription>
               <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
-                {events.length}
-              </CardTitle>
-              </CardHeader>
-            </Card>
-            </SidebarGroupContent>
-            <SidebarGroupContent>
-            <Card>
-              <CardHeader className="flex flex-col justify-between">
-              <CardDescription>{t('activitySection.thisMonthActivities', { month: currentMonthName })}</CardDescription>
-              <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
-                {eventsInThisMonth.length}
+                {eventsInSelectedMonth.length}
               </CardTitle>
               </CardHeader>
             </Card>
@@ -243,6 +234,8 @@ export default function ActivitySection() {
                             mode="single"
                             onSelect={(day) => handleClickCalendar(day)}
                             className="rounded-md"
+                            month={calendarMonth}
+                            onMonthChange={setCalendarMonth}
                             modifiers={{
                               selected: (day) => events.slice(0, -1).some((event) => new Date(event.start_date_iso).toDateString() === day.toDateString()),
                             }}
