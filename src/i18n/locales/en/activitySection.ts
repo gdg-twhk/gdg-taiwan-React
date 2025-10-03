@@ -2,6 +2,8 @@ export const activitySection = {
     title: "All Activities",
     recentActivities: "Recent Activities in Taiwan",
     thisMonthActivities: "{{month}} Activities",
+    thisWeekActivities: "This Week's Activities",
+    thisWeekendActivities: "This Weekend's Activities",
     pickADate: "Pick a date",
     calendar: {
         close: "Close",

@@ -91,6 +91,32 @@ export default function ActivitySection() {
     });
   }, [events, calendarMonth]);
 
+  const eventsInThisWeek = useMemo(() => {
+    const today = new Date();
+    const dayOfWeek = today.getDay(); 
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1)); 
+    startOfWeek.setHours(0, 0, 0, 0);
+
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6);
+    endOfWeek.setHours(23, 59, 59, 999);
+
+    return events.filter(event => {
+      const eventDate = new Date(event.start_date_iso);
+      return eventDate >= startOfWeek && eventDate <= endOfWeek;
+    });
+  }, [events]);
+
+  const eventsInThisWeekend = useMemo(() => {
+    return eventsInThisWeek.filter(event => {
+      const eventDate = new Date(event.start_date_iso);
+      const dayOfWeek = eventDate.getDay();
+      return dayOfWeek === 6 || dayOfWeek === 0; 
+    });
+  }, [eventsInThisWeek]);
+
+
   const selectedMonthName = useMemo(() => {
     return calendarMonth.toLocaleDateString(i18n.language, { month: 'long' });
   }, [calendarMonth, i18n.language]);
@@ -203,6 +229,26 @@ export default function ActivitySection() {
               </CardTitle>
               </CardHeader>
             </Card>
+            </SidebarGroupContent>
+            <SidebarGroupContent>
+              <Card>
+                <CardHeader className="flex flex-col justify-between">
+                  <CardDescription>{t('activitySection.thisWeekActivities')}</CardDescription>
+                  <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
+                    {eventsInThisWeek.length}
+                  </CardTitle>
+                </CardHeader>
+              </Card>
+            </SidebarGroupContent>
+            <SidebarGroupContent>
+              <Card>
+                <CardHeader className="flex flex-col justify-between">
+                  <CardDescription>{t('activitySection.thisWeekendActivities')}</CardDescription>
+                  <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
+                    {eventsInThisWeekend.length}
+                  </CardTitle>
+                </CardHeader>
+              </Card>
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
