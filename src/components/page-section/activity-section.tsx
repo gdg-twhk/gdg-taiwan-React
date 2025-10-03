@@ -2,7 +2,7 @@
 
 import { AddToCalendarButton } from 'add-to-calendar-button-react';
 import React, { useState, useEffect } from "react";
-import {getEvents} from "@/api/bevy";
+import {getUpcomingEvents, getPastEvents} from "@/api/bevy";
 import { Event } from "@/interfaces";
 import { SidebarHeader, SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { CardDescription } from "@/components/ui/card";
@@ -32,14 +32,17 @@ export default function ActivitySection() {
   const [totalPages, setTotalPages] = useState(0);
   const [eventsByDate, setEventsByDate] = useState<{ [key: string]: Event[] }>({});
   const [dates, setDates] = useState<string[]>([]);
+  const [calendarMonth, setCalendarMonth] = useState(new Date());
   const isMobile = useIsMobile();
   const { t } = useTranslation();
   // 取得所有活動
   useEffect(() => {
     async function fetchEvents() {
-      const events = await getEvents();
-      setEvents(events);
-      const eventsByDate = collectEventsByDate(events);
+      const upcomingEvents = await getUpcomingEvents();
+      const pastEvents = await getPastEvents();
+      const allEvents = [...upcomingEvents, ...pastEvents];
+      setEvents(allEvents);
+      const eventsByDate = collectEventsByDate(allEvents);
       setEventsByDate(eventsByDate);
       const dates = sortEventsByDate(Object.keys(eventsByDate));
       setTotalPages(dates.length);
@@ -79,20 +82,44 @@ export default function ActivitySection() {
     fetchEvents();
   }, []);
 
-  const eventsInThisMonth = useMemo(() => {
-    const today = new Date();
-    const currentMonth = today.getMonth();
-    const currentYear = today.getFullYear();
+  const eventsInSelectedMonth = useMemo(() => {
+    const selectedMonth = calendarMonth.getMonth();
+    const selectedYear = calendarMonth.getFullYear();
     return events.filter(event => {
       const eventDate = new Date(event.start_date_iso);
-      return eventDate.getMonth() === currentMonth && eventDate.getFullYear() === currentYear;
+      return eventDate.getMonth() === selectedMonth && eventDate.getFullYear() === selectedYear;
+    });
+  }, [events, calendarMonth]);
+
+  const eventsInThisWeek = useMemo(() => {
+    const today = new Date();
+    const dayOfWeek = today.getDay(); 
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1)); 
+    startOfWeek.setHours(0, 0, 0, 0);
+
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6);
+    endOfWeek.setHours(23, 59, 59, 999);
+
+    return events.filter(event => {
+      const eventDate = new Date(event.start_date_iso);
+      return eventDate >= startOfWeek && eventDate <= endOfWeek;
     });
   }, [events]);
 
-  const currentMonthName = useMemo(() => {
-    const today = new Date();
-    return today.toLocaleDateString(i18n.language, { month: 'long' });
-  }, [i18n.language]);
+  const eventsInThisWeekend = useMemo(() => {
+    return eventsInThisWeek.filter(event => {
+      const eventDate = new Date(event.start_date_iso);
+      const dayOfWeek = eventDate.getDay();
+      return dayOfWeek === 6 || dayOfWeek === 0; 
+    });
+  }, [eventsInThisWeek]);
+
+
+  const selectedMonthName = useMemo(() => {
+    return calendarMonth.toLocaleDateString(i18n.language, { month: 'long' });
+  }, [calendarMonth, i18n.language]);
 
   useEffect(() => {
     i18n.loadNamespaces(['activitySection']);
@@ -177,6 +204,8 @@ export default function ActivitySection() {
               mode="single"
               onSelect={(day) => handleClickCalendar(day)}
               className="rounded-md"
+              month={calendarMonth}
+              onMonthChange={setCalendarMonth}
               modifiers={{
                 selected: (day) => events.slice(0, -1).some((event) => new Date(event.start_date_iso).toDateString() === day.toDateString()),
               }}
@@ -194,22 +223,32 @@ export default function ActivitySection() {
             <SidebarGroupContent>
             <Card>
               <CardHeader className="flex flex-col justify-between">
-              <CardDescription>{t('activitySection.recentActivities')}</CardDescription>
+              <CardDescription>{t('activitySection.thisMonthActivities', { month: selectedMonthName })}</CardDescription>
               <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
-                {events.length}
+                {eventsInSelectedMonth.length}
               </CardTitle>
               </CardHeader>
             </Card>
             </SidebarGroupContent>
             <SidebarGroupContent>
-            <Card>
-              <CardHeader className="flex flex-col justify-between">
-              <CardDescription>{t('activitySection.thisMonthActivities', { month: currentMonthName })}</CardDescription>
-              <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
-                {eventsInThisMonth.length}
-              </CardTitle>
-              </CardHeader>
-            </Card>
+              <Card>
+                <CardHeader className="flex flex-col justify-between">
+                  <CardDescription>{t('activitySection.thisWeekActivities')}</CardDescription>
+                  <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
+                    {eventsInThisWeek.length}
+                  </CardTitle>
+                </CardHeader>
+              </Card>
+            </SidebarGroupContent>
+            <SidebarGroupContent>
+              <Card>
+                <CardHeader className="flex flex-col justify-between">
+                  <CardDescription>{t('activitySection.thisWeekendActivities')}</CardDescription>
+                  <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
+                    {eventsInThisWeekend.length}
+                  </CardTitle>
+                </CardHeader>
+              </Card>
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
@@ -241,6 +280,8 @@ export default function ActivitySection() {
                             mode="single"
                             onSelect={(day) => handleClickCalendar(day)}
                             className="rounded-md"
+                            month={calendarMonth}
+                            onMonthChange={setCalendarMonth}
                             modifiers={{
                               selected: (day) => events.slice(0, -1).some((event) => new Date(event.start_date_iso).toDateString() === day.toDateString()),
                             }}

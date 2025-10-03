@@ -328,8 +328,8 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
                   <div className="flex-1 h-px bg-border md:bg-gradient-to-r md:from-transparent md:via-primary/60 md:to-primary"></div>
 
                   {/* Year text with responsive styling */}
-                  <div className="relative mx-3 md:mx-6 px-3 md:px-6 py-1 md:py-2 bg-background rounded-full border border-border/50 shadow-sm">
-                    <div className="text-lg md:text-xl font-semibold text-foreground transition-all duration-300 hover:text-primary">
+                  <div className="relative mx-4 md:mx-8 px-4 md:px-6 py-2 md:py-3 bg-primary/10 rounded-full border border-primary/20">
+                      <div className="text-xl md:text-2xl font-bold text-primary transition-all duration-300 hover:text-primary/80">
                       {stickyYear || ''}{t('annualActivitySection.yearSuffix')}
                     </div>
                   </div>
@@ -343,8 +343,8 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
         </div>
       </div>
 
-      <section className="container mx-auto px-4 py-16 md:py-16 w-full justify-center items-center">
-        <div className="gap-4 px-4 py-4 overflow-auto w-full justify-center items-center flex flex-col">
+      <section className="container mx-auto px-4 w-full justify-center items-center">
+        <div className="gap-4 px-4 overflow-auto w-full justify-center items-center flex flex-col">
           {displayEvents.sortedYears.length > 0 ? (
             displayEvents.sortedYears.map((year) => (
               <div

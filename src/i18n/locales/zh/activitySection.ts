@@ -1,6 +1,8 @@
 export const activitySection = {
     title: "全台近期活動",
     recentActivities: "全台近期活動",
+    thisWeekActivities: "本週活動",
+    thisWeekendActivities: "本週末活動",
     pickADate: "選擇日期",
     calendar: {
         close: "關閉選單",
