@@ -145,9 +145,6 @@ export function MobileFilterInterface({
                           : "border-primary/30 hover:border-primary/60 hover:bg-primary/5"
                       }`}
                     >
-                      {filters.cities.includes(city) && (
-                        <IconX className="w-4 h-4 mr-1 text-current" />
-                      )}
                       {t('selectedCountryMap.' + city)}
                     </Button>
                   ))}
@@ -215,9 +212,6 @@ export function MobileFilterInterface({
                           : "border-primary/30 hover:border-primary/60 hover:bg-primary/5"
                       }`}
                     >
-                      {filters.eventTypes.includes(type) && (
-                        <IconX className="w-4 h-4 mr-1 text-current" />
-                      )}
                       {eventTypeMap[type as keyof typeof eventTypeMap] || type}
                     </Button>
                   ))}
@@ -283,9 +277,6 @@ export function MobileFilterInterface({
                           : "border-primary/30 hover:border-primary/60 hover:bg-primary/5"
                       }`}
                     >
-                      {filters.audienceTypes.includes(type) && (
-                        <IconX className="w-4 h-4 mr-1 text-current" />
-                      )}
                       {audienceTypeMap[type as keyof typeof audienceTypeMap] || type}
                     </Button>
                   ))}
