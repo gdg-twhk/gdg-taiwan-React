@@ -109,7 +109,7 @@ export function MobileFilterInterface({
                 <SheetTitle className="text-lg font-semibold text-primary-800">
                   {t('annualActivitySection.city')}
                 </SheetTitle>
-                <p className="text-sm text-primary-500 mt-1">選擇您所在或感興趣的分會</p>
+                <p className="text-sm text-primary-500 mt-1">{t('annualActivitySection.cityFilterSubtitle')}</p>
               </SheetHeader>
               <div className="mt-4">
                 <div className="flex gap-2 flex-wrap">
@@ -172,7 +172,7 @@ export function MobileFilterInterface({
                 <SheetTitle className="text-lg font-semibold text-primary-800">
                   {t('annualActivitySection.eventType')}
                 </SheetTitle>
-                <p className="text-sm text-primary-500 mt-1">選擇您感興趣的活動類型</p>
+                <p className="text-sm text-primary-500 mt-1">{t('annualActivitySection.eventTypeFilterSubtitle')}</p>
               </SheetHeader>
               <div className="mt-4">
                 <div className="flex gap-2 flex-wrap">
@@ -237,7 +237,7 @@ export function MobileFilterInterface({
                 <SheetTitle className="text-lg font-semibold text-primary-800">
                   {t('annualActivitySection.audienceType')}
                 </SheetTitle>
-                <p className="text-sm text-primary-500 mt-1">選擇適合的參與方式</p>
+                <p className="text-sm text-primary-500 mt-1">{t('annualActivitySection.audienceTypeFilterSubtitle')}</p>
               </SheetHeader>
               <div className="mt-4">
                 <div className="flex gap-2 flex-wrap">
