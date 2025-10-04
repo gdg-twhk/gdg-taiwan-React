@@ -70,7 +70,7 @@ export function MobileFilterInterface({
       <div className="mb-4 ">
         <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
           {/* Year Filter Select */}
-          <div className="flex items-center gap-1 rounded-full px-3 py-2 text-sm whitespace-nowrap flex-shrink-0 border border-gray-300 bg-gray-100">
+          <div className="flex items-center gap-1 rounded-full px-3 py-2 text-sm whitespace-nowrap flex-shrink-0 border border-primary hover:bg-gray-100">
             <IconCalendar className="w-4 h-4 text-gray-600" />
             <Select
               value={filters.year === 'all' ? 'all' : filters.year || 'all'}
@@ -91,7 +91,7 @@ export function MobileFilterInterface({
           {/* Cities Filter Chip */}
           <Sheet open={mobileDrawer.open && mobileDrawer.activeFilter === 'cities'} onOpenChange={(open) => setMobileDrawer({ open, activeFilter: open ? 'cities' : null })}>
             <SheetTrigger asChild>
-              <button className="flex items-center gap-1 rounded-full px-3 py-2 text-sm whitespace-nowrap flex-shrink-0 border border-gray-300 bg-gray-100 hover:bg-gray-200">
+              <button className="flex items-center gap-1 rounded-full px-3 py-2 text-sm whitespace-nowrap flex-shrink-0 border border-primary hover:bg-gray-100">
                 <IconMapPin className="w-4 h-4 text-gray-600" />
                 <span className="text-gray-700">
                   {filters.cities.length === 0
@@ -154,7 +154,7 @@ export function MobileFilterInterface({
           {/* Event Types Filter Chip */}
           <Sheet open={mobileDrawer.open && mobileDrawer.activeFilter === 'eventTypes'} onOpenChange={(open) => setMobileDrawer({ open, activeFilter: open ? 'eventTypes' : null })}>
             <SheetTrigger asChild>
-              <button className="flex items-center gap-1 rounded-full px-3 py-2 text-sm whitespace-nowrap flex-shrink-0 border border-gray-300 bg-gray-100 hover:bg-gray-200">
+              <button className="flex items-center gap-1 rounded-full px-3 py-2 text-sm whitespace-nowrap flex-shrink-0 border border-primary hover:bg-gray-100">
                 <IconTag className="w-4 h-4 text-gray-600" />
                 <span className="text-gray-700">
                   {filters.eventTypes.length === 0
@@ -219,7 +219,7 @@ export function MobileFilterInterface({
           {/* Audience Types Filter Chip */}
           <Sheet open={mobileDrawer.open && mobileDrawer.activeFilter === 'audienceTypes'} onOpenChange={(open) => setMobileDrawer({ open, activeFilter: open ? 'audienceTypes' : null })}>
             <SheetTrigger asChild>
-            <button className="flex items-center gap-1 rounded-full px-3 py-2 text-sm whitespace-nowrap flex-shrink-0 border border-gray-300 bg-gray-100 hover:bg-gray-200">
+            <button className="flex items-center gap-1 rounded-full px-3 py-2 text-sm whitespace-nowrap flex-shrink-0 border border-primary hover:bg-gray-100">
                 <UsersIcon className="w-4 h-4 text-gray-600" />
                 <span className="text-gray-700">
                   {filters.audienceTypes.length === 0
