@@ -104,16 +104,13 @@ export function MobileFilterInterface({
                 <IconChevronDown className="w-4 h-4 text-gray-600" />
               </button>
             </SheetTrigger>
-            <SheetContent side="bottom" className="h-[400px] px-4">
+            <SheetContent side="bottom" className="h-auto max-h-[50vh] flex flex-col px-4">
               <SheetHeader className="border-b border-primary pb-4">
                 <SheetTitle className="text-lg font-semibold text-primary-800">
                   {t('annualActivitySection.city')}
                 </SheetTitle>
                 <p className="text-sm text-primary-500 mt-1">{t('annualActivitySection.cityFilterSubtitle')}</p>
-              </SheetHeader>
-              <div className="mt-4">
-                <div className="flex gap-2 flex-wrap">
-                  <Button
+                <Button
                     variant={filters.cities.length === 0 ? "default" : "outline"}
                     size="sm"
                     onClick={() => setFilters(prev => ({ ...prev, cities: [] }))}
@@ -125,7 +122,9 @@ export function MobileFilterInterface({
                   >
                     {t('annualActivitySection.allCities')}
                   </Button>
-                  <div className="w-full border-t border-primary my-3"></div>
+              </SheetHeader>
+              <div className="mt-4 overflow-y-auto pb-4">
+                <div className="flex gap-2 flex-wrap">
                   {availableOptions.cities.map((city) => (
                     <Button
                       key={city}
@@ -167,16 +166,13 @@ export function MobileFilterInterface({
                 <IconChevronDown className="w-4 h-4 text-gray-600" />
               </button>
             </SheetTrigger>
-            <SheetContent side="bottom" className="h-[400px] px-4">
+            <SheetContent side="bottom" className="h-auto max-h-[50vh] flex flex-col px-4">
               <SheetHeader className="border-b border-primary pb-4">
                 <SheetTitle className="text-lg font-semibold text-primary-800">
                   {t('annualActivitySection.eventType')}
                 </SheetTitle>
                 <p className="text-sm text-primary-500 mt-1">{t('annualActivitySection.eventTypeFilterSubtitle')}</p>
-              </SheetHeader>
-              <div className="mt-4">
-                <div className="flex gap-2 flex-wrap">
-                  <Button
+                <Button
                     variant={filters.eventTypes.length === 0 ? "default" : "outline"}
                     size="sm"
                     onClick={() => setFilters(prev => ({ ...prev, eventTypes: [] }))}
@@ -188,7 +184,9 @@ export function MobileFilterInterface({
                   >
                     {t('annualActivitySection.allEventTypes')}
                   </Button>
-                  <div className="w-full border-t border-primary my-3"></div>
+              </SheetHeader>
+              <div className="mt-4 overflow-y-auto pb-4">
+                <div className="flex gap-2 flex-wrap">
                   {availableOptions.eventTypes
                     .filter(type => type && type.trim() !== '')
                     .map((type) => (
@@ -232,16 +230,13 @@ export function MobileFilterInterface({
                 <IconChevronDown className="w-4 h-4 text-gray-600" />
               </button>
             </SheetTrigger>
-            <SheetContent side="bottom" className="h-[400px] px-4">
+            <SheetContent side="bottom" className="h-auto max-h-[50vh] flex flex-col px-4">
               <SheetHeader className="border-b border-primary pb-4">
                 <SheetTitle className="text-lg font-semibold text-primary-800">
                   {t('annualActivitySection.audienceType')}
                 </SheetTitle>
                 <p className="text-sm text-primary-500 mt-1">{t('annualActivitySection.audienceTypeFilterSubtitle')}</p>
-              </SheetHeader>
-              <div className="mt-4">
-                <div className="flex gap-2 flex-wrap">
-                  <Button
+                <Button
                     variant={filters.audienceTypes.length === 0 ? "default" : "outline"}
                     size="sm"
                     onClick={() => setFilters(prev => ({ ...prev, audienceTypes: [] }))}
@@ -253,7 +248,9 @@ export function MobileFilterInterface({
                   >
                     {t('annualActivitySection.allAudienceTypes')}
                   </Button>
-                  <div className="w-full border-t border-primary my-3"></div>
+              </SheetHeader>
+              <div className="mt-4 overflow-y-auto pb-4">
+                <div className="flex gap-2 flex-wrap">
                   {availableOptions.audienceTypes.map((type) => (
                     <Button
                       key={type}
