@@ -33,4 +33,7 @@ export const annualActivitySection = {
     audienceType: "Audience Type",
     yearSuffix: "",
     unknownYear: "Unknown",
+    cityFilterSubtitle: "Choose your chapter or one you're interested in",
+    eventTypeFilterSubtitle: "Choose the event types you're interested in",
+    audienceTypeFilterSubtitle: "Choose a suitable way to participate",
 }

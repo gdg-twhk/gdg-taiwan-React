@@ -32,4 +32,7 @@ export const annualActivitySection = {
     audienceType: "참여 방식",
     yearSuffix: "년",
     unknownYear: "알 수 없음",
+    cityFilterSubtitle: "소속되어 있거나 관심 있는 챕터를 선택하세요",
+    eventTypeFilterSubtitle: "관심 있는 이벤트 유형을 선택하세요",
+    audienceTypeFilterSubtitle: "적합한 참여 방법을 선택하세요",
 }
