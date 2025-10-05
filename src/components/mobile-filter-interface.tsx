@@ -70,7 +70,7 @@ export function MobileFilterInterface({
       <div className="p-4 pb-3">
         <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
           {/* Year Filter Select */}
-          <div className="flex items-center gap-2 rounded-full px-4 py-2.5 text-sm whitespace-nowrap flex-shrink-0 border border-primary/30 hover:border-primary/60 hover:bg-primary/5 transition-colors bg-white">
+          <div className="flex items-center gap-2 rounded-full px-4 py-2.5 text-sm whitespace-nowrap flex-shrink-0 border border-primary/30 hover:border-primary/60 hover:bg-primary/5 transition-colors">
             <IconCalendar className="w-4 h-4 text-primary" />
             <Select
               value={filters.year === 'all' ? 'all' : filters.year || 'all'}
@@ -91,7 +91,7 @@ export function MobileFilterInterface({
           {/* Cities Filter Chip */}
           <Sheet open={mobileDrawer.open && mobileDrawer.activeFilter === 'cities'} onOpenChange={(open) => setMobileDrawer({ open, activeFilter: open ? 'cities' : null })}>
             <SheetTrigger asChild>
-              <button className="flex items-center gap-2 rounded-full px-4 py-2.5 text-sm whitespace-nowrap flex-shrink-0 border border-primary/30 hover:border-primary/60 hover:bg-primary/5 transition-colors bg-white">
+              <button className="flex items-center gap-2 rounded-full px-4 py-2.5 text-sm whitespace-nowrap flex-shrink-0 border border-primary/30 hover:border-primary/60 hover:bg-primary/5 transition-colors">
                 <IconMapPin className="w-4 h-4 text-primary" />
                 <span className="text-primary-700 font-medium">
                   {filters.cities.length === 0
@@ -156,7 +156,7 @@ export function MobileFilterInterface({
           {/* Event Types Filter Chip */}
           <Sheet open={mobileDrawer.open && mobileDrawer.activeFilter === 'eventTypes'} onOpenChange={(open) => setMobileDrawer({ open, activeFilter: open ? 'eventTypes' : null })}>
             <SheetTrigger asChild>
-              <button className="flex items-center gap-2 rounded-full px-4 py-2.5 text-sm whitespace-nowrap flex-shrink-0 border border-primary/30 hover:border-primary/60 hover:bg-primary/5 transition-colors bg-white">
+              <button className="flex items-center gap-2 rounded-full px-4 py-2.5 text-sm whitespace-nowrap flex-shrink-0 border border-primary/30 hover:border-primary/60 hover:bg-primary/5 transition-colors">
                 <IconTag className="w-4 h-4 text-primary" />
                 <span className="text-primary-700 font-medium">
                   {filters.eventTypes.length === 0
