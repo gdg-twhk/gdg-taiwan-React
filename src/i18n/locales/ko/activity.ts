@@ -12,8 +12,8 @@ export const activity = {
     description: "컨테이너화된 애플리케이션에서 가상 머신 생성에 이르기까지, Study Jams는 주제와 기술 수준에 따라 사용자 정의할 수 있습니다. 클라우드 기초 입문부터 머신러닝, BigQuery, 인증 또는 Kubernetes에 대한 심층 탐구까지, 무료 실습 실험실을 통해 Google Cloud의 핵심 도구와 기능을 배울 수 있습니다.",
   },
   devfest: {
-    title: "DevFest",
-    description: "DevFests는 전 세계 Google Developer Groups (GDG)이 주최하는 지역 기술 세미나입니다. 지역 주최자는 커뮤니티의 요구에 따라 기획하며, 실습 경험에서 전문가 기술 강연에 이르기까지, 참가자들이 Google 오픈 소스 기술과 개발 도구를 사용하여 협력하고 혁신할 수 있도록 이끕니다.",
+    title: "데브페스트",
+    description: "데브페스트(DevFests)는 전 세계 Google 개발자 그룹(GDG)이 주최하는 지역 기술 컨퍼런스입니다. 지역 주최자는 커뮤니티의 필요에 따라 행사를 기획하며, 실습 경험부터 전문가 기술 강연에 이르기까지 참가자들이 Google 관련 기술(오픈 소스 기술 및 개발 도구 포함)을 사용하여 협력하고 혁신하도록 이끌어줍니다.",
   },
   build_with_ai: {
     title: "Build with AI",
