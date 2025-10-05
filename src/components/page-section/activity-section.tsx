@@ -24,6 +24,7 @@ import { enUS, zhTW ,zhCN, ja, ko} from "date-fns/locale";
 import { useClientOnly } from "@/components/use-client-only";
 import { EventCard } from "@/components/event-card";
 import { useMemo } from 'react';
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ActivitySection() {
   const mounted = useClientOnly();
@@ -33,11 +34,13 @@ export default function ActivitySection() {
   const [eventsByDate, setEventsByDate] = useState<{ [key: string]: Event[] }>({});
   const [dates, setDates] = useState<string[]>([]);
   const [calendarMonth, setCalendarMonth] = useState(new Date());
+  const [isLoading, setIsLoading] = useState(true);
   const isMobile = useIsMobile();
   const { t } = useTranslation();
   // 取得所有活動
   useEffect(() => {
     async function fetchEvents() {
+      setIsLoading(true);
       const upcomingEvents = await getUpcomingEvents();
       const pastEvents = await getPastEvents();
       const allEvents = [...upcomingEvents, ...pastEvents];
@@ -78,6 +81,7 @@ export default function ActivitySection() {
 
       setCurrentPage(defaultPageIndex);
       setDates(dates);
+      setIsLoading(false);
     }
     fetchEvents();
   }, []);
@@ -225,7 +229,7 @@ export default function ActivitySection() {
               <CardHeader className="flex flex-col justify-between">
               <CardDescription>{t('activitySection.thisMonthActivities', { month: selectedMonthName })}</CardDescription>
               <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
-                {eventsInSelectedMonth.length}
+                {isLoading ? 0 : eventsInSelectedMonth.length}
               </CardTitle>
               </CardHeader>
             </Card>
@@ -235,7 +239,7 @@ export default function ActivitySection() {
                 <CardHeader className="flex flex-col justify-between">
                   <CardDescription>{t('activitySection.thisWeekActivities')}</CardDescription>
                   <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
-                    {eventsInThisWeek.length}
+                    {isLoading ? 0 : eventsInThisWeek.length}
                   </CardTitle>
                 </CardHeader>
               </Card>
@@ -245,7 +249,7 @@ export default function ActivitySection() {
                 <CardHeader className="flex flex-col justify-between">
                   <CardDescription>{t('activitySection.thisWeekendActivities')}</CardDescription>
                   <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
-                    {eventsInThisWeekend.length}
+                    {isLoading ? 0 : eventsInThisWeekend.length}
                   </CardTitle>
                 </CardHeader>
               </Card>
@@ -265,14 +269,18 @@ export default function ActivitySection() {
                   )}
                   </PaginationItem>
                   {!isMobile ? (
-                  <h1 className="text-2xl font-bold">{dates[currentPage] ? getDateString(dates[currentPage]) : <span>{t('activitySection.pickADate')}</span>}</h1>
+                    isLoading
+                      ? <Skeleton className="h-8 w-64 hidden md:block" />
+                      : <h1 className="text-2xl font-bold">{dates[currentPage] ? getDateString(dates[currentPage]) : <span>{t('activitySection.pickADate')}</span>}</h1>
                   ) : (
                     <PaginationItem>
                       <Popover>
                         <PopoverTrigger asChild>
-                          <Button variant="outline">
-                            <CalendarIcon />
-                            {dates[currentPage] ?  getDateString(dates[currentPage]) : <span>{t('activitySection.pickADate')}</span>}
+                          <Button variant="outline" className="w-48">
+                            <CalendarIcon className="mr-2 h-4 w-4" />
+                            {isLoading
+                              ? <Skeleton className="h-4 w-full" />
+                              : (dates[currentPage] ?  getDateString(dates[currentPage]) : <span>{t('activitySection.pickADate')}</span>)}
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0">
@@ -307,15 +315,69 @@ export default function ActivitySection() {
           </Pagination>
           </header>
           <div className="gap-4 px-4 py-4 overflow-auto">
-          <div className="flex flex-col gap-4 items-center">              
-              {eventsByDate[dates[currentPage]]?.length > 0 ? eventsByDate[dates[currentPage]].map((event:Event  ) => (
-                <EventCard key={event.id} eventObject={event} />
-              )):null}
-              {eventsByDate[dates[currentPage]]?.length === 0 ? (
-                <div className="text-center text-lg text-muted-foreground">
-                  {t('activitySection.noEvents')}
-                </div>
-              ):null}
+          <div className="flex flex-col gap-4 items-center">
+              {isLoading ? (
+                <>
+                  <div className="relative overflow-hidden rounded-3xl shadow-xl w-full mx-auto min-h-[400px]">
+                    <Skeleton className="absolute inset-0 w-full h-full" />
+                    <div className="relative h-full flex flex-col justify-between p-8">
+                      <div className="flex gap-3 flex-wrap mb-10">
+                        <Skeleton className="h-6 w-24 rounded-full bg-gray-200 hidden md:block  md:w-full" />
+                      </div>
+                      <div className="space-y-4">
+                        <div className="space-y-2">
+                          <Skeleton className="h-8 w-3/4 bg-gray-200" />
+                          <Skeleton className="h-6 w-1/2 bg-gray-200" />
+                        </div>
+                        <div className="space-y-2">
+                          <Skeleton className="h-4 w-1/3 bg-gray-200" />
+                          <Skeleton className="h-4 w-1/2 bg-gray-200" />
+                        </div>
+                        <Skeleton className="h-4 w-full bg-gray-200" />
+                        <Skeleton className="h-4 w-5/6 bg-gray-200" />
+                        <div className="pt-2">
+                          <Skeleton className="h-12 w-32 rounded-xl bg-gray-200" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="relative overflow-hidden rounded-3xl shadow-xl w-full mx-auto min-h-[400px]">
+                    <Skeleton className="absolute inset-0 w-full h-full" />
+                    <div className="relative h-full flex flex-col justify-between p-8">
+                      <div className="flex gap-3 flex-wrap mb-10">
+                        <Skeleton className="h-6 w-24 rounded-full bg-gray-200" />
+                      </div>
+                      <div className="space-y-4">
+                        <div className="space-y-2">
+                          <Skeleton className="h-8 w-3/4 bg-gray-200" />
+                          <Skeleton className="h-6 w-1/2 bg-gray-200" />
+                        </div>
+                        <div className="space-y-2">
+                          <Skeleton className="h-4 w-1/3 bg-gray-200" />
+                          <Skeleton className="h-4 w-1/2 bg-gray-200" />
+                        </div>
+                        <Skeleton className="h-4 w-full bg-gray-200" />
+                        <Skeleton className="h-4 w-5/6 bg-gray-200" />
+                        <div className="pt-2">
+                          <Skeleton className="h-12 w-32 rounded-xl bg-gray-200" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  {eventsByDate[dates[currentPage]]?.length > 0 ? (
+                    eventsByDate[dates[currentPage]].map((event:Event) => (
+                      <EventCard key={event.id} eventObject={event} />
+                    ))
+                  ) : (
+                    <div className="text-center text-lg text-muted-foreground">
+                      {t('activitySection.noEvents')}
+                    </div>
+                  )}
+                </>
+              )}
             </div>
           </div>
       </SidebarInset>
