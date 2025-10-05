@@ -223,7 +223,7 @@ export function MobileFilterInterface({
           {/* Audience Types Filter Chip */}
           <Sheet open={mobileDrawer.open && mobileDrawer.activeFilter === 'audienceTypes'} onOpenChange={(open) => setMobileDrawer({ open, activeFilter: open ? 'audienceTypes' : null })}>
             <SheetTrigger asChild>
-            <button className="flex items-center gap-2 rounded-full px-4 py-2.5 text-sm whitespace-nowrap flex-shrink-0 border border-primary/30 hover:border-primary/60 hover:bg-primary/5 transition-colors bg-white">
+            <button className="flex items-center gap-2 rounded-full px-4 py-2.5 text-sm whitespace-nowrap flex-shrink-0 border border-primary/30 hover:border-primary/60 hover:bg-primary/5 transition-colors">
                 <UsersIcon className="w-4 h-4 text-primary" />
                 <span className="text-primary-700 font-medium">
                   {filters.audienceTypes.length === 0
@@ -290,8 +290,8 @@ export function MobileFilterInterface({
             onClick={() => setFilters(prev => ({ ...prev, showCampusOnly: !prev.showCampusOnly }))}
             className={`flex items-center gap-2 rounded-full px-4 py-2.5 text-sm whitespace-nowrap flex-shrink-0 transition-colors border font-medium ${
               filters.showCampusOnly
-                ? "bg-google-green border-google-green text-white hover:bg-google-green/90"
-                : "border-primary/30 hover:border-primary/60 hover:bg-primary/5 bg-white text-primary-700"
+                ? "bg-google-green border-google-green text-black hover:bg-google-green/90"
+                : "border-primary/30 hover:border-primary/60 hover:bg-primary/5 text-primary-700"
             }`}
           >
             <IconSchool className="w-4 h-4" />
