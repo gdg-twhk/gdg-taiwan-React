@@ -13,7 +13,7 @@ export const activity = {
   },
   devfest: {
     title: "DevFest",
-    description: "DevFests 是由全球 Google Developer Groups (GDG) 主辦的在地技術研討會。當地主辦方依據社群需求策劃，從實作體驗到專家技術講座，帶領參與者使用 Google 開源技術與開發工具協作創新。",
+    description: "DevFests 是由全球 Google Developer Groups (GDG) 主辦的在地技術研討會。當地主辦方依據社群需求策劃，從實作體驗到專家技術講座，帶領參與者使用 Google 相關技術，包括其開源技術與開發工具協作創新。",
   },
   build_with_ai: {
     title: "Build with AI",
