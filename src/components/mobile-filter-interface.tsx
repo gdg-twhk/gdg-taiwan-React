@@ -65,18 +65,18 @@ export function MobileFilterInterface({
   });
 
   return (
-    <div className="md:hidden mx-4 px-4 bg-card rounded-xl border shadow-sm p-4">
+    <div className="md:hidden mx-4 bg-card rounded-xl border shadow-sm">
       {/* Horizontal Scrollable Filter Chips */}
-      <div className="mb-4 ">
-        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+      <div className="p-4 pb-3">
+        <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
           {/* Year Filter Select */}
-          <div className="flex items-center gap-1 rounded-full px-3 py-2 text-sm whitespace-nowrap flex-shrink-0 border border-gray-300 bg-gray-100">
-            <IconCalendar className="w-4 h-4 text-gray-600" />
+          <div className="flex items-center gap-2 rounded-full px-4 py-2.5 text-sm whitespace-nowrap flex-shrink-0 border border-primary/30 hover:border-primary/60 hover:bg-primary/5 transition-colors">
+            <IconCalendar className="w-4 h-4 text-primary" />
             <Select
               value={filters.year === 'all' ? 'all' : filters.year || 'all'}
               onValueChange={(value) => setFilters(prev => ({ ...prev, year: value }))}
             >
-              <SelectTrigger className="border-0 bg-transparent shadow-none p-0 h-auto text-gray-700 focus:ring-0">
+              <SelectTrigger className="border-0 bg-transparent shadow-none p-0 h-auto text-primary-700 focus:ring-0 font-medium">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -91,9 +91,9 @@ export function MobileFilterInterface({
           {/* Cities Filter Chip */}
           <Sheet open={mobileDrawer.open && mobileDrawer.activeFilter === 'cities'} onOpenChange={(open) => setMobileDrawer({ open, activeFilter: open ? 'cities' : null })}>
             <SheetTrigger asChild>
-              <button className="flex items-center gap-1 rounded-full px-3 py-2 text-sm whitespace-nowrap flex-shrink-0 border border-gray-300 bg-gray-100 hover:bg-gray-200">
-                <IconMapPin className="w-4 h-4 text-gray-600" />
-                <span className="text-gray-700">
+              <button className="flex items-center gap-2 rounded-full px-4 py-2.5 text-sm whitespace-nowrap flex-shrink-0 border border-primary/30 hover:border-primary/60 hover:bg-primary/5 transition-colors">
+                <IconMapPin className="w-4 h-4 text-primary" />
+                <span className="text-primary-700 font-medium">
                   {filters.cities.length === 0
                     ? t('annualActivitySection.allCities')
                     : filters.cities.length === 1
@@ -101,31 +101,32 @@ export function MobileFilterInterface({
                       : t('annualActivitySection.selectedCities', { count: filters.cities.length })
                   }
                 </span>
-                <IconChevronDown className="w-4 h-4 text-gray-600" />
+                <IconChevronDown className="w-4 h-4 text-primary/60" />
               </button>
             </SheetTrigger>
-            <SheetContent side="bottom" className="h-[400px] px-4">
-              <SheetHeader className="border-b border-primary pb-4">
+            <SheetContent side="bottom" className="h-auto max-h-[60vh] flex flex-col">
+              <SheetHeader className="px-4 pt-4 pb-3">
                 <SheetTitle className="text-lg font-semibold text-primary-800">
                   {t('annualActivitySection.city')}
                 </SheetTitle>
-                <p className="text-sm text-primary-500 mt-1">選擇您所在或感興趣的分會</p>
+                <p className="text-sm text-primary-500 mt-1">{t('annualActivitySection.cityFilterSubtitle')}</p>
               </SheetHeader>
-              <div className="mt-4">
-                <div className="flex gap-2 flex-wrap">
+              <div className="flex-1 overflow-y-auto px-4 pb-4">
+                <div className="mb-3">
                   <Button
-                    variant={filters.cities.length === 0 ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setFilters(prev => ({ ...prev, cities: [] }))}
-                    className={`h-10 px-4 rounded-full flex-shrink-0 ${
-                      filters.cities.length === 0
-                        ? ""
-                        : "border-primary text-primary-600 hover:bg-primary-50"
-                    }`}
-                  >
-                    {t('annualActivitySection.allCities')}
-                  </Button>
-                  <div className="w-full border-t border-primary my-3"></div>
+                      variant={filters.cities.length === 0 ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setFilters(prev => ({ ...prev, cities: [] }))}
+                      className={`h-10 px-4 rounded-full w-full ${
+                        filters.cities.length === 0
+                          ? ""
+                          : "border-primary text-primary-600 hover:bg-primary-50"
+                      }`}
+                    >
+                      {t('annualActivitySection.allCities')}
+                    </Button>
+                </div>
+                <div className="flex gap-2 flex-wrap">
                   {availableOptions.cities.map((city) => (
                     <Button
                       key={city}
@@ -138,11 +139,12 @@ export function MobileFilterInterface({
                           setFilters(prev => ({ ...prev, cities: [...prev.cities, city] }));
                         }
                       }}
-                      className="h-10 px-4 rounded-full flex-shrink-0 border border-primary"
+                      className={`h-10 px-4 rounded-full flex-shrink-0 transition-all duration-200 ${
+                        filters.cities.includes(city)
+                          ? "border-primary bg-primary text-white shadow-md"
+                          : "border-primary/30 hover:border-primary/60 hover:bg-primary/5"
+                      }`}
                     >
-                      {filters.cities.includes(city) && (
-                        <IconX className="w-4 h-4 mr-1 text-current" />
-                      )}
                       {t('selectedCountryMap.' + city)}
                     </Button>
                   ))}
@@ -154,9 +156,9 @@ export function MobileFilterInterface({
           {/* Event Types Filter Chip */}
           <Sheet open={mobileDrawer.open && mobileDrawer.activeFilter === 'eventTypes'} onOpenChange={(open) => setMobileDrawer({ open, activeFilter: open ? 'eventTypes' : null })}>
             <SheetTrigger asChild>
-              <button className="flex items-center gap-1 rounded-full px-3 py-2 text-sm whitespace-nowrap flex-shrink-0 border border-gray-300 bg-gray-100 hover:bg-gray-200">
-                <IconTag className="w-4 h-4 text-gray-600" />
-                <span className="text-gray-700">
+              <button className="flex items-center gap-2 rounded-full px-4 py-2.5 text-sm whitespace-nowrap flex-shrink-0 border border-primary/30 hover:border-primary/60 hover:bg-primary/5 transition-colors">
+                <IconTag className="w-4 h-4 text-primary" />
+                <span className="text-primary-700 font-medium">
                   {filters.eventTypes.length === 0
                     ? t('annualActivitySection.allEventTypes')
                     : filters.eventTypes.length === 1
@@ -164,31 +166,32 @@ export function MobileFilterInterface({
                       : t('annualActivitySection.selectedEventTypes', { count: filters.eventTypes.length })
                   }
                 </span>
-                <IconChevronDown className="w-4 h-4 text-gray-600" />
+                <IconChevronDown className="w-4 h-4 text-primary/60" />
               </button>
             </SheetTrigger>
-            <SheetContent side="bottom" className="h-[400px] px-4">
-              <SheetHeader className="border-b border-primary pb-4">
+            <SheetContent side="bottom" className="h-auto max-h-[60vh] flex flex-col">
+              <SheetHeader className="px-4 pt-4 pb-3">
                 <SheetTitle className="text-lg font-semibold text-primary-800">
                   {t('annualActivitySection.eventType')}
                 </SheetTitle>
-                <p className="text-sm text-primary-500 mt-1">選擇您感興趣的活動類型</p>
+                <p className="text-sm text-primary-500 mt-1">{t('annualActivitySection.eventTypeFilterSubtitle')}</p>
               </SheetHeader>
-              <div className="mt-4">
-                <div className="flex gap-2 flex-wrap">
+              <div className="flex-1 overflow-y-auto px-4 pb-4">
+                <div className="mb-3">
                   <Button
-                    variant={filters.eventTypes.length === 0 ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setFilters(prev => ({ ...prev, eventTypes: [] }))}
-                    className={`h-10 px-4 rounded-full flex-shrink-0 ${
-                      filters.eventTypes.length === 0
-                        ? ""
-                        : "border-primary text-primary-600 hover:bg-primary-50"
-                    }`}
-                  >
-                    {t('annualActivitySection.allEventTypes')}
-                  </Button>
-                  <div className="w-full border-t border-primary my-3"></div>
+                      variant={filters.eventTypes.length === 0 ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setFilters(prev => ({ ...prev, eventTypes: [] }))}
+                      className={`h-10 px-4 rounded-full w-full ${
+                        filters.eventTypes.length === 0
+                          ? ""
+                          : "border-primary text-primary-600 hover:bg-primary-50"
+                      }`}
+                    >
+                      {t('annualActivitySection.allEventTypes')}
+                    </Button>
+                </div>
+                <div className="flex gap-2 flex-wrap">
                   {availableOptions.eventTypes
                     .filter(type => type && type.trim() !== '')
                     .map((type) => (
@@ -203,11 +206,12 @@ export function MobileFilterInterface({
                           setFilters(prev => ({ ...prev, eventTypes: [...prev.eventTypes, type] }));
                         }
                       }}
-                      className="h-10 px-4 rounded-full flex-shrink-0 border border-primary"
+                      className={`h-10 px-4 rounded-full flex-shrink-0 transition-all duration-200 ${
+                        filters.eventTypes.includes(type)
+                          ? "border-primary bg-primary text-white shadow-md"
+                          : "border-primary/30 hover:border-primary/60 hover:bg-primary/5"
+                      }`}
                     >
-                      {filters.eventTypes.includes(type) && (
-                        <IconX className="w-4 h-4 mr-1 text-current" />
-                      )}
                       {eventTypeMap[type as keyof typeof eventTypeMap] || type}
                     </Button>
                   ))}
@@ -219,9 +223,9 @@ export function MobileFilterInterface({
           {/* Audience Types Filter Chip */}
           <Sheet open={mobileDrawer.open && mobileDrawer.activeFilter === 'audienceTypes'} onOpenChange={(open) => setMobileDrawer({ open, activeFilter: open ? 'audienceTypes' : null })}>
             <SheetTrigger asChild>
-            <button className="flex items-center gap-1 rounded-full px-3 py-2 text-sm whitespace-nowrap flex-shrink-0 border border-gray-300 bg-gray-100 hover:bg-gray-200">
-                <UsersIcon className="w-4 h-4 text-gray-600" />
-                <span className="text-gray-700">
+            <button className="flex items-center gap-2 rounded-full px-4 py-2.5 text-sm whitespace-nowrap flex-shrink-0 border border-primary/30 hover:border-primary/60 hover:bg-primary/5 transition-colors">
+                <UsersIcon className="w-4 h-4 text-primary" />
+                <span className="text-primary-700 font-medium">
                   {filters.audienceTypes.length === 0
                     ? t('annualActivitySection.allAudienceTypes')
                     : filters.audienceTypes.length === 1
@@ -229,31 +233,32 @@ export function MobileFilterInterface({
                       : t('annualActivitySection.selectedAudienceTypes', { count: filters.audienceTypes.length })
                   }
                 </span>
-                <IconChevronDown className="w-4 h-4 text-gray-600" />
+                <IconChevronDown className="w-4 h-4 text-primary/60" />
               </button>
             </SheetTrigger>
-            <SheetContent side="bottom" className="h-[400px] px-4">
-              <SheetHeader className="border-b border-primary pb-4">
+            <SheetContent side="bottom" className="h-auto max-h-[60vh] flex flex-col">
+              <SheetHeader className="px-4 pt-4 pb-3">
                 <SheetTitle className="text-lg font-semibold text-primary-800">
                   {t('annualActivitySection.audienceType')}
                 </SheetTitle>
-                <p className="text-sm text-primary-500 mt-1">選擇適合的參與方式</p>
+                <p className="text-sm text-primary-500 mt-1">{t('annualActivitySection.audienceTypeFilterSubtitle')}</p>
               </SheetHeader>
-              <div className="mt-4">
-                <div className="flex gap-2 flex-wrap">
+              <div className="flex-1 overflow-y-auto px-4 pb-4">
+                <div className="mb-3">
                   <Button
-                    variant={filters.audienceTypes.length === 0 ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setFilters(prev => ({ ...prev, audienceTypes: [] }))}
-                    className={`h-10 px-4 rounded-full flex-shrink-0 ${
-                      filters.audienceTypes.length === 0
-                        ? ""
-                        : "border-primary text-primary-600 hover:bg-primary-50"
-                    }`}
-                  >
-                    {t('annualActivitySection.allAudienceTypes')}
-                  </Button>
-                  <div className="w-full border-t border-primary my-3"></div>
+                      variant={filters.audienceTypes.length === 0 ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setFilters(prev => ({ ...prev, audienceTypes: [] }))}
+                      className={`h-10 px-4 rounded-full w-full ${
+                        filters.audienceTypes.length === 0
+                          ? ""
+                          : "border-primary text-primary-600 hover:bg-primary-50"
+                      }`}
+                    >
+                      {t('annualActivitySection.allAudienceTypes')}
+                    </Button>
+                </div>
+                <div className="flex gap-2 flex-wrap">
                   {availableOptions.audienceTypes.map((type) => (
                     <Button
                       key={type}
@@ -266,11 +271,12 @@ export function MobileFilterInterface({
                           setFilters(prev => ({ ...prev, audienceTypes: [...prev.audienceTypes, type] }));
                         }
                       }}
-                      className="h-10 px-4 rounded-full flex-shrink-0 border border-primary"
+                      className={`h-10 px-4 rounded-full flex-shrink-0 transition-all duration-200 ${
+                        filters.audienceTypes.includes(type)
+                          ? "border-primary bg-primary text-white shadow-md"
+                          : "border-primary/30 hover:border-primary/60 hover:bg-primary/5"
+                      }`}
                     >
-                      {filters.audienceTypes.includes(type) && (
-                        <IconX className="w-4 h-4 mr-1 text-current" />
-                      )}
                       {audienceTypeMap[type as keyof typeof audienceTypeMap] || type}
                     </Button>
                   ))}
@@ -282,10 +288,10 @@ export function MobileFilterInterface({
           {/* Campus Toggle Chip */}
           <button
             onClick={() => setFilters(prev => ({ ...prev, showCampusOnly: !prev.showCampusOnly }))}
-            className={`flex items-center gap-1 rounded-full px-3 py-2 text-sm whitespace-nowrap flex-shrink-0 transition-colors border border-primary ${
+            className={`flex items-center gap-2 rounded-full px-4 py-2.5 text-sm whitespace-nowrap flex-shrink-0 transition-colors border font-medium ${
               filters.showCampusOnly
-                ? "bg-google-green text-white"
-                : "bg-primary-100 hover:bg-primary-200 text-foreground-700"
+                ? "bg-google-green border-google-green text-black hover:bg-google-green/90"
+                : "border-primary/30 hover:border-primary/60 hover:bg-primary/5 text-primary-700"
             }`}
           >
             <IconSchool className="w-4 h-4" />
@@ -295,15 +301,15 @@ export function MobileFilterInterface({
       </div>
 
       {/* Results and Clear Button */}
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2 text-sm text-primary">
+      <div className="flex items-center justify-between px-4 pb-4 border-t border-gray-100 pt-3">
+        <div className="flex items-center gap-2 text-sm text-primary-600">
           <IconEye className="w-4 h-4" />
-          <span>{t('annualActivitySection.showingResults', { count: displayEvents.length })}</span>
+          <span className="font-medium">{t('annualActivitySection.showingResults', { count: displayEvents.length })}</span>
         </div>
         {(filters.year !== 'all' || filters.cities.length > 0 || filters.eventTypes.length > 0 || filters.audienceTypes.length > 0 || filters.showCampusOnly) && (
           <button
             onClick={() => setFilters({ year: 'all', cities: [], eventTypes: [], audienceTypes: [], showCampusOnly: false })}
-            className="flex items-center gap-1 text-red-600 bg-red-50 rounded-full px-3 py-1 text-sm hover:bg-red-100 transition-colors border border-red-600"
+            className="flex items-center gap-1.5 text-red-600 bg-red-50 rounded-full px-3 py-1.5 text-sm hover:bg-red-100 transition-colors border border-red-200 hover:border-red-300 font-medium"
           >
             <IconX className="w-4 h-4" />
             <span>{t('annualActivitySection.clearFilters')}</span>

@@ -32,4 +32,7 @@ export const annualActivitySection = {
     audienceType: "参加方法",
     yearSuffix: "年",
     unknownYear: "不明",
+    cityFilterSubtitle: "所属している、または興味のある支部を選択してください",
+    eventTypeFilterSubtitle: "興味のあるイベントの種類を選択してください",
+    audienceTypeFilterSubtitle: "適した参加方法を選択してください",
 }

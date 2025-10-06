@@ -33,4 +33,7 @@ export const annualActivitySection = {
     audienceType: "參與方式",
     yearSuffix: "年",
     unknownYear: "未知",
+    cityFilterSubtitle: "選擇您所在或感興趣的分會",
+    eventTypeFilterSubtitle: "選擇您感興趣的活動類型",
+    audienceTypeFilterSubtitle: "選擇適合的參與方式",
 }
