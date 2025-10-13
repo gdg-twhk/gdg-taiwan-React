@@ -23,6 +23,7 @@ import { isCampusChapter, getCountyFromChapterName, sortCountryList } from "@/he
 import { MobileFilterInterface } from "../mobile-filter-interface";
 import { DesktopFilterInterface } from "../desktop-filter-interface";
 import { TFunction } from "i18next";
+import { Skeleton } from "@/components/ui/skeleton";
 interface FilterState {
   year: string | null; // 'all' | specific year string
   cities: string[];
@@ -82,6 +83,7 @@ function filterEvents(events: Event[], filters: FilterState, t: TFunction): Even
 export default function AnnualActivitySection({ activity }: AnnualActivitySectionProps) {
   const mounted = useClientOnly();
   const [activities, setActivities] = useState<Event[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [filters, setFilters] = useState<FilterState>({
     year: 'all',
     cities: [],
@@ -122,10 +124,12 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
   // 取得所有活動
   useEffect(() => {
     async function fetchEvents() {
+      setIsLoading(true);
       const events = await getEventByTag(
         activityMeta[activity].bevytagId
       );
       setActivities(events || []);
+      setIsLoading(false);
     }
     fetchEvents();
   }, [activity]);
@@ -305,6 +309,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
           displayEvents={Object.values(displayEvents.eventsByYear).flat()}
           eventTypeMap={eventTypeMap}
           audienceTypeMap={audienceTypeMap}
+          isLoading={isLoading}
         />
       </section>
 
@@ -381,11 +386,23 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
 
                 {/* Events grid for this year with responsive spacing */}
                 <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 w-full mb-12 md:mb-16`}>
-                  {Object.values(displayEvents.eventsByYear[year])
+                  {isLoading ? (
+                    Array.from({ length: 6 }).map((_, index) => (
+                      <div key={index} className="flex flex-col space-y-3">
+                        <Skeleton className="h-[225px] w-full rounded-xl" />
+                        <div className="space-y-2">
+                          <Skeleton className="h-4 w-3/4" />
+                          <Skeleton className="h-4 w-1/2" />
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    Object.values(displayEvents.eventsByYear[year])
                     .sort((a, b) => new Date(b.start_date_iso).getTime() - new Date(a.start_date_iso).getTime())
                     .map((event: Event) => (
                       <ModernEventCard key={event.id} eventObject={event} />
-                    ))}
+                    ))
+                  )}
                 </div>
               </div>
             ))
