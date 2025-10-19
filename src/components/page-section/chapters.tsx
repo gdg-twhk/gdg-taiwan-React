@@ -10,17 +10,12 @@ import { collectChaptersByCountry, sortCountryList } from "@/helper";
 import { svgCountryMap } from "@/entities/chapters";
 import { ChapterCard } from "@/components/chapter-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DrawerTrigger } from "@/components/ui/drawer";
-import { Drawer, DrawerContent, DrawerDescription, DrawerTitle } from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { CommandEmpty, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
-import { Command } from "@/components/ui/command";
 import Image from "next/image";
 import { useTranslation } from 'react-i18next';
-import { IconMapPin } from "@tabler/icons-react";
 import { useClientOnly } from "@/components/use-client-only";
 import { QRCodeDialog } from "@/components/qr-code-dialog";
+import { MobileChapterSection } from "@/components/mobile-chapter-section";
 
 export default function ChaptersSection() {
   const mounted = useClientOnly();
@@ -60,41 +55,6 @@ export default function ChaptersSection() {
     setSelectedChapter(chapter);
     setQrDialogOpen(true);
   };
-
-  function StatusList({
-    setOpen,
-    setSelectedCountry,
-  }: {
-    setOpen: (open: boolean) => void;
-    setSelectedCountry: (country: string) => void;
-  }) {
-    return (
-      <Command>
-        <CommandList>
-          <CommandEmpty>{t('chaptersSection.noChaptersFound')}</CommandEmpty>
-          <CommandGroup>
-            {sortedCountries.map((country) => (
-              <CommandItem
-                key={country}
-                value={country}
-                className={`text-center justify-center transition-colors ${
-                  selectedCountry === country 
-                    ? 'bg-google-red text-white dark:bg-google-red dark:text-black' 
-                    : 'hover:bg-gray-100 dark:hover:bg-gray-800'
-                }`}
-                onSelect={(value: string) => {
-                  setSelectedCountry(value);
-                  setOpen(false);
-                }}
-              >
-                {t('selectedCountryMap.' + country)}
-              </CommandItem>
-            ))}
-          </CommandGroup>
-        </CommandList>
-      </Command>
-    );
-  }
 
   if (!mounted) return null;
 
@@ -137,34 +97,13 @@ export default function ChaptersSection() {
                   <CardHeader className="flex flex-row justify-between text-center">
                     <CardTitle className="text-center w-full" style={{textAlign: "center"}}>
                       {isMobile ? (
-                        <div className="flex flex-row w-full justify-center items-center relative z-10 mb-4 bg-card">
-                          <Drawer open={open} onOpenChange={setOpen}>
-                            <DrawerTrigger asChild>
-                              <Button
-                                variant="outline"
-                                className="w-fit-content justify-start text-xl"
-                              >
-                                {selectedCountry ? (
-                                  <><IconMapPin className="w-5 h-5 mr-2" /> {t('selectedCountryMap.' + selectedCountry)}</>
-                                ) : (
-                                  <>{t('chaptersSection.noContentYet')}</>
-                                )}
-                              </Button>
-                            </DrawerTrigger>
-                            <DrawerContent>
-                              <DrawerTitle className="text-center">{t('chaptersSection.selectCity')}</DrawerTitle>
-                              <DrawerDescription className="text-center">
-                                {t('chaptersSection.selectCityDescription')}
-                              </DrawerDescription>
-                              <div className="mt-4 border-t text-center">
-                                <StatusList
-                                  setOpen={setOpen}
-                                  setSelectedCountry={setSelectedCountry}
-                                />
-                              </div>
-                            </DrawerContent>
-                          </Drawer>
-                        </div>
+                        <MobileChapterSection
+                          open={open}
+                          setOpen={setOpen}
+                          selectedCountry={selectedCountry}
+                          setSelectedCountry={setSelectedCountry}
+                          sortedCountries={sortedCountries}
+                        />
                       ) : (
                         <h1 className="text-center text-4xl font-bold ">{`${t('selectedCountryMap.' + selectedCountry)}`}</h1>
                       )}
