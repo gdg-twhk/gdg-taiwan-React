@@ -118,7 +118,7 @@ export function MobileFilterInterface({
                           setFilters(prev => ({ ...prev, year }));
                           setYearDrawerOpen(false);
                         }}
-                        className="w-full h-10 px-4 rounded-full text-lg data-[active=true]:font-bold data-[active=true]:text-primary"
+                        className="w-full h-10 px-4 rounded-full text-lg data-[active=true]:text-google-red data-[active=true]:font-bold"
                         data-active={filters.year === year}
                       >
                         {year}
