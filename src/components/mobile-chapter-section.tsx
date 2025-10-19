@@ -1,9 +1,8 @@
 import { Drawer, DrawerContent, DrawerDescription, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { IconMapPin } from "@tabler/icons-react";
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
 
 interface StatusListProps {
   setOpen: (open: boolean) => void;
@@ -14,31 +13,47 @@ interface StatusListProps {
 
 function StatusList({ setOpen, setSelectedCountry, sortedCountries, selectedCountry }: StatusListProps) {
   const { t } = useTranslation();
+  const wheelContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (wheelContainerRef.current) {
+      const selectedButton = wheelContainerRef.current.querySelector<HTMLButtonElement>(
+        `[data-active="true"]`
+      );
+      if (selectedButton) {
+        const wheelItem = selectedButton.parentElement;
+        if (wheelItem) {
+          wheelItem.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }
+      }
+    }
+  }, [sortedCountries]); // Re-run when countries list changes
+
   return (
-    <Command>
-      <CommandList>
-        <CommandEmpty>{t('chaptersSection.noChaptersFound')}</CommandEmpty>
-        <CommandGroup>
-          {sortedCountries.map((country) => (
-            <CommandItem
-              key={country}
-              value={country}
-              className={`text-center justify-center transition-colors ${
-                selectedCountry === country
-                  ? 'bg-google-red text-white dark:bg-google-red dark:text-black'
-                  : 'hover:bg-gray-100 dark:hover:bg-gray-800'
-              }`}
-              onSelect={(value: string) => {
-                setSelectedCountry(value);
-                setOpen(false);
-              }}
-            >
-              {t('selectedCountryMap.' + country)}
-            </CommandItem>
-          ))}
-        </CommandGroup>
-      </CommandList>
-    </Command>
+    <div ref={wheelContainerRef} className="wheel-container h-48 overflow-y-auto" style={{ maskImage: 'linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)' }}>
+      <div className="wheel-item h-12"></div>
+      <div className="wheel-item h-12"></div>
+      {sortedCountries.map((country) => (
+        <div key={country} className="wheel-item h-12 flex items-center justify-center">
+          <Button
+            variant="ghost"
+            onClick={() => {
+              setSelectedCountry(country);
+              setOpen(false);
+            }}
+            className="text-xl w-full h-10 px-4 rounded-full data-[active=true]:text-google-red data-[active=true]:font-bold"
+            data-active={selectedCountry === country}
+          >
+            {t('selectedCountryMap.' + country)}
+          </Button>
+        </div>
+      ))}
+      <div className="wheel-item h-12"></div>
+      <div className="wheel-item h-12"></div>
+    </div>
   );
 }
 
@@ -58,6 +73,18 @@ export function MobileChapterSection({
   sortedCountries,
 }: MobileChapterSectionProps) {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (open) {
+      // We need a slight delay to ensure the content is rendered before scrolling
+      setTimeout(() => {
+        const selectedItem = document.querySelector(".wheel-item [data-active='true']");
+        if (selectedItem) {
+          selectedItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 50);
+    }
+  }, [open]);
 
   return (
     <div className="flex flex-row w-full justify-center items-center relative z-10 mb-4 bg-card">

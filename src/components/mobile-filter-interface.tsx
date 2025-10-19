@@ -132,7 +132,6 @@ export function MobileFilterInterface({
                   </div>
                 <div ref={wheelContainerRef} className="wheel-container h-48 overflow-y-auto" style={{ maskImage: 'linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)' }}>
                   <div className="wheel-item h-12"></div>
-                  <div className="wheel-item h-12"></div>
                   {availableOptions.years.map((year) => (
                     <div key={year} className="wheel-item h-12 flex items-center justify-center">
                       <Button
@@ -148,7 +147,6 @@ export function MobileFilterInterface({
                       </Button>
                     </div>
                   ))}
-                  <div className="wheel-item h-12"></div>
                   <div className="wheel-item h-12"></div>
                 </div>
               </div>
