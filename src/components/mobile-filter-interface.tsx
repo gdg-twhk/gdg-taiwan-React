@@ -5,13 +5,6 @@ import { Button } from "@/components/ui/button";
 import { IconSchool, IconX, IconEye, IconCalendar, IconMapPin, IconTag, IconChevronDown } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
 import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import {
   Drawer,
   DrawerContent,
   DrawerDescription,
@@ -154,8 +147,8 @@ export function MobileFilterInterface({
           </Drawer>
 
           {/* Cities Filter Chip */}
-          <Sheet open={mobileDrawer.open && mobileDrawer.activeFilter === 'cities'} onOpenChange={(open) => setMobileDrawer({ open, activeFilter: open ? 'cities' : null })}>
-            <SheetTrigger asChild>
+          <Drawer open={mobileDrawer.open && mobileDrawer.activeFilter === 'cities'} onOpenChange={(open) => setMobileDrawer({ open, activeFilter: open ? 'cities' : null })}>
+            <DrawerTrigger asChild>
               <button className="flex items-center gap-2 rounded-full px-4 py-2.5 text-sm whitespace-nowrap flex-shrink-0 border border-primary/30 hover:border-primary/60 hover:bg-primary/5 transition-colors">
                 <IconMapPin className="w-4 h-4 text-primary" />
                 <span className="text-primary-700 font-medium">
@@ -168,21 +161,21 @@ export function MobileFilterInterface({
                 </span>
                 <IconChevronDown className="w-4 h-4 text-primary/60" />
               </button>
-            </SheetTrigger>
-            <SheetContent side="bottom" className="h-auto max-h-[60vh] flex flex-col">
-              <SheetHeader className="px-4 pt-4 pb-3">
-                <SheetTitle className="text-lg font-semibold text-primary-800 text-center">
+            </DrawerTrigger>
+            <DrawerContent className="h-auto max-h-[60vh] flex flex-col">
+              <DrawerHeader>
+                <DrawerTitle className="text-lg font-semibold text-primary-800 text-center">
                   {t('annualActivitySection.city')}
-                </SheetTitle>
-                <p className="text-sm text-primary-500 mt-1 text-center">{t('annualActivitySection.cityFilterSubtitle')}</p>
-              </SheetHeader>
-              <div className="flex-1 overflow-y-auto px-4 pb-4">
+                </DrawerTitle>
+                <DrawerDescription className="text-sm text-primary-500 mt-1 text-center">{t('annualActivitySection.cityFilterSubtitle')}</DrawerDescription>
+              </DrawerHeader>
+              <div className="flex-1 overflow-y-auto px-4 py-4 border-t">
                 <div className="mb-3 items-center justify-center">
                   <Button
                       variant={filters.cities.length === 0 ? "default" : "outline"}
                       size="sm"
                       onClick={() => setFilters(prev => ({ ...prev, cities: [] }))}
-                      className={`h-10 px-4 rounded-full w-full ${
+                      className={`h-10 px-4 rounded-full w-full py-4 ${
                         filters.cities.length === 0
                           ? ""
                           : "border-primary text-primary-600 hover:bg-primary-50"
@@ -215,12 +208,12 @@ export function MobileFilterInterface({
                   ))}
                 </div>
               </div>
-            </SheetContent>
-          </Sheet>
+            </DrawerContent>
+          </Drawer>
 
           {/* Event Types Filter Chip */}
-          <Sheet open={mobileDrawer.open && mobileDrawer.activeFilter === 'eventTypes'} onOpenChange={(open) => setMobileDrawer({ open, activeFilter: open ? 'eventTypes' : null })}>
-            <SheetTrigger asChild>
+          <Drawer open={mobileDrawer.open && mobileDrawer.activeFilter === 'eventTypes'} onOpenChange={(open) => setMobileDrawer({ open, activeFilter: open ? 'eventTypes' : null })}>
+            <DrawerTrigger asChild>
               <button className="flex items-center gap-2 rounded-full px-4 py-2.5 text-sm whitespace-nowrap flex-shrink-0 border border-primary/30 hover:border-primary/60 hover:bg-primary/5 transition-colors">
                 <IconTag className="w-4 h-4 text-primary" />
                 <span className="text-primary-700 font-medium">
@@ -233,21 +226,21 @@ export function MobileFilterInterface({
                 </span>
                 <IconChevronDown className="w-4 h-4 text-primary/60" />
               </button>
-            </SheetTrigger>
-            <SheetContent side="bottom" className="h-auto max-h-[60vh] flex flex-col">
-              <SheetHeader className="px-4 pt-4 pb-3">
-                <SheetTitle className="text-lg font-semibold text-primary-800 text-center">
+            </DrawerTrigger>
+            <DrawerContent className="h-auto max-h-[60vh] flex flex-col">
+              <DrawerHeader className="px-4 pt-4 pb-3">
+                <DrawerTitle className="text-lg font-semibold text-primary-800 text-center">
                   {t('annualActivitySection.eventType')}
-                </SheetTitle>
-                <p className="text-sm text-primary-500 mt-1 text-center">{t('annualActivitySection.eventTypeFilterSubtitle')}</p>
-              </SheetHeader>
-              <div className="flex-1 overflow-y-auto px-4 pb-4">
+                </DrawerTitle>
+                <DrawerDescription className="text-sm text-primary-500 mt-1 text-center">{t('annualActivitySection.eventTypeFilterSubtitle')}</DrawerDescription>
+              </DrawerHeader>
+              <div className="flex-1 overflow-y-auto px-4 py-4 border-t">
                 <div className="mb-3 items-center justify-center">
                   <Button
                       variant={filters.eventTypes.length === 0 ? "default" : "outline"}
                       size="sm"
                       onClick={() => setFilters(prev => ({ ...prev, eventTypes: [] }))}
-                      className={`h-10 px-4 rounded-full w-full ${
+                      className={`h-10 px-4 rounded-full w-full py-4 ${
                         filters.eventTypes.length === 0
                           ? ""
                           : "border-primary text-primary-600 hover:bg-primary-50"
@@ -282,12 +275,12 @@ export function MobileFilterInterface({
                   ))}
                 </div>
               </div>
-            </SheetContent>
-          </Sheet>
+            </DrawerContent>
+          </Drawer>
 
           {/* Audience Types Filter Chip */}
-          <Sheet open={mobileDrawer.open && mobileDrawer.activeFilter === 'audienceTypes'} onOpenChange={(open) => setMobileDrawer({ open, activeFilter: open ? 'audienceTypes' : null })}>
-            <SheetTrigger asChild>
+          <Drawer open={mobileDrawer.open && mobileDrawer.activeFilter === 'audienceTypes'} onOpenChange={(open) => setMobileDrawer({ open, activeFilter: open ? 'audienceTypes' : null })}>
+            <DrawerTrigger asChild>
             <button className="flex items-center gap-2 rounded-full px-4 py-2.5 text-sm whitespace-nowrap flex-shrink-0 border border-primary/30 hover:border-primary/60 hover:bg-primary/5 transition-colors">
                 <UsersIcon className="w-4 h-4 text-primary" />
                 <span className="text-primary-700 font-medium">
@@ -300,21 +293,21 @@ export function MobileFilterInterface({
                 </span>
                 <IconChevronDown className="w-4 h-4 text-primary/60" />
               </button>
-            </SheetTrigger>
-            <SheetContent side="bottom" className="h-auto max-h-[60vh] flex flex-col">
-              <SheetHeader className="px-4 pt-4 pb-3">
-                <SheetTitle className="text-lg font-semibold text-primary-800 text-center">
+            </DrawerTrigger>
+            <DrawerContent className="h-auto max-h-[60vh] flex flex-col">
+              <DrawerHeader>
+                <DrawerTitle className="text-lg font-semibold text-primary-800 text-center">
                   {t('annualActivitySection.audienceType')}
-                </SheetTitle>
-                <p className="text-sm text-primary-500 mt-1">{t('annualActivitySection.audienceTypeFilterSubtitle')}</p>
-              </SheetHeader>
-              <div className="flex-1 overflow-y-auto px-4 pb-4">
+                </DrawerTitle>
+                <DrawerDescription className="text-sm text-primary-500 mt-1 text-center">{t('annualActivitySection.audienceTypeFilterSubtitle')}</DrawerDescription>
+              </DrawerHeader>
+              <div className="flex-1 overflow-y-auto px-4 py-4 border-t">
                 <div className="mb-3">
                   <Button
                       variant={filters.audienceTypes.length === 0 ? "default" : "outline"}
                       size="sm"
                       onClick={() => setFilters(prev => ({ ...prev, audienceTypes: [] }))}
-                      className={`h-10 px-4 rounded-full w-full ${
+                      className={`h-10 px-4 rounded-full w-full py-4 ${
                         filters.audienceTypes.length === 0
                           ? ""
                           : "border-primary text-primary-600 hover:bg-primary-50"
@@ -347,8 +340,8 @@ export function MobileFilterInterface({
                   ))}
                 </div>
               </div>
-            </SheetContent>
-          </Sheet>
+            </DrawerContent>
+          </Drawer>
 
           {/* Campus Toggle Chip */}
           <button
