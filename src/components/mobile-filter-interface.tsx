@@ -106,13 +106,13 @@ export function MobileFilterInterface({
             </SheetTrigger>
             <SheetContent side="bottom" className="h-auto max-h-[60vh] flex flex-col">
               <SheetHeader className="px-4 pt-4 pb-3">
-                <SheetTitle className="text-lg font-semibold text-primary-800">
+                <SheetTitle className="text-lg font-semibold text-primary-800 text-center">
                   {t('annualActivitySection.city')}
                 </SheetTitle>
-                <p className="text-sm text-primary-500 mt-1">{t('annualActivitySection.cityFilterSubtitle')}</p>
+                <p className="text-sm text-primary-500 mt-1 text-center">{t('annualActivitySection.cityFilterSubtitle')}</p>
               </SheetHeader>
               <div className="flex-1 overflow-y-auto px-4 pb-4">
-                <div className="mb-3">
+                <div className="mb-3 items-center justify-center">
                   <Button
                       variant={filters.cities.length === 0 ? "default" : "outline"}
                       size="sm"
@@ -126,7 +126,7 @@ export function MobileFilterInterface({
                       {t('annualActivitySection.allCities')}
                     </Button>
                 </div>
-                <div className="flex gap-2 flex-wrap">
+                <div className="flex gap-2 flex-wrap items-center justify-center">
                   {availableOptions.cities.map((city) => (
                     <Button
                       key={city}
@@ -171,13 +171,13 @@ export function MobileFilterInterface({
             </SheetTrigger>
             <SheetContent side="bottom" className="h-auto max-h-[60vh] flex flex-col">
               <SheetHeader className="px-4 pt-4 pb-3">
-                <SheetTitle className="text-lg font-semibold text-primary-800">
+                <SheetTitle className="text-lg font-semibold text-primary-800 text-center">
                   {t('annualActivitySection.eventType')}
                 </SheetTitle>
-                <p className="text-sm text-primary-500 mt-1">{t('annualActivitySection.eventTypeFilterSubtitle')}</p>
+                <p className="text-sm text-primary-500 mt-1 text-center">{t('annualActivitySection.eventTypeFilterSubtitle')}</p>
               </SheetHeader>
               <div className="flex-1 overflow-y-auto px-4 pb-4">
-                <div className="mb-3">
+                <div className="mb-3 items-center justify-center">
                   <Button
                       variant={filters.eventTypes.length === 0 ? "default" : "outline"}
                       size="sm"
@@ -191,7 +191,7 @@ export function MobileFilterInterface({
                       {t('annualActivitySection.allEventTypes')}
                     </Button>
                 </div>
-                <div className="flex gap-2 flex-wrap">
+                <div className="flex gap-2 flex-wrap items-center justify-center">
                   {availableOptions.eventTypes
                     .filter(type => type && type.trim() !== '')
                     .map((type) => (
@@ -238,7 +238,7 @@ export function MobileFilterInterface({
             </SheetTrigger>
             <SheetContent side="bottom" className="h-auto max-h-[60vh] flex flex-col">
               <SheetHeader className="px-4 pt-4 pb-3">
-                <SheetTitle className="text-lg font-semibold text-primary-800">
+                <SheetTitle className="text-lg font-semibold text-primary-800 text-center">
                   {t('annualActivitySection.audienceType')}
                 </SheetTitle>
                 <p className="text-sm text-primary-500 mt-1">{t('annualActivitySection.audienceTypeFilterSubtitle')}</p>
@@ -258,7 +258,7 @@ export function MobileFilterInterface({
                       {t('annualActivitySection.allAudienceTypes')}
                     </Button>
                 </div>
-                <div className="flex gap-2 flex-wrap">
+                <div className="flex gap-2 flex-wrap items-center justify-center">
                   {availableOptions.audienceTypes.map((type) => (
                     <Button
                       key={type}
