@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { IconSchool, IconX, IconEye, IconCalendar, IconMapPin, IconTag, IconChevronDown } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
@@ -61,10 +61,31 @@ export function MobileFilterInterface({
 }: MobileFilterInterfaceProps) {
   const { t } = useTranslation();
   const [yearDrawerOpen, setYearDrawerOpen] = useState(false);
+  const wheelContainerRef = useRef<HTMLDivElement>(null);
   const [mobileDrawer, setMobileDrawer] = useState<MobileDrawerState>({
     open: false,
     activeFilter: null,
   });
+
+  useEffect(() => {
+    if (yearDrawerOpen) {
+      setTimeout(() => {
+        if (!wheelContainerRef.current) return;
+        const selectedButton = wheelContainerRef.current.querySelector<HTMLButtonElement>(
+          `[data-active="true"]`
+        );
+        if (selectedButton) {
+          const wheelItem = selectedButton.parentElement;
+          if (wheelItem) {
+            wheelItem.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+          }
+        }
+      }, 50);
+    }
+  }, [yearDrawerOpen]);
 
   return (
     <div className="md:hidden mx-4 bg-card rounded-xl border shadow-sm">
@@ -109,7 +130,9 @@ export function MobileFilterInterface({
                       {t('annualActivitySection.allYears')}
                     </Button>
                   </div>
-                <div className="wheel-container h-48 overflow-y-auto" style={{ maskImage: 'linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)' }}>
+                <div ref={wheelContainerRef} className="wheel-container h-48 overflow-y-auto" style={{ maskImage: 'linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)' }}>
+                  <div className="wheel-item h-12"></div>
+                  <div className="wheel-item h-12"></div>
                   {availableOptions.years.map((year) => (
                     <div key={year} className="wheel-item h-12 flex items-center justify-center">
                       <Button
@@ -118,13 +141,15 @@ export function MobileFilterInterface({
                           setFilters(prev => ({ ...prev, year }));
                           setYearDrawerOpen(false);
                         }}
-                        className="w-full h-10 px-4 rounded-full text-lg data-[active=true]:text-google-red data-[active=true]:font-bold"
+                        className="text-xl w-full h-10 px-4 rounded-full data-[active=true]:text-google-red data-[active=true]:font-bold"
                         data-active={filters.year === year}
                       >
                         {year}
                       </Button>
                     </div>
                   ))}
+                  <div className="wheel-item h-12"></div>
+                  <div className="wheel-item h-12"></div>
                 </div>
               </div>
             </DrawerContent>
