@@ -294,16 +294,56 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
                 </div>
               ))
             ) : isLoading ? (
-              Array.from({ length: 3 }).map((_, index) => (
-                <div key={index} className="flex gap-4 items-start">
-                  <Skeleton className="h-10 w-10 rounded-full" />
-                  <div className="space-y-2 flex-1">
-                    <Skeleton className="h-4 w-1/4" />
-                    <Skeleton className="h-4 w-3/4" />
-                    <Skeleton className="h-4 w-1/2" />
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <div key={index} className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 py-0 overflow-hidden rounded-lg border bg-card text-card-foreground">
+                    {/* Image and badges area */}
+                    <div className="relative h-48 overflow-hidden bg-muted">
+                      <Skeleton className="h-full w-full" />
+                      {/* Date badge */}
+                      <div className="absolute top-4 left-4">
+                        <div className="rounded-lg p-2 w-16">
+                          <Skeleton className="h-12 w-full" />
+                        </div>
+                      </div>
+                      {/* Event type badge */}
+                      <div className="absolute top-4 right-4">
+                        <Skeleton className="h-6 w-24 rounded-full" />
+                      </div>
+                    </div>
+
+                    {/* Content area */}
+                    <div className="p-6">
+                      {/* Chapter badge and status */}
+                      <div className="flex items-start justify-between gap-2 mb-4">
+                        <Skeleton className="h-6 w-32 rounded-full" />
+                        <Skeleton className="h-6 w-20 rounded-full" />
+                      </div>
+
+                      {/* Title */}
+                      <div className="space-y-2 mb-4">
+                        <Skeleton className="h-6 w-3/4" />
+                        <Skeleton className="h-6 w-1/2" />
+                      </div>
+
+                      {/* Description */}
+                      <div className="space-y-2 mb-6">
+                        <Skeleton className="h-4 w-full" />
+                        <Skeleton className="h-4 w-5/6" />
+                      </div>
+
+                      {/* Event details */}
+                      <div className="space-y-2 mb-6">
+                        <Skeleton className="h-4 w-40" />
+                        <Skeleton className="h-4 w-32" />
+                      </div>
+
+                      {/* Button */}
+                      <Skeleton className="h-10 w-full rounded-md" />
+                    </div>
                   </div>
-                </div>
-              ))
+                ))}
+              </div>
             ) : (
               <div className="text-center py-8">
                 <ClockIcon className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
