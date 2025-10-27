@@ -1,8 +1,9 @@
-import { Drawer, DrawerContent, DrawerDescription, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
+import { Drawer, DrawerContent, DrawerDescription, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { IconMapPin } from "@tabler/icons-react";
 import React, { useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface StatusListProps {
   setOpen: (open: boolean) => void;
@@ -35,7 +36,6 @@ function StatusList({ setOpen, setSelectedCountry, sortedCountries, selectedCoun
   return (
     <div ref={wheelContainerRef} className="wheel-container h-48 overflow-y-auto" style={{ maskImage: 'linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)' }}>
       <div className="wheel-item h-12"></div>
-      <div className="wheel-item h-12"></div>
       {sortedCountries.map((country) => (
         <div key={country} className="wheel-item h-12 flex items-center justify-center">
           <Button
@@ -52,7 +52,6 @@ function StatusList({ setOpen, setSelectedCountry, sortedCountries, selectedCoun
         </div>
       ))}
       <div className="wheel-item h-12"></div>
-      <div className="wheel-item h-12"></div>
     </div>
   );
 }
@@ -63,6 +62,7 @@ interface MobileChapterSectionProps {
   selectedCountry: string;
   setSelectedCountry: (country: string) => void;
   sortedCountries: string[];
+  isLoading?: boolean;
 }
 
 export function MobileChapterSection({
@@ -71,6 +71,7 @@ export function MobileChapterSection({
   selectedCountry,
   setSelectedCountry,
   sortedCountries,
+  isLoading = false,
 }: MobileChapterSectionProps) {
   const { t } = useTranslation();
 
@@ -94,7 +95,9 @@ export function MobileChapterSection({
             variant="outline"
             className="w-fit-content justify-start text-xl"
           >
-            {selectedCountry ? (
+            {isLoading ? (
+              <Skeleton className="h-6 w-32" />
+            ) : selectedCountry ? (
               <><IconMapPin className="w-5 h-5 mr-2" /> {t('selectedCountryMap.' + selectedCountry)}</>
             ) : (
               <>{t('chaptersSection.noContentYet')}</>
@@ -102,10 +105,10 @@ export function MobileChapterSection({
           </Button>
         </DrawerTrigger>
         <DrawerContent>
-          <DrawerTitle className="text-center">{t('chaptersSection.selectCity')}</DrawerTitle>
-          <DrawerDescription className="text-center">
-            {t('chaptersSection.selectCityDescription')}
-          </DrawerDescription>
+          <DrawerHeader>
+            <DrawerTitle className="text-center">{t('chaptersSection.selectCity')}</DrawerTitle>
+            <DrawerDescription className="text-center">{t('chaptersSection.selectCityDescription')}</DrawerDescription>
+          </DrawerHeader>
           <div className="mt-4 border-t text-center">
             <StatusList
               setOpen={setOpen}
