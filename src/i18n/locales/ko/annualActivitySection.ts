@@ -35,4 +35,6 @@ export const annualActivitySection = {
     cityFilterSubtitle: "소속되어 있거나 관심 있는 챕터를 선택하세요",
     eventTypeFilterSubtitle: "관심 있는 이벤트 유형을 선택하세요",
     audienceTypeFilterSubtitle: "적합한 참여 방법을 선택하세요",
+    yearFilterSubtitle: "이벤트를 필터링할 연도를 선택하세요",
+    yearFilterTitle: "연도별 필터",
 }

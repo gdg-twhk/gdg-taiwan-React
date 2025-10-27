@@ -66,6 +66,13 @@ export function ModernEventCard({ eventObject }: { eventObject: Event }) {
     }
   };
 
+  const isLiveEvent = () => {
+    const now = new Date();
+    const startDate = new Date(eventObject.start_date_iso);
+    const endDate = new Date(eventObject.end_date_iso);
+    return now >= startDate && now <= endDate;
+  };
+
   return (
     <Card className={`group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 py-0 overflow-hidden max-w-md ${isMobile ? 'w-full' : ''} flex flex-col`}>
       {/* Event Image */}
@@ -101,10 +108,18 @@ export function ModernEventCard({ eventObject }: { eventObject: Event }) {
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between gap-2 mb-2">
         <ChapterBadge chapter={eventObject.chapter_title} />
-          <Badge variant={getAudienceTypeVariant()} className="text-xs">
-            <UsersIcon className="w-3 h-3" />
-            {audienceTypeMap[eventObject.audience_type as keyof typeof audienceTypeMap]}
-          </Badge>
+          <div className="flex gap-2">
+            {isLiveEvent() && (
+              <Badge variant="destructive" className="text-xs animate-pulse">
+                <div className="w-2 h-2 bg-white rounded-full mr-1"></div>
+                {t('eventCard.live') || 'LIVE'}
+              </Badge>
+            )}
+            <Badge variant={getAudienceTypeVariant()} className="text-xs">
+              <UsersIcon className="w-3 h-3" />
+              {audienceTypeMap[eventObject.audience_type as keyof typeof audienceTypeMap]}
+            </Badge>
+          </div>
         </div>
 
         <CardTitle className="text-xl leading-tight line-clamp-2 group-hover:text-primary transition-colors">

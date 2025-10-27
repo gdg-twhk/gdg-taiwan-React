@@ -1,7 +1,7 @@
 "use client";
 
 import { getEventByTag } from "@/api/bevy";
-import { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Event } from "@/interfaces";
 import React from "react";
 import {
@@ -23,6 +23,9 @@ import { isCampusChapter, getCountyFromChapterName, sortCountryList } from "@/he
 import { MobileFilterInterface } from "../mobile-filter-interface";
 import { DesktopFilterInterface } from "../desktop-filter-interface";
 import { TFunction } from "i18next";
+import { Skeleton } from "@/components/ui/skeleton";
+import { ClockIcon } from "lucide-react";
+
 interface FilterState {
   year: string | null; // 'all' | specific year string
   cities: string[];
@@ -82,6 +85,7 @@ function filterEvents(events: Event[], filters: FilterState, t: TFunction): Even
 export default function AnnualActivitySection({ activity }: AnnualActivitySectionProps) {
   const mounted = useClientOnly();
   const [activities, setActivities] = useState<Event[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [filters, setFilters] = useState<FilterState>({
     year: 'all',
     cities: [],
@@ -89,8 +93,6 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
     audienceTypes: [],
     showCampusOnly: false,
   });
-  const [stickyYear, setStickyYear] = useState<string | null>(null);
-  const yearRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const { t } = useTranslation();
   const content = useActivityContent();
 
@@ -118,14 +120,15 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
     "Hybrid": t('audienceTypeMap.Hybrid')
   }
 
-
   // 取得所有活動
   useEffect(() => {
     async function fetchEvents() {
+      setIsLoading(true);
       const events = await getEventByTag(
         activityMeta[activity].bevytagId
       );
       setActivities(events || []);
+      setIsLoading(false);
     }
     fetchEvents();
   }, [activity]);
@@ -148,7 +151,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
   // 篩選後的活動
   const filteredEvents = useMemo(() => {
     return filterEvents(activities, filters, t);
-  }, [activities, filters]);
+  }, [activities, filters, t]);
 
   // 顯示活動 (按年份分組)
   const displayEvents = useMemo(() => {
@@ -173,46 +176,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
     });
 
     return { eventsByYear, sortedYears };
-  }, [filteredEvents]);
-
-  // Scroll detection for sticky year header
-  const handleScroll = useCallback(() => {
-    if (displayEvents.sortedYears.length <= 1) {
-      setStickyYear(null);
-      return;
-    }
-
-    let currentStickyYear = null;
-    const scrollY = window.scrollY;
-    const offsetThreshold = 100; // Offset from top of viewport
-
-    for (const year of displayEvents.sortedYears) {
-      const yearElement = yearRefs.current[year];
-      if (yearElement) {
-        const rect = yearElement.getBoundingClientRect();
-        const absoluteTop = scrollY + rect.top;
-
-        if (scrollY + offsetThreshold >= absoluteTop) {
-          currentStickyYear = year;
-        } else {
-          break;
-        }
-      }
-    }
-
-    setStickyYear(currentStickyYear);
-  }, [displayEvents.sortedYears]);
-
-  useEffect(() => {
-    if (!mounted || displayEvents.sortedYears.length <= 1) return;
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Check initial state
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [mounted, handleScroll, displayEvents.sortedYears.length]);
+  }, [filteredEvents, t]);
 
   if (!mounted) return null;
 
@@ -305,95 +269,88 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
           displayEvents={Object.values(displayEvents.eventsByYear).flat()}
           eventTypeMap={eventTypeMap}
           audienceTypeMap={audienceTypeMap}
+          isLoading={isLoading}
         />
       </section>
 
-      {/* Sticky Year Header */}
-      <div
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
-          stickyYear
-            ? 'translate-y-0 opacity-100'
-            : '-translate-y-full opacity-0'
-        }`}
-      >
-        {/* Background with blur effect and gradient border */}
-        <div className="bg-background/95 backdrop-blur-sm border-b border-border/50 shadow-lg">
-          {/* Inner container with responsive styling */}
-          <div className="container mx-auto px-4">
-            {(displayEvents.sortedYears.length > 1 || filters.year !== 'all') && (
-              <div className="relative py-2 md:py-4">
-                {/* Mobile-first responsive design */}
-                <div className="flex items-center justify-center">
-                  {/* Mobile: Simple divider lines, Desktop: Gradient lines */}
-                  <div className="flex-1 h-px bg-border md:bg-gradient-to-r md:from-transparent md:via-primary/60 md:to-primary"></div>
+      <section className="container mx-auto px-4 w-full justify-center items-center">
+      <div className="max-h-[800px] overflow-y-auto px-4">
+          <div className="space-y-6">
+            {displayEvents.sortedYears.length > 0 ? (
+              displayEvents.sortedYears.map((year) => (
+                <div key={year}>
+                  <div className="sticky top-0 bg-background/80 backdrop-blur-sm py-2 mb-3 z-10 flex items-center">
+                    <div className="flex-grow border-t border-muted-foreground" />
+                    <h3 className="shrink-0 mx-4 text-3xl font-semibold text-muted-foreground">{year}{t('annualActivitySection.yearSuffix')}</h3>
+                    <div className="flex-grow border-t border-muted-foreground" />
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {Object.values(displayEvents.eventsByYear[year])
+                      .sort((a, b) => new Date(a.start_date_iso).getTime() - new Date(b.start_date_iso).getTime())
+                      .map((event: Event) => (
+                        <ModernEventCard key={event.id} eventObject={event} />
+                      ))}
+                  </div>
+                </div>
+              ))
+            ) : isLoading ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <div key={index} className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 py-0 overflow-hidden rounded-lg border bg-card text-card-foreground">
+                    {/* Image and badges area */}
+                    <div className="relative h-48 overflow-hidden bg-muted">
+                      <Skeleton className="h-full w-full" />
+                      {/* Date badge */}
+                      <div className="absolute top-4 left-4">
+                        <div className="rounded-lg p-2 w-16">
+                          <Skeleton className="h-12 w-full" />
+                        </div>
+                      </div>
+                      {/* Event type badge */}
+                      <div className="absolute top-4 right-4">
+                        <Skeleton className="h-6 w-24 rounded-full" />
+                      </div>
+                    </div>
 
-                  {/* Year text with responsive styling */}
-                  <div className="relative mx-4 md:mx-8 px-4 md:px-6 py-2 md:py-3 bg-primary/10 rounded-full border border-primary/20">
-                      <div className="text-xl md:text-2xl font-bold text-primary transition-all duration-300 hover:text-primary/80">
-                      {stickyYear || ''}{t('annualActivitySection.yearSuffix')}
+                    {/* Content area */}
+                    <div className="p-6">
+                      {/* Chapter badge and status */}
+                      <div className="flex items-start justify-between gap-2 mb-4">
+                        <Skeleton className="h-6 w-32 rounded-full" />
+                        <Skeleton className="h-6 w-20 rounded-full" />
+                      </div>
+
+                      {/* Title */}
+                      <div className="space-y-2 mb-4">
+                        <Skeleton className="h-6 w-3/4" />
+                        <Skeleton className="h-6 w-1/2" />
+                      </div>
+
+                      {/* Description */}
+                      <div className="space-y-2 mb-6">
+                        <Skeleton className="h-4 w-full" />
+                        <Skeleton className="h-4 w-5/6" />
+                      </div>
+
+                      {/* Event details */}
+                      <div className="space-y-2 mb-6">
+                        <Skeleton className="h-4 w-40" />
+                        <Skeleton className="h-4 w-32" />
+                      </div>
+
+                      {/* Button */}
+                      <Skeleton className="h-10 w-full rounded-md" />
                     </div>
                   </div>
-
-                  {/* Mobile: Simple divider lines, Desktop: Gradient lines */}
-                  <div className="flex-1 h-px bg-border md:bg-gradient-to-l md:from-transparent md:via-primary/60 md:to-primary"></div>
-                </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-8">
+                <ClockIcon className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <p className="text-muted-foreground">{t('annualActivitySection.noEvents')}</p>
               </div>
             )}
           </div>
-        </div>
-      </div>
-
-      <section className="container mx-auto px-4 w-full justify-center items-center">
-        <div className="gap-4 px-4 overflow-auto w-full justify-center items-center flex flex-col">
-          {displayEvents.sortedYears.length > 0 ? (
-            displayEvents.sortedYears.map((year) => (
-              <div
-                key={year}
-                className="w-full scroll-mt-32"
-                ref={(el) => {
-                  yearRefs.current[year] = el;
-                }}
-              >
-                {/* Year separator with responsive design - only show if multiple years or not showing all years */}
-                {(displayEvents.sortedYears.length > 1 || filters.year !== 'all') && (
-                  <div className="relative my-8 md:my-12">
-                    {/* Mobile: Simple card, Desktop: Enhanced card */}
-                    <div className="bg-background/30 md:bg-background/50 backdrop-blur-sm rounded-lg border border-border/30 p-4 md:p-6 shadow-sm md:shadow-md">
-                      <div className="flex items-center justify-center">
-                        {/* Mobile: Simple lines, Desktop: Gradient lines */}
-                        <div className="flex-1 h-px bg-border md:bg-gradient-to-r md:from-transparent md:via-primary/40 md:to-primary/70"></div>
-
-                        {/* Year text with responsive styling */}
-                        <div className="relative mx-4 md:mx-8 px-4 md:px-6 py-2 md:py-3 bg-primary/10 rounded-full border border-primary/20">
-                          <div className="text-xl md:text-2xl font-bold text-primary transition-all duration-300 hover:text-primary/80">
-                            {year}{t('annualActivitySection.yearSuffix')}
-                          </div>
-                          {/* Subtle shine effect - only on desktop */}
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent rounded-full opacity-0 hover:opacity-100 transition-opacity duration-300 hidden md:block"></div>
-                        </div>
-
-                        {/* Mobile: Simple lines, Desktop: Gradient lines */}
-                        <div className="flex-1 h-px bg-border md:bg-gradient-to-l md:from-transparent md:via-primary/40 md:to-primary/70"></div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Events grid for this year with responsive spacing */}
-                <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 w-full mb-12 md:mb-16`}>
-                  {Object.values(displayEvents.eventsByYear[year])
-                    .sort((a, b) => new Date(b.start_date_iso).getTime() - new Date(a.start_date_iso).getTime())
-                    .map((event: Event) => (
-                      <ModernEventCard key={event.id} eventObject={event} />
-                    ))}
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="col-span-full text-center text-lg text-muted-foreground py-16">
-              {t('annualActivitySection.noEvents')}
-            </div>
-          )}
         </div>
       </section>
     </div>

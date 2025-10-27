@@ -232,3 +232,21 @@ ol li {
   background-color: var(--accent-color);
   color: var(--accent-foreground-color);
 } 
+
+.wheel-container {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch; /* for smooth scrolling on iOS */
+  scrollbar-width: none; /* for Firefox */
+}
+
+.wheel-container::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}
+
+.wheel-item {
+  scroll-snap-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} 

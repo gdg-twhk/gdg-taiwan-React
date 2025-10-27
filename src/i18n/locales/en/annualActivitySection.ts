@@ -36,4 +36,6 @@ export const annualActivitySection = {
     cityFilterSubtitle: "Choose your chapter or one you're interested in",
     eventTypeFilterSubtitle: "Choose the event types you're interested in",
     audienceTypeFilterSubtitle: "Choose a suitable way to participate",
+    yearFilterSubtitle: "Select a year to filter events",
+    yearFilterTitle: "Filter by Year",
 }
