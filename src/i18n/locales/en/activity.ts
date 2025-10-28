@@ -1,11 +1,11 @@
 export const activity = {
   international_womens_day: {
     title: "International Women's Day",
-    description: "International Women's Day (IWD) is the biggest annual event for Women Techmakers, where ambassadors around the world host activities throughout March and April to celebrate this moment. From large summits to small private gatherings, IWD is also a way for us to support our mission to build a world where all women can thrive in tech. GDG and GDG on Campus communities can also participate in IWD events.",
+    description: "International Women's Day (IWD) is the biggest annual event for Women Techmakers, where ambassadors around the world host activities throughout March and April to celebrate this moment. From large summits to small private gatherings, IWD is also a way for us to support our mission to build a world where all women can thrive in tech.",
   },
   google_io_extended: {
     title: "Google I/O Extended",
-    description: "Google I/O connects developers from around the world for thoughtful discussions, hands-on learning with Google experts, and an early look at Google's latest developer products. The magic of I/O doesn't end after the main event. Local developer communities come together at I/O Extended events to discuss the latest new technologies, recap content, host Q&As, and meet other tech enthusiasts.",
+    description: "Google I/O connects developers from around the world for thoughtful discussions, hands-on learning with Google experts, and an early look at Google's latest developer products. After the main event, local developer communities come together at I/O Extended events to discuss the latest technologies, host Q&As, and interact with other developers.",
   },
   cloud_study_jam: {
     title: "Cloud Study Jams",

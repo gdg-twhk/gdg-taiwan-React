@@ -12,6 +12,6 @@ export const eventTypeMap = {
     GoogleHostedSummit: "Google Hosted Summit",
     HandsOnWorkshopVirtual: "Hands on workshop - Virtual",
     InternationalWomensDay: "International Women's Day",
-    SpeakerSessionTechTalkVirtual: "Speaker Session/ Tech Talk - Virtual",
+    SpeakerSessionTechTalkVirtual: "Speaker Session / Tech Talk - Virtual",
     DevFestCoHost: "DevFest Co-Host"
 }
