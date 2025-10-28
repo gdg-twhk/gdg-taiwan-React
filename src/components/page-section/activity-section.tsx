@@ -2,7 +2,7 @@
 
 import { AddToCalendarButton } from 'add-to-calendar-button-react';
 import React, { useState, useEffect } from "react";
-import {getUpcomingEvents, getPastEvents} from "@/api/bevy";
+import {getUpcomingEvents, fetchAllPastEvents} from "@/api/bevy";
 import { Event } from "@/interfaces";
 import { SidebarHeader, SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { CardDescription } from "@/components/ui/card";
@@ -42,7 +42,7 @@ export default function ActivitySection() {
     async function fetchEvents() {
       setIsLoading(true);
       const upcomingEvents = await getUpcomingEvents();
-      const pastEvents = await getPastEvents();
+      const pastEvents = await fetchAllPastEvents();
       const allEvents = [...upcomingEvents, ...pastEvents];
       setEvents(allEvents);
       const eventsByDate = collectEventsByDate(allEvents);
