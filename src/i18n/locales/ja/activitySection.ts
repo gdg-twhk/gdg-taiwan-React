@@ -1,6 +1,6 @@
 export const activitySection = {
     title: "すべての活動",
-    recentActivities: "台湾の最近の活動",
+    recentActivities: "最近の活動",
     thisMonthActivities: "{{month}}の活動",
     thisWeekActivities: "今週の活動",
     thisWeekendActivities: "今週末の活動",
@@ -12,6 +12,6 @@ export const activitySection = {
         outlookcom: "Outlookカレンダーに追加",
         yahoo: "Yahooカレンダーに追加",
         ical: "iCalファイルをダウンロード",
-        subscribe: "台湾GDG活動カレンダーを購読"
+        subscribe: "購読"
     }
 };

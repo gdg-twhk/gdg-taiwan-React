@@ -1,6 +1,6 @@
 export const activitySection = {
-    title: "Recent Activities in Taiwan",
-    recentActivities: "Recent Activities in Taiwan",
+    title: "Recent Activities",
+    recentActivities: "Recent Activities",
     thisMonthActivities: "{{month}} Activities",
     thisWeekActivities: "This Week's Activities",
     thisWeekendActivities: "This Weekend's Activities",
@@ -12,6 +12,6 @@ export const activitySection = {
         outlookcom: "Add to Outlook Calendar",
         yahoo: "Add to Yahoo Calendar",
         ical: "Download iCal file",
-        subscribe: "Subscribe to GDG Taiwan Activities Calendar"
+        subscribe: "Subscribe"
     }
 };
