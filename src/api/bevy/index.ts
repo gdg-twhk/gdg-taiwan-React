@@ -14,15 +14,34 @@ export const getEvents = async (): Promise<Event[]> => {
 }
 
 
-export const getPastEvents = async (): Promise<Event[]> => {
-  try{
-    const response = await axios.get(`${API_URL}/search/event?q=Taiwan&around_radius=200&status=past`);
-    return response.data.results;
+export const getPastEvents = async (page: number = 1): Promise<{ events: Event[], hasNextPage: boolean }> => {
+  try {
+    const response = await axios.get(`${API_URL}/search/event?q=Taiwan&around_radius=200&status=past&page=${page}`);
+    return {
+      events: response.data.results,
+      hasNextPage: response.data.links?.next !== null
+    };
   } catch (error) {
     console.error(error);
     throw new Error(`Failed to fetch past events: ${error}`);
   }
 }
+
+  // Function to fetch all past events by iterating through all pages
+  export const fetchAllPastEvents = async () => {
+    const allPastEvents: Event[] = [];
+    let currentPage = 1;
+    let hasNextPage = true;
+
+    while (hasNextPage) {
+      const { events: pastEvents, hasNextPage: morePages } = await getPastEvents(currentPage);
+      allPastEvents.push(...pastEvents);
+      hasNextPage = morePages;
+      currentPage++;
+    }
+
+    return allPastEvents;
+  };
 
 export const getUpcomingEvents = async (): Promise<Event[]> => {
   try{

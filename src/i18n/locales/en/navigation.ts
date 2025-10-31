@@ -9,7 +9,7 @@ export const navigation = {
     },
     googleIOExtended: {
         title: "Google I/O Extended",
-        description: "Discussing the latest new technologies, summarizing content, hosting a Q&A session, and meeting other tech enthusiasts."
+        description: "Discussing the latest technologies, hosting Q&A sessions, and interacting with other developers."
     },
     cloudStudyJam: {
         title: "Cloud Study Jam",
@@ -17,7 +17,7 @@ export const navigation = {
     },
     devfest: {
         title: "DevFest",
-        description: "Local technical workshops hosted by global Google Developer Groups (GDGs)."
+        description: "Local technical conferences hosted by Google Developer Groups (GDG) worldwide."
     },
     buildWithAi: {
         title: "Build with AI",

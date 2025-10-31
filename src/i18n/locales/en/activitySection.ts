@@ -1,6 +1,6 @@
 export const activitySection = {
-    title: "All Activities",
-    recentActivities: "Recent Activities in Taiwan",
+    title: "Recent Activities",
+    recentActivities: "Recent Activities",
     thisMonthActivities: "{{month}} Activities",
     thisWeekActivities: "This Week's Activities",
     thisWeekendActivities: "This Weekend's Activities",
