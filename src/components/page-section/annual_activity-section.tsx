@@ -281,7 +281,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
                 <div key={year}>
                   <div className="sticky top-0 bg-background/80 backdrop-blur-sm py-2 mb-3 z-10 flex items-center">
                     <div className="flex-grow border-t border-muted-foreground" />
-                    <h3 className="shrink-0 mx-4 text-3xl font-semibold text-muted-foreground">{year}{t('annualActivitySection.yearSuffix')}</h3>
+                    <h3 className="shrink-0 mx-4 text-3xl font-semibold text-muted-foreground">{year}</h3>
                     <div className="flex-grow border-t border-muted-foreground" />
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

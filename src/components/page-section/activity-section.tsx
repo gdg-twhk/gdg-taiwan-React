@@ -211,7 +211,15 @@ export default function ActivitySection() {
               month={calendarMonth}
               onMonthChange={setCalendarMonth}
               modifiers={{
-                selected: (day) => events.slice(0, -1).some((event) => new Date(event.start_date_iso).toDateString() === day.toDateString()),
+                selected: (day) => events.some((event) => {
+                  const startDate = new Date(event.start_date_iso);
+                  startDate.setHours(0, 0, 0, 0);
+                  const endDate = new Date(event.end_date_iso || event.start_date_iso);
+                  endDate.setHours(0, 0, 0, 0);
+                  const currentDay = new Date(day);
+                  currentDay.setHours(0, 0, 0, 0);
+                  return currentDay >= startDate && currentDay <= endDate;
+                }),
               }}
               modifiersClassNames={{
                 today: 'text-red-500 border-red-500 rounded-md border-2',
@@ -291,7 +299,15 @@ export default function ActivitySection() {
                             month={calendarMonth}
                             onMonthChange={setCalendarMonth}
                             modifiers={{
-                              selected: (day) => events.slice(0, -1).some((event) => new Date(event.start_date_iso).toDateString() === day.toDateString()),
+                              selected: (day) => events.some((event) => {
+                                const startDate = new Date(event.start_date_iso);
+                                startDate.setHours(0, 0, 0, 0);
+                                const endDate = new Date(event.end_date_iso || event.start_date_iso);
+                                endDate.setHours(0, 0, 0, 0);
+                                const currentDay = new Date(day);
+                                currentDay.setHours(0, 0, 0, 0);
+                                return currentDay >= startDate && currentDay <= endDate;
+                              }),
                             }}
                             modifiersClassNames={{
                               today: 'text-red-500 border-red-500 rounded-md border-2', 

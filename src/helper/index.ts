@@ -21,11 +21,28 @@ export const chapterNameFilter = (name: string) =>{
 
 export const collectEventsByDate = (events: Event[]) : { [key: string]: Event[] }=>  {
   const eventsByDate: { [key: string]: Event[] } = events.reduce((acc: { [key: string]: Event[] }, event) => {
-    const date = new Date(event.start_date_iso).toISOString().split('T')[0];
-    if (!acc[date]) {
-      acc[date] = [];
+    const startDate = new Date(event.start_date_iso);
+    const endDate = new Date(event.end_date_iso || event.start_date_iso);
+    
+    // Helper to get YYYY-MM-DD from a Date object in UTC
+    const getISODate = (d: Date) => d.toISOString().split('T')[0];
+
+    const startStr = getISODate(startDate);
+    const endStr = getISODate(endDate);
+    
+    let loopDate = new Date(startStr); // This creates a date at 00:00:00 UTC
+    const lastDate = new Date(endStr);
+    
+    while (loopDate <= lastDate) {
+        const dateStr = getISODate(loopDate);
+        if (!acc[dateStr]) {
+          acc[dateStr] = [];
+        }
+        acc[dateStr].push(event);
+        
+        // Increment day
+        loopDate.setUTCDate(loopDate.getUTCDate() + 1);
     }
-    acc[date].push(event);
     return acc;
   }, {});
   return eventsByDate;
