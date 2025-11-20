@@ -86,6 +86,12 @@ export default function ActivitySection() {
     fetchEvents();
   }, []);
 
+  useEffect(() => {
+    if (dates[currentPage]) {
+      setCalendarMonth(new Date(dates[currentPage]));
+    }
+  }, [currentPage, dates]);
+
   const eventsInSelectedMonth = useMemo(() => {
     const selectedMonth = calendarMonth.getMonth();
     const selectedYear = calendarMonth.getFullYear();
@@ -211,7 +217,15 @@ export default function ActivitySection() {
               month={calendarMonth}
               onMonthChange={setCalendarMonth}
               modifiers={{
-                selected: (day) => events.some((event) => {
+                selected: (day) => {
+                  if (!dates[currentPage]) return false;
+                  const currentEventDate = new Date(dates[currentPage]);
+                  currentEventDate.setHours(0, 0, 0, 0);
+                  const currentDay = new Date(day);
+                  currentDay.setHours(0, 0, 0, 0);
+                  return currentDay.getTime() === currentEventDate.getTime();
+                },
+                hasEvent: (day) => events.some((event) => {
                   const startDate = new Date(event.start_date_iso);
                   startDate.setHours(0, 0, 0, 0);
                   const endDate = new Date(event.end_date_iso || event.start_date_iso);
@@ -223,6 +237,8 @@ export default function ActivitySection() {
               }}
               modifiersClassNames={{
                 today: 'text-red-500 border-red-500 rounded-md border-2',
+                hasEvent: 'font-bold text-primary decoration-primary border-primary-800 border-2',
+                selected: 'bg-primary text-primary-foreground hover:bg-primary-700 hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground border-primary border-2',
               }}
               onDayClick={(day) => handleClickCalendar(day)}
               locale={calendarLocale[i18n.language as keyof typeof calendarLocale]}
@@ -299,7 +315,15 @@ export default function ActivitySection() {
                             month={calendarMonth}
                             onMonthChange={setCalendarMonth}
                             modifiers={{
-                              selected: (day) => events.some((event) => {
+                              selected: (day) => {
+                                if (!dates[currentPage]) return false;
+                                const currentEventDate = new Date(dates[currentPage]);
+                                currentEventDate.setHours(0, 0, 0, 0);
+                                const currentDay = new Date(day);
+                                currentDay.setHours(0, 0, 0, 0);
+                                return currentDay.getTime() === currentEventDate.getTime();
+                              },
+                              hasEvent: (day) => events.some((event) => {
                                 const startDate = new Date(event.start_date_iso);
                                 startDate.setHours(0, 0, 0, 0);
                                 const endDate = new Date(event.end_date_iso || event.start_date_iso);
@@ -311,6 +335,8 @@ export default function ActivitySection() {
                             }}
                             modifiersClassNames={{
                               today: 'text-red-500 border-red-500 rounded-md border-2', 
+                              hasEvent: 'font-bold text-primary decoration-primary underline decoration-2 underline-offset-4',
+                              selected: 'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground',
                             }}
                             onDayClick={(day) => handleClickCalendar(day)}
                             locale={calendarLocale[i18n.language as keyof typeof calendarLocale]}
