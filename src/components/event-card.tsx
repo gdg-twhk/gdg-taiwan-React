@@ -50,6 +50,21 @@ export function EventCard( {eventObject}: {eventObject: Event}) {
     });
   };
 
+  const formatFullDateTime = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleString(i18n.language, {
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    });
+  };
+
+  const startDate = new Date(eventObject.start_date_iso);
+  const endDate = new Date(eventObject.end_date_iso || eventObject.start_date_iso);
+  const isMultiDay = startDate.getDate() !== endDate.getDate() || startDate.getMonth() !== endDate.getMonth() || startDate.getFullYear() !== endDate.getFullYear();
+
   return (
     <div className={`relative overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-700 group cursor-pointer min-h-[400px] w-full mx-auto`}>
       {/* Background Image */}
@@ -90,7 +105,10 @@ export function EventCard( {eventObject}: {eventObject: Event}) {
             <div className="flex items-center gap-3 text-sm text-white/90">
               <ClockIcon className="w-4 h-4 flex-shrink-0" />
               <span className="font-medium">
-              {formatTime(eventObject.start_date_iso)} ~ {formatTime(eventObject.end_date_iso)}
+              {isMultiDay
+                ? `${formatFullDateTime(eventObject.start_date_iso)} ~ ${formatFullDateTime(eventObject.end_date_iso)}`
+                : `${formatTime(eventObject.start_date_iso)} ~ ${formatTime(eventObject.end_date_iso)}`
+              }
               </span>
             </div>
             <div className="flex items-center gap-3 text-sm text-white/90">
