@@ -384,9 +384,11 @@ export default function ActivitySection() {
               ) : (
                 <>
                   {eventsByDate[dates[currentPage]]?.length > 0 ? (
-                    eventsByDate[dates[currentPage]].map((event:Event) => (
-                      <EventCard key={event.id} eventObject={event} />
-                    ))
+                    eventsByDate[dates[currentPage]]
+                      .sort((a: Event, b: Event) => new Date(a.start_date_iso).getTime() - new Date(b.start_date_iso).getTime())
+                      .map((event: Event) => (
+                        <EventCard key={event.id} eventObject={event} />
+                      ))
                   ) : (
                     <div className="text-center text-lg text-muted-foreground">
                       {t('activitySection.noEvents')}
