@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Event } from "@/interfaces";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ChapterBadge } from "@/components/chapter-badge";
 import Link from "next/link";
@@ -65,6 +66,13 @@ export function EventCard( {eventObject}: {eventObject: Event}) {
   const endDate = new Date(eventObject.end_date_iso || eventObject.start_date_iso);
   const isMultiDay = startDate.getDate() !== endDate.getDate() || startDate.getMonth() !== endDate.getMonth() || startDate.getFullYear() !== endDate.getFullYear();
 
+  const isLiveEvent = () => {
+    const now = new Date();
+    const startDate = new Date(eventObject.start_date_iso);
+    const endDate = new Date(eventObject.end_date_iso);
+    return now >= startDate && now <= endDate;
+  };
+
   return (
     <div className={`relative overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-700 group cursor-pointer min-h-[400px] w-full mx-auto`}>
       {/* Background Image */}
@@ -86,6 +94,12 @@ export function EventCard( {eventObject}: {eventObject: Event}) {
         {/* Top Section - Badges */}
         <div className="flex gap-3 flex-wrap mb-10">
           <ChapterBadge chapter={eventObject.chapter_title} />
+          {isLiveEvent() && (
+            <Badge variant="destructive" className="text-xs animate-pulse">
+              <div className="w-2 h-2 bg-white rounded-full mr-1"></div>
+              {t('eventCard.live') || 'LIVE'}
+            </Badge>
+          )}
         </div>
 
         {/* Bottom Section - Main Content */}

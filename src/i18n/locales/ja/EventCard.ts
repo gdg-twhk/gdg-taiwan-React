@@ -1,3 +1,4 @@
 export const eventCard = {
-    learnMore: "もっと詳しく知る",
+    learnMore: "詳細を見る",
+    live: "開催中",
 }
