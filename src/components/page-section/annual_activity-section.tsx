@@ -146,7 +146,7 @@ export default function AnnualActivitySection({ activity }: AnnualActivitySectio
     }))].sort((a, b) => b.localeCompare(a)); // Sort in descending order (newest first)
 
     return { cities, eventTypes, audienceTypes, years };
-  }, [activities]);
+  }, [activities, t]);
 
   // 篩選後的活動
   const filteredEvents = useMemo(() => {

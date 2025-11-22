@@ -12,6 +12,8 @@ export const activitySection = {
         outlookcom: "Outlook 일정에 추가",
         yahoo: "Yahoo 캘린더에 추가",
         ical: "iCal 파일 다운로드",
-        subscribe: "전국 GDG 활동 일정 구독"
+        subscribe: "전국 GDG 활동 일정 구독",
+        backToToday: "오늘로 돌아가기",
+        title: "활동 캘린더",
     }
 };

@@ -12,6 +12,8 @@ export const activitySection = {
         outlookcom: "Add to Outlook Calendar",
         yahoo: "Add to Yahoo Calendar",
         ical: "Download iCal file",
-        subscribe: "Subscribe"
+        subscribe: "Subscribe",
+        backToToday: "Back to Today",
+        title: "Activity Calendar",
     }
 };

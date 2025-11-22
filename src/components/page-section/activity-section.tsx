@@ -5,10 +5,7 @@ import React, { useState, useEffect } from "react";
 import {getUpcomingEvents, fetchAllPastEvents} from "@/api/bevy";
 import { Event } from "@/interfaces";
 import { SidebarHeader, SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { CardDescription } from "@/components/ui/card";
-import { CardTitle } from "@/components/ui/card";
-import { Card } from "@/components/ui/card";
-import { CardHeader } from "@/components/ui/card";
+import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
 import { Calendar } from "@/components/ui/calendar";
@@ -18,6 +15,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Button } from "@/components/ui/button";
 import { CalendarIcon } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile";
+
 import { useTranslation } from 'react-i18next';
 import i18n from "@/i18n/config"
 import { enUS, zhTW ,zhCN, ja, ko} from "date-fns/locale";
@@ -129,7 +127,7 @@ export default function ActivitySection() {
 
   const selectedMonthName = useMemo(() => {
     return calendarMonth.toLocaleDateString(i18n.language, { month: 'long' });
-  }, [calendarMonth, i18n.language]);
+  }, [calendarMonth]);
 
   useEffect(() => {
     i18n.loadNamespaces(['activitySection']);
@@ -143,6 +141,39 @@ export default function ActivitySection() {
       setCurrentPage(index);
     }
   };
+
+  const jumpToToday = () => {
+    const today = new Date();
+    setCalendarMonth(today);
+    
+    // Find today's index or nearest upcoming
+    const todayIndex = dates.findIndex(date => {
+      const eventDate = new Date(date);
+      eventDate.setHours(0, 0, 0, 0);
+      const todayZero = new Date(today);
+      todayZero.setHours(0, 0, 0, 0);
+      return eventDate.getTime() === todayZero.getTime();
+    });
+
+    if (todayIndex !== -1) {
+      setCurrentPage(todayIndex);
+    } else {
+      // If today is not found, find the nearest upcoming date
+      const upcomingIndex = dates.findIndex(date => {
+        const eventDate = new Date(date);
+        eventDate.setHours(0, 0, 0, 0);
+        const todayZero = new Date(today);
+        todayZero.setHours(0, 0, 0, 0);
+        return eventDate.getTime() >= todayZero.getTime();
+      });
+
+      if (upcomingIndex !== -1) {
+        setCurrentPage(upcomingIndex);
+      }
+    }
+  };
+
+
 
   const CanlendercustomLabels={
     "close": t('activitySection.calendar.close'),
@@ -209,41 +240,58 @@ export default function ActivitySection() {
       <SidebarProvider>
       <Sidebar collapsible="none" className="hidden flex-1 md:flex h-full rounded">
         <SidebarHeader className="gap-3.5 p-4 justify-center">
-          <div className="flex justify-center w-full">
-            <Calendar
-              mode="single"
-              onSelect={(day) => handleClickCalendar(day)}
-              className="rounded-md"
-              month={calendarMonth}
-              onMonthChange={setCalendarMonth}
-              modifiers={{
-                selected: (day) => {
-                  if (!dates[currentPage]) return false;
-                  const currentEventDate = new Date(dates[currentPage]);
-                  currentEventDate.setHours(0, 0, 0, 0);
-                  const currentDay = new Date(day);
-                  currentDay.setHours(0, 0, 0, 0);
-                  return currentDay.getTime() === currentEventDate.getTime();
-                },
-                hasEvent: (day) => events.some((event) => {
-                  const startDate = new Date(event.start_date_iso);
-                  startDate.setHours(0, 0, 0, 0);
-                  const endDate = new Date(event.end_date_iso || event.start_date_iso);
-                  endDate.setHours(0, 0, 0, 0);
-                  const currentDay = new Date(day);
-                  currentDay.setHours(0, 0, 0, 0);
-                  return currentDay >= startDate && currentDay <= endDate;
-                }),
-              }}
-              modifiersClassNames={{
-                today: 'text-red-500 border-red-500 rounded-md border-2',
-                hasEvent: 'font-bold text-primary decoration-primary border-primary-800 border-2',
-                selected: 'bg-primary text-primary-foreground hover:bg-primary-700 hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground border-primary border-2',
-              }}
-              onDayClick={(day) => handleClickCalendar(day)}
-              locale={calendarLocale[i18n.language as keyof typeof calendarLocale]}
-            />
-          </div>
+          <Card>
+            <CardHeader className="vertical-align-center">
+              <CardTitle>{t('activitySection.calendar.title', 'Activity Calendar')}</CardTitle>
+              <CardAction>
+                <div className="flex items-center gap-1">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={jumpToToday}
+                    className="h-7 text-xs"
+                  >
+                    {t('activitySection.calendar.backToToday')}
+                  </Button>
+                </div>
+              </CardAction>
+            </CardHeader>
+            <CardContent>
+              <Calendar
+                mode="single"
+                onSelect={(day) => handleClickCalendar(day)}
+                className="bg-transparent p-0"
+                month={calendarMonth}
+                onMonthChange={setCalendarMonth}
+                modifiers={{
+                  selected: (day) => {
+                    if (!dates[currentPage]) return false;
+                    const currentEventDate = new Date(dates[currentPage]);
+                    currentEventDate.setHours(0, 0, 0, 0);
+                    const currentDay = new Date(day);
+                    currentDay.setHours(0, 0, 0, 0);
+                    return currentDay.getTime() === currentEventDate.getTime();
+                  },
+                  hasEvent: (day) => events.some((event) => {
+                    const startDate = new Date(event.start_date_iso);
+                    startDate.setHours(0, 0, 0, 0);
+                    const endDate = new Date(event.end_date_iso || event.start_date_iso);
+                    endDate.setHours(0, 0, 0, 0);
+                    const currentDay = new Date(day);
+                    currentDay.setHours(0, 0, 0, 0);
+                    return currentDay >= startDate && currentDay <= endDate;
+                  }),
+                }}
+                modifiersClassNames={{
+                  today: 'text-google-blue border-google-blue rounded-md border-2',
+                  hasEvent: 'font-bold text-google-blue decoration-google-blue underline decoration-2 underline-offset-4 hover:bg-google-blue/10 hover:text-google-blue hower:decoration-primary',
+                  selected: 'bg-google-blue text-white border-google-blue underline decoration-white hover:bg-google-blue/90 hover:text-white focus:bg-google-blue focus:text-white',
+                }}
+                onDayClick={(day) => handleClickCalendar(day)}
+                locale={calendarLocale[i18n.language as keyof typeof calendarLocale]}
+              />
+            </CardContent>
+          </Card>
         </SidebarHeader>
         <Separator />
         <SidebarContent>
@@ -299,7 +347,7 @@ export default function ActivitySection() {
                   ) : (
                     <PaginationItem>
                       <Popover>
-                        <PopoverTrigger asChild>
+                        <PopoverTrigger asChild >
                           <Button variant="outline" className="w-48">
                             <CalendarIcon className="mr-2 h-4 w-4" />
                             {isLoading
@@ -307,7 +355,7 @@ export default function ActivitySection() {
                               : (dates[currentPage] ?  getDateString(dates[currentPage]) : <span>{t('activitySection.pickADate')}</span>)}
                           </Button>
                         </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0">
+                        <PopoverContent className="w-auto p-0 justify-center items-center gap-2">
                           <Calendar
                             mode="single"
                             onSelect={(day) => handleClickCalendar(day)}
@@ -334,13 +382,21 @@ export default function ActivitySection() {
                               }),
                             }}
                             modifiersClassNames={{
-                              today: 'text-red-500 border-red-500 rounded-md border-2', 
-                              hasEvent: 'font-bold text-primary decoration-primary underline decoration-2 underline-offset-4',
-                              selected: 'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground',
+                              today: 'text-google-blue border-google-blue rounded-md border-2',
+                              hasEvent: 'font-bold text-google-blue decoration-google-blue underline decoration-2 underline-offset-4 hover:bg-google-blue/10 hover:text-google-blue hower:decoration-primary',
+                              selected: 'bg-google-blue text-white border-google-blue underline decoration-white hover:bg-google-blue/90 hover:text-white focus:bg-google-blue focus:text-white',
                             }}
                             onDayClick={(day) => handleClickCalendar(day)}
                             locale={calendarLocale[i18n.language as keyof typeof calendarLocale]}
                           />
+                          <div className="flex justify-center mb-2">
+                            <Button
+                              onClick={jumpToToday}
+                              className="h-7 text-xs w-48 p-2 bg-primary text-primary-foreground"
+                            >
+                              {t('activitySection.calendar.backToToday')}
+                            </Button>
+                          </div>
                         </PopoverContent>
                       </Popover>
                     </PaginationItem>
