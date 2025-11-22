@@ -236,9 +236,9 @@ export default function ActivitySection() {
                 }),
               }}
               modifiersClassNames={{
-                today: 'text-red-500 border-red-500 rounded-md border-2',
-                hasEvent: 'font-bold text-primary decoration-primary border-primary-800 border-2',
-                selected: 'bg-primary text-primary-foreground hover:bg-primary-700 hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground border-primary border-2',
+                today: 'text-red-500 border-red-500 rounded-md border-2', 
+                hasEvent: 'font-bold text-primary decoration-primary underline decoration-2 underline-offset-4',
+                selected: 'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground',
               }}
               onDayClick={(day) => handleClickCalendar(day)}
               locale={calendarLocale[i18n.language as keyof typeof calendarLocale]}
