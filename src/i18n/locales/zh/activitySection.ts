@@ -11,7 +11,10 @@ export const activitySection = {
         outlookcom: "加入到 Outlook 行事曆",
         yahoo: "加入到 Yahoo 行事曆",
         ical: "下載 iCal 檔案",
-        subscribe: "訂閱全台GDG活動行事曆"
+        subscribe: "訂閱全台GDG活動行事曆",
+        backToToday: "回到今天",
+        title: "活動行事曆",
+        description: "依日期尋找活動"
     },
     thisMonthActivities: '{{month}}活動'
 };
