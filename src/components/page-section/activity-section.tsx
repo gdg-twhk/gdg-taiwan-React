@@ -13,9 +13,9 @@ import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, Pagi
 import { collectEventsByDate, sortEventsByDate } from "@/helper";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { CalendarIcon, ChevronsLeft, ChevronsRight } from "lucide-react"
+import { CalendarIcon } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile";
-import { addYears, subYears } from "date-fns";
+
 import { useTranslation } from 'react-i18next';
 import i18n from "@/i18n/config"
 import { enUS, zhTW ,zhCN, ja, ko} from "date-fns/locale";
@@ -127,7 +127,7 @@ export default function ActivitySection() {
 
   const selectedMonthName = useMemo(() => {
     return calendarMonth.toLocaleDateString(i18n.language, { month: 'long' });
-  }, [calendarMonth, i18n.language]);
+  }, [calendarMonth]);
 
   useEffect(() => {
     i18n.loadNamespaces(['activitySection']);
@@ -173,13 +173,7 @@ export default function ActivitySection() {
     }
   };
 
-  const handlePrevYear = () => {
-    setCalendarMonth(prev => subYears(prev, 1));
-  };
 
-  const handleNextYear = () => {
-    setCalendarMonth(prev => addYears(prev, 1));
-  };
 
   const CanlendercustomLabels={
     "close": t('activitySection.calendar.close'),
