@@ -14,7 +14,6 @@ export const activitySection = {
         subscribe: "訂閱全台GDG活動行事曆",
         backToToday: "回到今天",
         title: "活動行事曆",
-        description: "依日期尋找活動"
     },
     thisMonthActivities: '{{month}}活動'
 };

@@ -12,6 +12,8 @@ export const activitySection = {
         outlookcom: "加入到 Outlook 日历",
         yahoo: "加入到 Yahoo 日历",
         ical: "下载 iCal 文件",
-        subscribe: "订阅全台GDG活动日历"
+        subscribe: "订阅全台GDG活动日历",
+        backToToday: "回到今天",
+        title: "活动日历",
     }
 };

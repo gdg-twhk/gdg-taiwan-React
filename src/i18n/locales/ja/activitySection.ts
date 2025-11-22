@@ -12,6 +12,8 @@ export const activitySection = {
         outlookcom: "Outlookカレンダーに追加",
         yahoo: "Yahooカレンダーに追加",
         ical: "iCalファイルをダウンロード",
-        subscribe: "購読"
+        subscribe: "購読",
+        backToToday: "今日へ戻る",
+        title: "活動カレンダー",
     }
 };

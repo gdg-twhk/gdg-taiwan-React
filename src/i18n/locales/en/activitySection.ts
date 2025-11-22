@@ -15,6 +15,5 @@ export const activitySection = {
         subscribe: "Subscribe",
         backToToday: "Back to Today",
         title: "Activity Calendar",
-        description: "Find events by date"
     }
 };
