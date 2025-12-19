@@ -5,7 +5,11 @@ import { Event, Chapter } from '@/interfaces';
 
 export const getEvents = async (): Promise<Event[]> => {
   try{
-    const response = await axios.get(`${API_URL}/search/event?q=Taiwan&around_radius=200`);
+    const params = new URLSearchParams({
+      q: 'Taiwan',
+      around_radius: '200',
+    });
+    const response = await axios.get(`${API_URL}/search/event/`, { params });
     return response.data.results;
   } catch (error) {
     console.error(error);
@@ -16,7 +20,13 @@ export const getEvents = async (): Promise<Event[]> => {
 
 export const getPastEvents = async (page: number = 1): Promise<{ events: Event[], hasNextPage: boolean }> => {
   try {
-    const response = await axios.get(`${API_URL}/search/event?q=Taiwan&around_radius=200&status=past&page=${page}`);
+    const params = new URLSearchParams({
+      q: 'Taiwan',
+      around_radius: '200',
+      status: 'past',
+      page: page.toString(),
+    });
+    const response = await axios.get(`${API_URL}/search/event/`, { params });
     return {
       events: response.data.results,
       hasNextPage: response.data.links?.next !== null
@@ -45,7 +55,12 @@ export const getPastEvents = async (page: number = 1): Promise<{ events: Event[]
 
 export const getUpcomingEvents = async (): Promise<Event[]> => {
   try{
-    const response = await axios.get(`${API_URL}/search/event?q=Taiwan&around_radius=200&status=upcoming`);
+    const params = new URLSearchParams({
+      q: 'Taiwan',
+      around_radius: '200',
+      status: 'upcoming',
+    });
+    const response = await axios.get(`${API_URL}/search/event/`, { params });
     return response.data.results;
   } catch (error) {
     console.error(error);
@@ -55,7 +70,13 @@ export const getUpcomingEvents = async (): Promise<Event[]> => {
 
 export const getLiveEvents = async (): Promise<Event[]> => {
   try{
-    const response = await axios.get(`${API_URL}/search/event?q=Taiwan&around_radius=200&status=upcoming&page_size=10`);
+    const params = new URLSearchParams({
+      q: 'Taiwan',
+      around_radius: '200',
+      status: 'upcoming',
+      page_size: '10',
+    });
+    const response = await axios.get(`${API_URL}/search/event/`, { params });
     return response.data.results;
   } catch (error) {
     console.error(error);
@@ -65,7 +86,13 @@ export const getLiveEvents = async (): Promise<Event[]> => {
 
 export const getEventByTag = async(eventTagsId: string): Promise<Event[]> =>{
   try{
-    const response = await axios.get(`${API_URL}/search/event?latitude=23.5825&longitude=120.582&around_radius=200&event_tags_ids=${eventTagsId}`);
+    const params = new URLSearchParams({
+      latitude: '23.5825',
+      longitude: '120.582',
+      around_radius: '200',
+      event_tags_ids: eventTagsId,
+    });
+    const response = await axios.get(`${API_URL}/search/event/`, { params });
     return response.data.results;
 
   } catch (error) {
@@ -77,7 +104,10 @@ export const getEventByTag = async(eventTagsId: string): Promise<Event[]> =>{
 
 export const getChapters = async(): Promise<Chapter[]>=>{
   try{
-    const response = await axios.get(`${API_URL}/search/chapter?q=(TW)`);
+    const params = new URLSearchParams({
+      q: '(TW)',
+    });
+    const response = await axios.get(`${API_URL}/search/chapter/`, { params });
     return response.data.results
 
   } catch (error) {
