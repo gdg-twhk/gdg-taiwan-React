@@ -32,7 +32,7 @@ jobs:
         run: git config --global init.defaultBranch main
 
       - name: Install dependencies
-        run: cd src && npm install
+        run: cd src && npm ci --legacy-peer-deps
 
       - name: Install Trivy
         run: |
