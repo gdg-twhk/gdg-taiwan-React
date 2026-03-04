@@ -18,25 +18,30 @@ function Calendar({
       showOutsideDays={showOutsideDays}
       className={cn("p-3", className)}
       classNames={{
-        months: "flex flex-col sm:flex-row gap-2",
+        months: "relative flex flex-col sm:flex-row gap-2",
         month: "flex flex-col gap-4",
         month_caption: "flex justify-center pt-1 relative items-center w-full",
         caption_label: "text-sm font-medium",
-        nav: "flex items-center gap-1",
+        nav: "flex items-center gap-1 absolute top-0 w-full justify-between z-10",
         button_previous: cn(
           buttonVariants({ variant: "outline" }),
-          "absolute left-1 size-7 bg-transparent p-0 opacity-50 hover:opacity-100"
+          "size-7 bg-transparent p-0 opacity-50 hover:opacity-100"
         ),
         button_next: cn(
           buttonVariants({ variant: "outline" }),
-          "absolute right-1 size-7 bg-transparent p-0 opacity-50 hover:opacity-100"
+          "size-7 bg-transparent p-0 opacity-50 hover:opacity-100"
         ),
         month_grid: "w-full border-collapse space-x-1",
         weekdays: "flex",
         weekday:
           "text-neutral-500 rounded-md w-8 font-normal text-[0.8rem] dark:text-neutral-400",
         week: "flex w-full mt-2",
-        day: "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-neutral-100 [&:has([aria-selected].day-range-end)]:rounded-r-md dark:[&:has([aria-selected])]:bg-neutral-800 [&:has([aria-selected])]:rounded-md",
+        day: cn(
+          "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-neutral-100 [&:has([aria-selected].day-range-end)]:rounded-r-md dark:[&:has([aria-selected])]:bg-neutral-800",
+          props.mode === "range"
+            ? "[&:has(>.day-range-end)]:rounded-r-md [&:has(>.day-range-start)]:rounded-l-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md"
+            : "[&:has([aria-selected])]:rounded-md"
+        ),
         day_button: cn(
           buttonVariants({ variant: "ghost" }),
           "size-8 p-0 font-normal aria-selected:opacity-100"
@@ -57,9 +62,9 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        Chevron: ({ orientation, className, ...props }) => {
+        Chevron: ({ orientation }) => {
           const Icon = orientation === "left" ? ChevronLeft : ChevronRight
-          return <Icon className={cn("size-4", className)} {...props} />
+          return <Icon className="size-4" />
         },
       }}
       {...props}
