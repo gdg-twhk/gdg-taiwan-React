@@ -45,7 +45,7 @@ jobs:
 
       - name: Run Trivy vulnerability scanner (filesystem)
         id: trivy-sarif
-        uses: aquasecurity/trivy-action@0.34.1
+        uses: aquasecurity/trivy-action@latest
         with:
           scan-type: "fs"
           scan-ref: "src"
