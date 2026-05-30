@@ -59,7 +59,7 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('src/package-lock.json', 'src/yarn.lock') }}-
 
       - name: Install dependencies
-        run: cd src && ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+        run: cd src && ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }} --legacy-peer-deps
 
       - name: Run lint
         run: cd src && npm run lint
