@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import * as RechartsPrimitive from "recharts"
+import type { LegendPayload, TooltipPayloadEntry } from "recharts"
 
 import { cn } from "@/lib/utils"
 
@@ -118,13 +119,19 @@ function ChartTooltipContent({
   color,
   nameKey,
   labelKey,
-}: React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
-  React.ComponentProps<"div"> & {
+}: React.ComponentProps<"div"> & {
+    active?: boolean
+    payload?: TooltipPayloadEntry[]
+    label?: string | number
+    labelFormatter?: (value: unknown, payload: TooltipPayloadEntry[]) => React.ReactNode
+    formatter?: (value: unknown, name: unknown, item: TooltipPayloadEntry, index: number, payload: TooltipPayloadEntry[]) => React.ReactNode
+    color?: string
+    nameKey?: string
+    labelKey?: string
     hideLabel?: boolean
     hideIndicator?: boolean
     indicator?: "line" | "dot" | "dashed"
-    nameKey?: string
-    labelKey?: string
+    labelClassName?: string
   }) {
   const { config } = useChart()
 
@@ -186,7 +193,7 @@ function ChartTooltipContent({
 
           return (
             <div
-              key={item.dataKey}
+              key={String(item.dataKey)}
               className={cn(
                 "[&>svg]:text-muted-foreground flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5",
                 indicator === "dot" && "items-center"
@@ -256,8 +263,9 @@ function ChartLegendContent({
   payload,
   verticalAlign = "bottom",
   nameKey,
-}: React.ComponentProps<"div"> &
-  Pick<RechartsPrimitive.LegendProps, "payload" | "verticalAlign"> & {
+}: React.ComponentProps<"div"> & {
+    payload?: LegendPayload[]
+    verticalAlign?: RechartsPrimitive.LegendProps["verticalAlign"]
     hideIcon?: boolean
     nameKey?: string
   }) {
