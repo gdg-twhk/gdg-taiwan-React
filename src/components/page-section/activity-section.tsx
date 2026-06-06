@@ -86,6 +86,7 @@ export default function ActivitySection() {
 
   useEffect(() => {
     if (dates[currentPage]) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setCalendarMonth(new Date(dates[currentPage]));
     }
   }, [currentPage, dates]);

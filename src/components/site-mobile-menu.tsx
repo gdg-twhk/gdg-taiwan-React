@@ -29,6 +29,7 @@ export function SiteMobileMenu() {
   // Auto-expand annual activities if one is active
   useEffect(() => {
     if (isAnyAnnualActivityActive) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsAnnualActivitiesOpen(true);
     }
   }, [isAnyAnnualActivityActive]);

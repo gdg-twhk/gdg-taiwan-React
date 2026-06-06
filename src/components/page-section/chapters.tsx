@@ -51,6 +51,7 @@ export default function ChaptersSection() {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelectedCountry(sortedCountries[0]);
   }, [sortedCountries]);
 
