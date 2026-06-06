@@ -30,7 +30,7 @@ export const collectEventsByDate = (events: Event[]) : { [key: string]: Event[] 
     const startStr = getISODate(startDate);
     const endStr = getISODate(endDate);
     
-    let loopDate = new Date(startStr); // This creates a date at 00:00:00 UTC
+    const loopDate = new Date(startStr); // This creates a date at 00:00:00 UTC
     const lastDate = new Date(endStr);
     
     while (loopDate <= lastDate) {
