@@ -28,17 +28,11 @@ export function SiteDesktopMenu() {
         <NavigationMenuTrigger>{t('navigation.annualActivities')}</NavigationMenuTrigger>
           <NavigationMenuContent className="bg-card !absolute !top-full !left-0 !z-[9999] shadow-lg border !transform-none">
         <ul className="grid gap-3 p-6 md:w-[400px]">
-          <ListItem href="/annual_activity/international_womens_day" title={t('navigation.internationalWomensDay.title')}>
-            {t('navigation.internationalWomensDay.description')}
-          </ListItem>
           <ListItem href="/annual_activity/google_io_extended" title={t('navigation.googleIOExtended.title')}>
             {t('navigation.googleIOExtended.description')}
           </ListItem>
           <ListItem href="/annual_activity/cloud_study_jam" title={t('navigation.cloudStudyJam.title')}>
             {t('navigation.cloudStudyJam.description')}
-          </ListItem>
-          <ListItem href="/annual_activity/build_with_ai" title={t('navigation.buildWithAi.title')}>
-            {t('navigation.buildWithAi.description')}
           </ListItem>
           <ListItem href="/annual_activity/devfest" title={t('navigation.devfest.title')}>
             {t('navigation.devfest.description')}

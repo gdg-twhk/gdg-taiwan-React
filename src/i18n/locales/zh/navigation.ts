@@ -3,10 +3,6 @@ export const navigation = {
     recentActivities: "最新活動",
     annualActivities: "年度活動",
     chapters: "探索區域",
-    internationalWomensDay: {
-        title: "國際婦女節",
-        description: "國際婦女節是 Women Techmakers 最大的年度活動"
-    },
     googleIOExtended: {
         title: "Google I/O 延伸活動",
         description: "討論最新的新技術、總結內容、主持問答環節並會見其他技術愛好者。"
@@ -18,9 +14,5 @@ export const navigation = {
     devfest: {
         title: "DevFest",
         description: "是由全球 Google Developer Group (GDG) 主持的當地技術研討會。"
-    },
-    buildWithAi: {
-        title: "Build with AI",
-        description: "為各種技能水平的開發者設計的活動，旨在學習和使用 Google 最新的 AI 技術進行建構。"
     }
 }
