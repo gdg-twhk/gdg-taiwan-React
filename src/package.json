@@ -60,7 +60,7 @@
     "lodash": "^4.18.0"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
+    "@eslint/compat": "^2.1.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^25",
     "@types/react": "^19",
