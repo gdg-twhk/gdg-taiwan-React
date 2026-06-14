@@ -3,10 +3,6 @@ export const navigation = {
     recentActivities: "Recent Activities",
     annualActivities: "Annual Activities",
     chapters: "Explore by region",
-    internationalWomensDay: {
-        title: "International Women's Day",
-        description: "International Women's Day is the largest annual event for Women Techmakers"
-    },
     googleIOExtended: {
         title: "Google I/O Extended",
         description: "Discussing the latest technologies, hosting Q&A sessions, and interacting with other developers."
@@ -18,9 +14,5 @@ export const navigation = {
     devfest: {
         title: "DevFest",
         description: "Local technical conferences hosted by Google Developer Groups (GDG) worldwide."
-    },
-    buildWithAi: {
-        title: "Build with AI",
-        description: "An event for developers of all skill levels to learn and build with Google's latest AI technologies."
     }
 }

@@ -1,24 +1,10 @@
 export const activityMeta = {
-    international_womens_day: {
-      bevytagId: "30",
-      backgroundUrl: "/event/international-womans-day/bg.png",
-      iconUrl: "/event/international-womans-day/logo.png",
-      animationUrl: "/event/international-womans-day/main.png",
-      url: "https://developers.google.com/womentechmakers/initiatives/iwd",
-    },
     google_io_extended: {
       bevytagId: "24",
       backgroundUrl: "/event/io-extends/banner.svg",
       iconUrl: "/event/io-extends/logo-white.svg",
       animationUrl: "/event/io-extends/giphy.gif",
       url: "https://gdg.community.dev/ioextended/",
-    },
-    build_with_ai: {
-      bevytagId: "73",
-      backgroundUrl: "/event/build-with-ai/banner.jpg",
-      iconUrl: "/event/build-with-ai/logo.png",
-      animationUrl: "/event/build-with-ai/minilogo.png",
-      url: "https://ai.google/build/",
     },
     cloud_study_jam: {
       bevytagId: "23",
