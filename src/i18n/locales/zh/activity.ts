@@ -3,9 +3,9 @@ export const activity = {
     title: "Google I/O 延伸活動",
     description: "Google I/O 將來自全球的開發者聚集在一起，進行深入討論、與 Google 專家實作學習，並搶先體驗 Google 最新開發者產品。主賽事結束後，當地社群透過 I/O Extended 活動繼續交流技術、主持問答並與其他開發者互動。",
   },
-  cloud_study_jam: {
-    title: "Cloud Study Jam",
-    description: "從容器化應用到建立虛擬機，Study Jams 可根據主題與技能等級進行自訂。無論是雲端基礎入門或深入探討機器學習、BigQuery、認證或 Kubernetes，都能透過免費實作實驗室學習 Google Cloud 的核心工具與功能。",
+  build_with_ai: {
+    title: "Build with AI",
+    description: "這是一個為各種技能水平的開發者設計的活動，旨在學習和使用 Google 最新的 AI 技術進行建構。透過實作工作坊和 Google 專家的演講，探索生成式 AI。",
   },
   devfest: {
     title: "DevFest",

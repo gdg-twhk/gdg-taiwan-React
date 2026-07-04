@@ -7,9 +7,9 @@ export const navigation = {
         title: "Google I/O 延伸活動",
         description: "討論最新的新技術、總結內容、主持問答環節並會見其他技術愛好者。"
     },
-    cloudStudyJam: {
-        title: "雲端研習營",
-        description: "從容器化應用程式到創建虛擬機，Study Jams 可以根據特定的雲端主題和技能水平進行自訂。"
+    buildWithAi: {
+        title: "Build with AI",
+        description: "為各種技能水平的開發者設計的活動，旨在學習和使用 Google 最新的 AI 技術進行建構。"
     },
     devfest: {
         title: "DevFest",

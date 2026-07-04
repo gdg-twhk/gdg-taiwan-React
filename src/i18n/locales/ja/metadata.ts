@@ -12,9 +12,9 @@ export const metadata = {
             "title": "Google I/O エクステンデッド | Google Developer Groups Taiwan",
             "description": "Google I/Oは、世界中の開発者が集まり、Googleの専門家と共に実践的な学習やディスカッションを行い、Googleの最新開発者プロダクトをいち早く体験できるイベントです。メインイベント終了後、各地のコミュニティはI/O Extendedイベントを通じて技術交流やQ&A、他の開発者との交流を続けます。"
         },
-        "cloud_study_jam":{
-            "title": "クラウドスタディジャム | Google Developer Groups Taiwan",
-            "description": "コンテナ化アプリケーションから仮想マシンの作成まで、Study Jamはテーマやスキルレベルに応じてカスタマイズできます。クラウドの基礎から機械学習、BigQuery、認定、Kubernetesの深掘りまで、Google Cloudの主要ツールと機能を無料のハンズオンラボで学ぶことができます。"
+        "build_with_ai": {
+            "title": "Build with AI | Google Developer Groups Taiwan",
+            "description": "あらゆるスキルレベルの開発者が Google の最新 AI 技術を学び、構築するためのイベントです。ハンズオンワークショップや Google の専門家による講演を通じて、生成 AI を探求します。"
         },
         "devfest":{
             "title": "DevFest | Google Developer Groups Taiwan",
