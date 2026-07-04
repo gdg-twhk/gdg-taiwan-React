@@ -9,7 +9,7 @@ import { DrawerContent } from './ui/drawer';
 import { LanguageToggle } from './language-toggle';
 import { ModeToggle } from './model-toggle';
 import { useState, useEffect } from 'react';
-import { IconBrandGoogle, IconCalendarEvent, IconCode, IconCloud, IconMapPin, IconHome } from '@tabler/icons-react';
+import { IconBrandGoogle, IconCalendarEvent, IconCode, IconMapPin, IconHome, IconRobot } from '@tabler/icons-react';
 
 export function SiteMobileMenu() {
   const { t } = useTranslation();
@@ -42,10 +42,10 @@ export function SiteMobileMenu() {
       isActive: isActive('/annual_activity/google_io_extended')
     },
     {
-      icon: IconCloud,
-      label: t('navigation.cloudStudyJam.title'),
-      href: '/annual_activity/cloud_study_jam',
-      isActive: isActive('/annual_activity/cloud_study_jam')
+      icon: IconRobot,
+      label: t('navigation.buildWithAi.title'),
+      href: '/annual_activity/build_with_ai',
+      isActive: isActive('/annual_activity/build_with_ai')
     },
     {
       icon: IconCode,

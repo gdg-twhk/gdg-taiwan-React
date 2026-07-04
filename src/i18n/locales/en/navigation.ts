@@ -7,9 +7,9 @@ export const navigation = {
         title: "Google I/O Extended",
         description: "Discussing the latest technologies, hosting Q&A sessions, and interacting with other developers."
     },
-    cloudStudyJam: {
-        title: "Cloud Study Jam",
-        description: "From containerized applications to creating virtual machines, Study Jams can be customized for specific cloud themes and skill levels."
+    buildWithAi: {
+        title: "Build with AI",
+        description: "An event for developers of all skill levels to learn and build with Google's latest AI technologies."
     },
     devfest: {
         title: "DevFest",

@@ -6,12 +6,12 @@ export const activityMeta = {
       animationUrl: "/event/io-extends/giphy.gif",
       url: "https://gdg.community.dev/ioextended/",
     },
-    cloud_study_jam: {
-      bevytagId: "23",
-      backgroundUrl: "/event/cloud-study-jam/banner.jpg",
-      iconUrl: "/event/cloud-study-jam/logo.svg",
-      animationUrl: "/event/cloud-study-jam/cloud_animation.gif",
-      url: "https://events.withgoogle.com/cloud-studyjam/",
+    build_with_ai: {
+      bevytagId: "73",
+      backgroundUrl: "/event/build-with-ai/banner.jpg",
+      iconUrl: "/event/build-with-ai/logo.png",
+      animationUrl: "/event/build-with-ai/minilogo.png",
+      url: "https://ai.google/build/",
     },
     devfest: {
       bevytagId: "21",

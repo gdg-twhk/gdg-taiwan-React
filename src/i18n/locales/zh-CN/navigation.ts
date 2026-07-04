@@ -7,9 +7,9 @@ export const navigation = {
         title: "Google I/O 延伸活动",
         description: "讨论最新的新技术、总结内容、主持问答环节并会见其他技术爱好者。"
     },
-    cloudStudyJam: {
-        title: "云端研习营",
-        description: "从容器化应用程序到创建虚拟机，Study Jams 可以根据特定的云端主题和技能水平进行自定义。"
+    buildWithAi: {
+        title: "Build with AI",
+        description: "为各种技能水平的开发者设计的活动，旨在学习和使用 Google 最新的 AI 技术进行构建。"
     },
     devfest: {
         title: "DevFest",

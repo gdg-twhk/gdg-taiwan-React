@@ -31,8 +31,8 @@ export function SiteDesktopMenu() {
           <ListItem href="/annual_activity/google_io_extended" title={t('navigation.googleIOExtended.title')}>
             {t('navigation.googleIOExtended.description')}
           </ListItem>
-          <ListItem href="/annual_activity/cloud_study_jam" title={t('navigation.cloudStudyJam.title')}>
-            {t('navigation.cloudStudyJam.description')}
+          <ListItem href="/annual_activity/build_with_ai" title={t('navigation.buildWithAi.title')}>
+            {t('navigation.buildWithAi.description')}
           </ListItem>
           <ListItem href="/annual_activity/devfest" title={t('navigation.devfest.title')}>
             {t('navigation.devfest.description')}
